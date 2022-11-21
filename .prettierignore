@@ -1,0 +1,9 @@
+.gitignore
+.prettierrc.json
+package-lock.json
+package.json
+eslintrc.json
+node_modules/
+dist/
+webpack.config.js
+.prettierrc.json
