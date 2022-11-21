@@ -13,16 +13,12 @@ function getCityCoordinates(city) {
 function testGeocoding(cityName) {
     fetch(`http://api.openweathermap.org/geo/1.0/direct?q={${cityName}}&appid=d145974fac8fb803900422c2cc1d620e`)
     .then((response) => {
-        let weatherPromise = '';
         if (response.status === 200) {
             console.log('status was 200')
-            weatherPromise = response.json();
+            return response.json();
         }
-        return weatherPromise;
     })
-    .then( (value)=> {
-        return Promise.resolve([value[0].lat,value[0].lon])
-    })
+    .then( (value)=> Promise.resolve([value[0].lat,value[0].lon]) )
     .catch((err)=>{ console.log(err) })
 }
 
