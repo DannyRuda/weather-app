@@ -14,5 +14,6 @@
         "sourceType": "module"
     },
     "rules": {
+        "linebreak-style": "off"
     }
 }
