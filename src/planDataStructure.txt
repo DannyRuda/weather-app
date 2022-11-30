@@ -185,8 +185,7 @@ Datenstruktur Variante 2
         }
 
         object dayOne {
-            day:
-            date:
+            date: new Date(unix*1000)
             data: [
                 {
                     time:
@@ -207,6 +206,10 @@ Datenstruktur Variante 2
                 ...
             ]
 
+            function getMonthAndDayDate(languageTag) {
+                return new Date(null,this.date.getMonth(),this.date.getDate()).toLocalDateString(`${languageTag}`, {month:'long'})
+            }
+
             function getMinTemp() {
                 return data.reduce((accum,current)=> accum < current ? accum : current);
             }
@@ -216,28 +219,24 @@ Datenstruktur Variante 2
             }
 
             function getDominatingWeathericon() {
-                let thunder = 0;
-                let drizzle = 0;
-                let cntRain = 0;
-                let cntSnow = 0;
-                let cntClear = 0;
-                let cntClouds = 0;
-                data.forEach((element)=>{
-                    switch(element.weathercon) {
-                        case 'thunderstorm': 
-                            Thunder += 1;
-                    }
-                })
+                let thunder = data.filter((element)=>element.weathercon === 'Thunder');
+                let drizzle = data.filter((element)=>element.weathercon === 'Drizzle');
+                let rain = data.filter((element)=>element.weathercon === 'Rain');
+                let snow = data.filter((element)=>element.weathercon === 'Snow');
+                let clear = data.filter((element)=>element.weathercon === 'Clear');
+                let clouds = data.filter((element)=>element.weathercon === 'Clouds');
+                let sortedWeather = [thunder,drizzle,rain,snow,clear,clouds].sort((a,b)=>b-a);
+                return sortedWeather[0].weathercon
             }
 
-            function getCurrentTime() {
-                return `${date.getHours()}:${date.getMinutes()}`
+            function getWeekday() {
+                const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                return week[this.date.getDay()];
             }
         }
 
         object daytwo {
-            day:
-            date:
+            date: new Date(unix*1000)
             data: [
                 {
                     time:
@@ -258,11 +257,29 @@ Datenstruktur Variante 2
                 ...
             ]
 
-            function getMinTemp()
+            function getMinTemp() {
+                return data.reduce((accum,current)=> accum < current ? accum : current);
+            }
 
-            function getMaxTemp()
+            function getMaxTemp() {
+                return data.reduce((accum,current)=> accum > current ? accum : current);
+            }
 
-            function getDominatingWeathericon()
+            function getDominatingWeathericon() {
+                let thunder = data.filter((element)=>element.weathercon === 'Thunder');
+                let drizzle = data.filter((element)=>element.weathercon === 'Drizzle');
+                let rain = data.filter((element)=>element.weathercon === 'Rain');
+                let snow = data.filter((element)=>element.weathercon === 'Snow');
+                let clear = data.filter((element)=>element.weathercon === 'Clear');
+                let clouds = data.filter((element)=>element.weathercon === 'Clouds');
+                let sortedWeather = [thunder,drizzle,rain,snow,clear,clouds].sort((a,b)=>b-a);
+                return sortedWeather[0].weathercon
+            }
+
+            function getWeekday() {
+                const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                return week[date.getDay()];
+            }
         }
 
 
@@ -271,7 +288,7 @@ Funktionen um daten aus api response in die objects zu verstauen
 function createCurrentWeather(date,lon,lat,temperature,precipitation,humidity,windspeed,weathercon) {
     
     function getMonthAndDayDate(languageTag) {
-        return new Date(null,this.date.getMonth(),this.date.getDate()).toLocalDateString(`${languageTag}`, {month:'long'})
+        return new Date(null,date.getMonth(),date.getDate()).toLocalDateString(`${languageTag}`, {month:'long'})
     } 
 
     async function getCityNameAndCountryCode() {
@@ -279,7 +296,7 @@ function createCurrentWeather(date,lon,lat,temperature,precipitation,humidity,wi
     }
 
     function getCurrentTime() {
-        return `${date.getHours()}:${this.date.getMinutes()}`
+        return `${date.getHours()}:${date.getMinutes()}`
     }
 
     function getWeekday() {
@@ -295,24 +312,104 @@ function createCurrentWeather(date,lon,lat,temperature,precipitation,humidity,wi
 }
 
 
-function create
+function PH1 return an array where each item is an array of hourly weather data for one day
+    returns array[ dayone[ {hour1},{hour4},{hour10}... ] , daytwo[ {hour1}...]... ]
 
+        function PH1(forecastData) {
+            const hourlyDataObjects = [];
+            const dayDataArrays = [];
+            for (let hourData of forecastData.list) {
+                hourlyDataObjects.push(createHourObject(hourData))
+            }
+            if (hourlyDataObjects[0].date.getHours() > 2) {
+                for (let j = 0; j < 6 ; j += 1) {
+                    const startingDayDate = hourlyDataObjects[0].date.getDate(); 
+                    const dayData = hourlyDataObjects.filter((hourData)=>hourData.date.getDate() === hourlyDataObjects[0].date.getDate()))
+                    hourlyDataObjects.splice(0,dayArray.length);
+                    dayDataArrays.push(dayArray);
+                }
+            }
+            else {
+                for (let j = 0; j < 5 ; j += 1) {
+                    const startingDayDate = hourlyDataObjects[0].date.getDate(); 
+                    const dayData = hourlyDataObjects.filter((hourData)=>hourData.date.getDate() === hourlyDataObjects[0].date.getDate()))
+                    hourlyDataObjects.splice(0,dayArray.length);
+                    dayDataArrays.push(dayArray);
+                }
+            }
+            return dayDataArrays;    
+        }
+
+function numberToWord(number) {
+    const numbers = ['one','two','three','four','five','six']
+    return numbers[number]
+}
+
+function createHourObject(hourData) {
+    const date = new Date(hourData.dt*1000);
+    const time = `${date.getHours()}:${date.getMinutes}`;
+    const temperature = hourData.main.temp;
+    const precipitation = hourData.pop;
+    const humidity = hourData.main.humidity;
+    const windspeed = hourData.wind.speed;
+    const weathercon = hourData.weather[0].main;
+    return {date,time,temperature,precipitation,humidity,windspeed,weathercon}    
+}
+
+function createDayObject(data) {
+
+    const date = new Date(data[0].dt*1000);
+
+    function getMinTemp() {
+        return data.reduce((accum,current)=> accum < current ? accum : current);
+    }
+
+    function getMaxTemp() {
+        return data.reduce((accum,current)=> accum > current ? accum : current);
+    }
+
+    function getDominatingWeathericon() {
+        let thunder = data.filter((element)=>element.weathercon === 'Thunder');
+        let drizzle = data.filter((element)=>element.weathercon === 'Drizzle');
+        let rain = data.filter((element)=>element.weathercon === 'Rain');
+        let snow = data.filter((element)=>element.weathercon === 'Snow');
+        let clear = data.filter((element)=>element.weathercon === 'Clear');
+        let clouds = data.filter((element)=>element.weathercon === 'Clouds');
+        let sortedWeather = [thunder,drizzle,rain,snow,clear,clouds].sort((a,b)=>b-a);
+        return sortedWeather[0].weathercon
+    }
+
+    function getWeekday() {
+        const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return week[this.date.getDay()];
+    }
+
+    return {date,data,getMinTemp,getMaxTemp,getDominatingWeathericon,getWeekday}
+}
 
 async function createObjects() {
-    Promise.all(promise current weather,promise forecast)
-    .then((values)=>{
-        const currentData = values[0];
-        const forecast = values[1];
-        createCurrentWeather(
-            currentData.dt,
-            currentData.coord.lon,
-            currentData.coord.lat,
-            currentData.main.temp,
-            forecast.list[0].pop,
-            currentData.main.humidity,
-            currentData.wind.speed,
-            currentData.weather[0].main
-        );
-
+    return new Promise((resolve,reject)=>{
+        Promise.all(promise current weather,promise forecast)
+        .then((values)=>{
+            const dayWeatherObjects = []
+            const currentData = values[0];
+            const forecast = values[1];
+            const weatherDataDays = PH1();
+            const currentWeather = createCurrentWeather(
+                new Date(currentData.dt*1000),
+                currentData.coord.lon,
+                currentData.coord.lat,
+                currentData.main.temp,
+                forecast.list[0].pop,
+                currentData.main.humidity,
+                currentData.wind.speed,
+                currentData.weather[0].main
+            );
+            for (let i = 0, i < weatherDataDays.length, i += 1) {
+                const dayData = weatherDataDays[i];
+                dayWeatherObjects[i] = createDayObject(dayData);
+            }
+            resolve([currentWeather,dayWeatherObjects]);
+        })
     })
 }
