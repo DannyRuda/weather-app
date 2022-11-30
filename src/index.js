@@ -1,57 +1,53 @@
-function createWeatherObject(city, day, temp, feelslike, cond, humidity) {
-  return { city, day, temp, feelslike, cond, humidity };
-}
+import {
+  createCurrentWeather,
+  createHourObject,
+  createDayObject,
+} from "./weatherObjects";
 
-function fillWeatherobjectWithData(weatherData) {
-  return createWeatherObject(
-    weatherData.name,
-    weatherData.dt,
-    weatherData.main.temp,
-    weatherData.main.feels_like,
-    weatherData.weather[0].main,
-    weatherData.main.humidity
-  );
-}
+import {
+  writeWeatherintoObjects,
+} from "./helperFunctions";
 
-function getCurrentWeather(lat, lon) {
+function getCurrentWeather(city, country) {
   return new Promise((resolve, reject) => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d145974fac8fb803900422c2cc1d620e`
-    )
-      .then((response) => response.json())
-      .then((value) => Promise.resolve(value))
-      .then((value) => {
-        resolve(value);
-      })
-      .catch((err) => {
-        reject(err);
-      });
+    getCityCoordinates(city, country).then((coordinates) => {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates[0]}&lon=${coordinates[1]}&appid=d145974fac8fb803900422c2cc1d620e`
+      )
+        .then((response) => response.json())
+        .then((value) => Promise.resolve(value))
+        .then((value) => {
+          resolve(value);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   });
 }
 
-function getFiveDayForecast(lat, lon) {
+function getFiveDayForecast(city,country) {
   return new Promise((resolve, reject) => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=d145974fac8fb803900422c2cc1d620e`,
-      {
-        mode: "cors",
-      }
-    )
-      .then((response) => response.json())
-      .then((value) => Promise.resolve(value))
-      .then((value) => {
-        resolve(value);
-      })
-      .catch((err) => {
-        reject(err);
-      });
+    getCityCoordinates(city, country).then((coordinates) => {
+      fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${coordinates[0]}&lon=${coordinates[1]}&appid=d145974fac8fb803900422c2cc1d620e`
+      )
+        .then((response) => response.json())
+        .then((value) => Promise.resolve(value))
+        .then((value) => {
+          resolve(value);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
   });
 }
 
-function getCityCoordinates(cityName) {
+function getCityCoordinates(cityName, country) {
   return new Promise((resolve, reject) => {
     fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q={${cityName}}&appid=d145974fac8fb803900422c2cc1d620e`
+      `http://api.openweathermap.org/geo/1.0/direct?q={${cityName}},{${country}}&appid=d145974fac8fb803900422c2cc1d620e`
     )
       .then((response) => {
         if (response.status === 200) {
@@ -68,6 +64,8 @@ function getCityCoordinates(cityName) {
   });
 }
 
+writeWeatherintoObjects(getCurrentWeather("duisburg","DE"),getFiveDayForecast("duisburg","DE"))
+.then((weatherObjects)=>{console.log(weatherObjects)});
 /*
 function testGeocoding(cityName) {
   return new Promise((resolve, reject) => {
@@ -89,8 +87,8 @@ function testGeocoding(cityName) {
   });
 }
 */
-
-getCityCoordinates("new york city")
+/*
+getCityCoordinates("London", "US")
   .then((value) => getCurrentWeather(value[0], value[1]))
   .then((value) => fillWeatherobjectWithData(value))
   .then((value) => {
@@ -117,3 +115,34 @@ getCityCoordinates("new york city")
       console.log(testTime);
     }
   });
+
+const stringtest = "one";
+
+window[stringtest] = "two";
+console.log(one);
+
+function countalla(numberone) {
+  function useNumberOne() {
+    return numberone * numberone;
+  }
+
+  return { useNumberOne };
+}
+
+const testobject = countalla(3);
+console.log(testobject.useNumberOne());
+
+const testArray = [];
+for (let i = 0; i < 3; i += 1) {
+  testArray[i] = i;
+}
+
+console.log(testArray);
+
+function createTestObject(temperature, keytwo, keythree) {
+  return { temperature, keytwo, keythree };
+}
+
+const testobjecttwo = createTestObject(1, 2, 3);
+console.log("testobject: ", testobjecttwo);
+*/
