@@ -2,6 +2,20 @@
 import { writeWeatherintoObjects } from "./helperFunctions";
 
 import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
+import "./style.css"
+import Clear from "./media/clear.mp4";
+import Clouds from "./media/cloudy.mp4";
+import Rain from "./media/rain.mp4";
+import Drizzle from "./media/drizzle.mp4";
+import Snow from "./media/snow.mp4"
+
+const testvar = `${Clear}`;
+document.body.innerHTML = `<video class ="video" autoplay muted loop id="myVideo">
+<source src="${testvar}" type="video/mp4">
+</video><div class="overlay"><div class="currentW"></div></div>
+`;
+
+
 
 let city = "";
 let cityCoords = [];
@@ -57,7 +71,9 @@ new Promise((resolve, reject) => {
     // eslint-disable-next-line prefer-destructuring
     [currentWeather, daysForecast] = weatherObjects;
   })
-  .catch((err)=>{throw err})
+  .catch((err) => {
+    throw err;
+  });
 
 /*
 function testGeocoding(cityName) {

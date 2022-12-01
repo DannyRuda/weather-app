@@ -1,0 +1,36 @@
+.video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 100%;
+
+}
+
+.overlay {
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(1);
+    
+    max-height: 100vh;
+    
+    z-index: 4;
+    width: 80%;
+    height: 90%;
+    border-radius: 30px;
+    backdrop-filter: blur(100px);
+    
+}
+
+.currentW {
+    width: 85%;
+    height: 70%;
+    background-color: white;
+    border-radius: 30px;
+    position: fixed;
+    top:30%;
+    left:50%;
+    transform: translate(-50%, -30%) scale(1);
+    filter: drop-shadow(0 1px 1px black);
+}
