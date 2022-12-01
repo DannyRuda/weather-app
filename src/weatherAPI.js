@@ -1,5 +1,3 @@
-export { getCityCoordinates, getCurrentWeather, getFiveDayForecast };
-
 function getCityCoordinates(cityName, country) {
   return new Promise((resolve, reject) => {
     fetch(
@@ -55,3 +53,5 @@ function getFiveDayForecast(city, country) {
     });
   });
 }
+
+export { getCityCoordinates, getCurrentWeather, getFiveDayForecast };

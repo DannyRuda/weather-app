@@ -1,6 +1,8 @@
-import { createHourObject, createCurrentWeather, createDayObject } from "./weatherObjects";
-
-export { numberToWord, splitIntoDays, writeWeatherintoObjects };
+import {
+  createHourObject,
+  createCurrentWeather,
+  createDayObject,
+} from "./weatherObjects";
 
 function numberToWord(number) {
   const numbers = ["one", "two", "three", "four", "five", "six"];
@@ -60,3 +62,18 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
     });
   });
 }
+
+function kelvinToFahrenheit(temp) {
+  return (temp - 273.15) * 1.8 + 32.0;
+}
+
+function kelvinToCelsius(temp) {
+  return temp - 273.15;
+}
+export {
+  numberToWord,
+  splitIntoDays,
+  writeWeatherintoObjects,
+  kelvinToFahrenheit,
+  kelvinToCelsius,
+};

@@ -10,6 +10,16 @@ writeWeatherintoObjects(
   getFiveDayForecast("duisburg", "DE")
 ).then((weatherObjects) => {
   console.log(weatherObjects);
+  weatherObjects[0].getCityNameAndCountryCode().then((cityandcountry)=>console.log(cityandcountry));
+  console.log(weatherObjects[0].getMonthAndDayDate("DE"));
+  console.log(weatherObjects[0].getCurrentTime());
+  console.log(weatherObjects[0].getWeekDay());
+  console.log(weatherObjects[1][0].getMonthAndDayDate("DE"));
+  console.log(weatherObjects[1][0].getMinTemp());
+  console.log(weatherObjects[1][0].getMaxTemp());
+  console.log(weatherObjects[1][0].getDominatingWeathericon());
+  console.log(weatherObjects[1][0].getWeekDay());
+  console.log(weatherObjects[1][0].date);
 });
 /*
 function testGeocoding(cityName) {

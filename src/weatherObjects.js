@@ -1,7 +1,3 @@
-export { createCurrentWeather };
-export { createHourObject };
-export { createDayObject };
-
 function createCurrentWeather(
   date,
   lon,
@@ -13,10 +9,10 @@ function createCurrentWeather(
   weathercon
 ) {
   function getMonthAndDayDate(languageTag) {
-    return new Date(null, date.getMonth(), date.getDate()).toLocalDateString(
-      `${languageTag}`,
-      { month: "long" }
-    );
+    return date.toLocaleDateString(`${languageTag}`, {
+      month: "long",
+      day: "2-digit",
+    });
   }
 
   async function getCityNameAndCountryCode() {
@@ -40,7 +36,7 @@ function createCurrentWeather(
     return `${date.getHours()}:${date.getMinutes()}`;
   }
 
-  function getWeekday() {
+  function getWeekDay() {
     const week = [
       "Sunday",
       "Monday",
@@ -63,13 +59,12 @@ function createCurrentWeather(
     getCityNameAndCountryCode,
     getMonthAndDayDate,
     getCurrentTime,
-    getWeekday,
+    getWeekDay,
     getIconName,
   };
 }
 
 function createHourObject(hourData) {
-  // console.log(hourData)
   const date = new Date(hourData.dt * 1000);
   const time = `${date.getHours()}:${date.getMinutes()}0`;
   const temperature = hourData.main.temp;
@@ -89,14 +84,29 @@ function createHourObject(hourData) {
 }
 
 function createDayObject(data) {
-  const {date} = data[0]
+  const { date } = data[0];
+
+  function getMonthAndDayDate(languageTag) {
+    return date.toLocaleDateString(`${languageTag}`, {
+      month: "long",
+      day: "2-digit",
+    });
+  }
 
   function getMinTemp() {
-    return data.reduce((accum, current) => (accum < current ? accum : current));
+    return data.reduce((accum, current) =>
+      accum.temperature < current.temperature
+        ? accum.temperature
+        : current.temperature
+    );
   }
 
   function getMaxTemp() {
-    return data.reduce((accum, current) => (accum > current ? accum : current));
+    return data.reduce((accum, current) =>
+      accum.temperature > current.temperature
+        ? accum.temperature
+        : current.temperature
+    );
   }
 
   function getDominatingWeathericon() {
@@ -107,12 +117,12 @@ function createDayObject(data) {
     const clear = data.filter((element) => element.weathercon === "Clear");
     const clouds = data.filter((element) => element.weathercon === "Clouds");
     const sortedWeather = [thunder, drizzle, rain, snow, clear, clouds].sort(
-      (a, b) => b - a
+      (a, b) => b.length - a.length
     );
-    return sortedWeather[0].weathercon;
+    return sortedWeather[0][0].weathercon;
   }
 
-  function getWeekday() {
+  function getWeekDay() {
     const week = [
       "Sunday",
       "Monday",
@@ -128,9 +138,12 @@ function createDayObject(data) {
   return {
     date,
     data,
+    getMonthAndDayDate,
     getMinTemp,
     getMaxTemp,
     getDominatingWeathericon,
-    getWeekday,
+    getWeekDay,
   };
 }
+
+export { createCurrentWeather, createHourObject, createDayObject };
