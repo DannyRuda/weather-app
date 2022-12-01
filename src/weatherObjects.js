@@ -100,23 +100,21 @@ function createDayObject(data) {
   }
 
   function getMinTemp() {
-    return data.reduce(
+    const coldestHour = data.reduce(
       (accum, current) =>
-        accum.temperature < current.temperature
-          ? accum.temperature
-          : current.temperature,
+        accum.temperature < current.temperature ? accum : current,
       data[0]
     );
+    return coldestHour.temperature;
   }
 
   function getMaxTemp() {
-    return data.reduce(
+    const hottestHour = data.reduce(
       (accum, current) =>
-        accum.temperature > current.temperature
-          ? accum.temperature
-          : current.temperature,
+        accum.temperature > current.temperature ? accum : current,
       data[0]
     );
+    return hottestHour.temperature;
   }
 
   function getDominatingWeathericon() {

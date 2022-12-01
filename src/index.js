@@ -73,7 +73,10 @@ new Promise((resolve, reject) => {
   })
   .catch((err) => {
     throw err;
-  });
+  }).then(()=>{
+    console.log(currentWeather);
+    console.log(daysForecast);
+  })
 
 /*
 function testGeocoding(cityName) {
