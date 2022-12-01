@@ -5,11 +5,19 @@ import {
   getFiveDayForecast,
 } from "./weatherAPI";
 
+let city = "";
+let country = "";
+let currentWeather = {};
+let daysForecast = {};
+
+
+
 writeWeatherintoObjects(
   getCurrentWeather("duisburg", "DE"),
   getFiveDayForecast("duisburg", "DE")
 ).then((weatherObjects) => {
   console.log(weatherObjects);
+  // tests object creation and object methods
   weatherObjects[0].getCityNameAndCountryCode().then((cityandcountry)=>console.log(cityandcountry));
   console.log(weatherObjects[0].getMonthAndDayDate("DE"));
   console.log(weatherObjects[0].getCurrentTime());
@@ -20,6 +28,8 @@ writeWeatherintoObjects(
   console.log(weatherObjects[1][0].getDominatingWeathericon());
   console.log(weatherObjects[1][0].getWeekDay());
   console.log(weatherObjects[1][0].date);
+  // eslint-disable-next-line prefer-destructuring
+  [currentWeather,daysForecast] = weatherObjects;
 });
 /*
 function testGeocoding(cityName) {
