@@ -32,8 +32,13 @@ function createCurrentWeather(
     });
   }
 
+  // if minute is one digit, a 0 gets added to the minute to show a 2 digit minute count
   function getCurrentTime() {
-    return `${date.getHours()}:${date.getMinutes()}`;
+    return `${date.getHours()}:${
+      date.getMinutes().toString().length < 2
+        ? `${date.getMinutes()}0`
+        : date.getMinutes()
+    }`;
   }
 
   function getWeekDay() {
@@ -52,6 +57,7 @@ function createCurrentWeather(
   function getIconName() {}
 
   return {
+    date,
     temperature,
     precipitation,
     humidity,
@@ -94,18 +100,22 @@ function createDayObject(data) {
   }
 
   function getMinTemp() {
-    return data.reduce((accum, current) =>
-      accum.temperature < current.temperature
-        ? accum.temperature
-        : current.temperature
+    return data.reduce(
+      (accum, current) =>
+        accum.temperature < current.temperature
+          ? accum.temperature
+          : current.temperature,
+      data[0]
     );
   }
 
   function getMaxTemp() {
-    return data.reduce((accum, current) =>
-      accum.temperature > current.temperature
-        ? accum.temperature
-        : current.temperature
+    return data.reduce(
+      (accum, current) =>
+        accum.temperature > current.temperature
+          ? accum.temperature
+          : current.temperature,
+      data[0]
     );
   }
 
