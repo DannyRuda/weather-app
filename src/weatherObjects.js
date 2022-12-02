@@ -1,3 +1,14 @@
+import Clear from "./media/clear.mp4";
+import Clouds from "./media/cloudy.mp4";
+import Rain from "./media/rain.mp4";
+import Drizzle from "./media/drizzle.mp4";
+import Snow from "./media/snow.mp4";
+import ClearIcon from "./media/clearIcon.svg";
+import CloudsIcon from "./media/cloudyIcon.svg";
+import RainIcon from "./media/rainIcon.svg";
+import DrizzleIcon from "./media/drizzleIcon.svg";
+import SnowIcon from "./media/snowIcon.svg";
+
 function createCurrentWeather(
   date,
   lon,
@@ -54,7 +65,53 @@ function createCurrentWeather(
     return week[date.getDay()];
   }
 
-  function getIconName() {}
+  function getIconLink() {
+    let videoLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        videoLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        videoLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        videoLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        videoLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
+  function getBackgroundLink() {
+    let videoLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
 
   return {
     date,
@@ -66,7 +123,8 @@ function createCurrentWeather(
     getMonthAndDayDate,
     getCurrentTime,
     getWeekDay,
-    getIconName,
+    getIconLink,
+    getBackgroundLink,
   };
 }
 
@@ -78,6 +136,55 @@ function createHourObject(hourData) {
   const { humidity } = hourData.main;
   const windspeed = hourData.wind.speed;
   const weathercon = hourData.weather[0].main;
+
+  function getIconLink() {
+    let videoLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        videoLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        videoLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        videoLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        videoLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
+  function getBackgroundLink() {
+    let videoLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
   return {
     date,
     time,
@@ -86,6 +193,8 @@ function createHourObject(hourData) {
     humidity,
     windspeed,
     weathercon,
+    getIconLink,
+    getBackgroundLink,
   };
 }
 
@@ -130,6 +239,56 @@ function createDayObject(data) {
     return sortedWeather[0][0].weathercon;
   }
 
+  function getIconLink() {
+    let iconLink = "";
+    const weathercon = this.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        iconLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        iconLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        iconLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        iconLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        iconLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return iconLink;
+  }
+
+  function getBackgroundLink() {
+    let videoLink = "";
+    const weathercon = this.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
   function getWeekDay() {
     const week = [
       "Sunday",
@@ -151,6 +310,8 @@ function createDayObject(data) {
     getMaxTemp,
     getDominatingWeathericon,
     getWeekDay,
+    getIconLink,
+    getBackgroundLink,
   };
 }
 
