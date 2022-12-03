@@ -9,6 +9,84 @@ import RainIcon from "./media/rainIcon.svg";
 import DrizzleIcon from "./media/drizzleIcon.svg";
 import SnowIcon from "./media/snowIcon.svg";
 
+const mediaLinks = (state) => ({
+  getBackgroundLink() {
+    let videoLink = "";
+    const weathercon = state.weathercon
+      ? state.weathercon
+      : state.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  },
+
+  getIconLink() {
+    let iconLink = "";
+    const weathercon = state.weathercon
+      ? state.weathercon
+      : state.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        iconLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        iconLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        iconLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        iconLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        iconLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return iconLink;
+  },
+});
+
+const dateData = (state) => ({
+  getWeekDay() {
+    const week = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return week[state.date.getDay()];
+  },
+
+  getMonthAndDayDate(languageTag) {
+    return state.date.toLocaleDateString(`${languageTag}`, {
+      month: "long",
+      day: "2-digit",
+    });
+  },
+});
+
 function createCurrentWeather(
   date,
   lon,
@@ -19,13 +97,6 @@ function createCurrentWeather(
   windspeed,
   weathercon
 ) {
-  function getMonthAndDayDate(languageTag) {
-    return date.toLocaleDateString(`${languageTag}`, {
-      month: "long",
-      day: "2-digit",
-    });
-  }
-
   async function getCityNameAndCountryCode() {
     return new Promise((resolve, reject) => {
       fetch(
@@ -52,79 +123,36 @@ function createCurrentWeather(
     }`;
   }
 
-  function getWeekDay() {
-    const week = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    return week[date.getDay()];
-  }
-
-  function getIconLink() {
-    let videoLink = "";
-    switch (weathercon) {
-      case "Clouds":
-        videoLink = `${CloudsIcon}`;
-        break;
-      case "Clear":
-        videoLink = `${ClearIcon}`;
-        break;
-      case "Snow":
-        videoLink = `${SnowIcon}`;
-        break;
-      case "Rain":
-        videoLink = `${RainIcon}`;
-        break;
-      case "Drizzle":
-        videoLink = `${DrizzleIcon}`;
-        break;
-      default:
-        alert("no weathercon set yet");
-    }
-    return videoLink;
-  }
-
-  function getBackgroundLink() {
-    let videoLink = "";
-    switch (weathercon) {
-      case "Clouds":
-        videoLink = `${Clouds}`;
-        break;
-      case "Clear":
-        videoLink = `${Clear}`;
-        break;
-      case "Snow":
-        videoLink = `${Snow}`;
-        break;
-      case "Rain":
-        videoLink = `${Rain}`;
-        break;
-      case "Drizzle":
-        videoLink = `${Drizzle}`;
-        break;
-      default:
-        alert("no weathercon set yet");
-    }
-    return videoLink;
-  }
-
+  // Assigns the methods from mediaLinks and dataData to the returned object via spread operator
   return {
     date,
     temperature,
     precipitation,
     humidity,
     windspeed,
+    weathercon,
     getCityNameAndCountryCode,
-    getMonthAndDayDate,
     getCurrentTime,
-    getWeekDay,
-    getIconLink,
-    getBackgroundLink,
+    ...mediaLinks({
+      date,
+      temperature,
+      precipitation,
+      humidity,
+      windspeed,
+      weathercon,
+      getCityNameAndCountryCode,
+      getCurrentTime,
+    }),
+    ...dateData({
+      date,
+      temperature,
+      precipitation,
+      humidity,
+      windspeed,
+      weathercon,
+      getCityNameAndCountryCode,
+      getCurrentTime,
+    }),
   };
 }
 
@@ -137,54 +165,6 @@ function createHourObject(hourData) {
   const windspeed = hourData.wind.speed;
   const weathercon = hourData.weather[0].main;
 
-  function getIconLink() {
-    let videoLink = "";
-    switch (weathercon) {
-      case "Clouds":
-        videoLink = `${CloudsIcon}`;
-        break;
-      case "Clear":
-        videoLink = `${ClearIcon}`;
-        break;
-      case "Snow":
-        videoLink = `${SnowIcon}`;
-        break;
-      case "Rain":
-        videoLink = `${RainIcon}`;
-        break;
-      case "Drizzle":
-        videoLink = `${DrizzleIcon}`;
-        break;
-      default:
-        alert("no weathercon set yet");
-    }
-    return videoLink;
-  }
-
-  function getBackgroundLink() {
-    let videoLink = "";
-    switch (weathercon) {
-      case "Clouds":
-        videoLink = `${Clouds}`;
-        break;
-      case "Clear":
-        videoLink = `${Clear}`;
-        break;
-      case "Snow":
-        videoLink = `${Snow}`;
-        break;
-      case "Rain":
-        videoLink = `${Rain}`;
-        break;
-      case "Drizzle":
-        videoLink = `${Drizzle}`;
-        break;
-      default:
-        alert("no weathercon set yet");
-    }
-    return videoLink;
-  }
-
   return {
     date,
     time,
@@ -193,20 +173,20 @@ function createHourObject(hourData) {
     humidity,
     windspeed,
     weathercon,
-    getIconLink,
-    getBackgroundLink,
+    ...mediaLinks({
+      date,
+      time,
+      temperature,
+      precipitation,
+      humidity,
+      windspeed,
+      weathercon,
+    }),
   };
 }
 
 function createDayObject(data) {
   const { date } = data[0];
-
-  function getMonthAndDayDate(languageTag) {
-    return date.toLocaleDateString(`${languageTag}`, {
-      month: "long",
-      day: "2-digit",
-    });
-  }
 
   function getMinTemp() {
     const coldestHour = data.reduce(
@@ -239,79 +219,26 @@ function createDayObject(data) {
     return sortedWeather[0][0].weathercon;
   }
 
-  function getIconLink() {
-    let iconLink = "";
-    const weathercon = this.getDominatingWeathericon();
-    switch (weathercon) {
-      case "Clouds":
-        iconLink = `${CloudsIcon}`;
-        break;
-      case "Clear":
-        iconLink = `${ClearIcon}`;
-        break;
-      case "Snow":
-        iconLink = `${SnowIcon}`;
-        break;
-      case "Rain":
-        iconLink = `${RainIcon}`;
-        break;
-      case "Drizzle":
-        iconLink = `${DrizzleIcon}`;
-        break;
-      default:
-        alert("no weathercon set yet");
-    }
-    return iconLink;
-  }
-
-  function getBackgroundLink() {
-    let videoLink = "";
-    const weathercon = this.getDominatingWeathericon();
-    switch (weathercon) {
-      case "Clouds":
-        videoLink = `${Clouds}`;
-        break;
-      case "Clear":
-        videoLink = `${Clear}`;
-        break;
-      case "Snow":
-        videoLink = `${Snow}`;
-        break;
-      case "Rain":
-        videoLink = `${Rain}`;
-        break;
-      case "Drizzle":
-        videoLink = `${Drizzle}`;
-        break;
-      default:
-        alert("no weathercon set yet");
-    }
-    return videoLink;
-  }
-
-  function getWeekDay() {
-    const week = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-    ];
-    return week[date.getDay()];
-  }
-
   return {
     date,
     data,
-    getMonthAndDayDate,
     getMinTemp,
     getMaxTemp,
     getDominatingWeathericon,
-    getWeekDay,
-    getIconLink,
-    getBackgroundLink,
+    ...dateData({
+      date,
+      data,
+      getMinTemp,
+      getMaxTemp,
+      getDominatingWeathericon,
+    }),
+    ...mediaLinks({
+      date,
+      data,
+      getMinTemp,
+      getMaxTemp,
+      getDominatingWeathericon,
+    }),
   };
 }
 
