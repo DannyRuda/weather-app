@@ -2,13 +2,27 @@
 import { writeWeatherintoObjects } from "./helperFunctions";
 
 import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
-import "./style.css"
+import "./style.css";
 
 let city = "";
 let cityCoords = [];
 let country = "";
 let currentWeather = {};
 let daysForecast = {};
+
+writeWeatherintoObjects(
+  getCurrentWeather("sidney", "AU"),
+  getFiveDayForecast("sidney", "AU")
+)
+  .then((weatherObjects) => {
+    [currentWeather, daysForecast] = weatherObjects;
+  })
+  .then(() => {
+    document.body.innerHTML = `<video class ="video" autoplay muted loop id="myVideo">
+    <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
+    </video><div class="overlay"><div class="currentW"><img class="icon" src="${currentWeather.getIconLink()}"></div></div>
+    `;
+  });
 
 new Promise((resolve, reject) => {
   if (navigator.geolocation) {
@@ -60,11 +74,12 @@ new Promise((resolve, reject) => {
   })
   .catch((err) => {
     throw err;
-  }).then(()=>{
+  })
+  .then(() => {
     document.body.innerHTML = `<video class ="video" autoplay muted loop id="myVideo">
 <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
 </video><div class="overlay"><div class="currentW"><img class="icon" src="${currentWeather.getIconLink()}"></div></div>
 `;
     console.log(currentWeather);
     console.log(daysForecast);
-  })
+  });
