@@ -63,7 +63,7 @@ new Promise((resolve, reject) => {
   }).then(()=>{
     document.body.innerHTML = `<video class ="video" autoplay muted loop id="myVideo">
 <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
-</video><div class="overlay"><div class="currentW"></div></div>
+</video><div class="overlay"><div class="currentW"><img src="${currentWeather.getIconLink()}"></div></div>
 `;
     console.log(currentWeather);
     console.log(daysForecast);
