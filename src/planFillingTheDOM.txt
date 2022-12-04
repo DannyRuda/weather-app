@@ -28,20 +28,23 @@ on pageload body.innerHTML = html code als string
     - load Current Time
         dom Element = currentWeather.getCurrentTime();
 
-    - create number of hour elements of the current day. First day in daysForecast 
-      already contains currentweather as an hourData in the data array 
+    - create hour elements of the current day and give them ascending data-index-day 
+      and data-index-hour attribute. First day in daysForecast already contains currentweather 
+      as an hourData in the data array 
         - all elements :
             loop over data array of the first object in the daysForecast
-            for(let i = 0; i < daysForecast([0].data.length; i += 1) {
+            daysForecast[0].data.forEach((hour,i)=>{
                 domTIme = daysForecast[0].data[i].time;
                 domIcon = daysForecast[0].data[i].getIconLink();
                 domTemp = daysForecast[0].data[i].temperature;
-            } 
+                data-index-hour = i:
+                data-index-day = 0;
+            })
 
 
-    - create day Cards, number representing the length of daysForecast
+    - create day Cards, also give them data-index attribute ascending
         - next day cards : 
-            for (let i = 0; i < daysForecast.length;i += 1) {
+            daysForecast.forEach((day,i)=>{
                 domWeekday = daysForecast[i].getWeekDay()!==currentWeather.getWeekDay() ? 
                              daysForecast[i].getWeekDay() : 
                              "today";
@@ -49,6 +52,36 @@ on pageload body.innerHTML = html code als string
                 domIcon = daysForecast[i].getIconLink();
                 domMinTemp = daysForecast[i].getMinTemp();
                 domMaxTemp = daysForecast[i].getMaxTemp();
-            }
+                data-index-day = i;
+            })
 
+- click on hour Symbol, change values for dom elements in the current weather section
+  depending on the data-index attribute of the clicked element
+    - icon = daysForecast[data-index-day].data[data-index-hour].getIconLink()
+    - Temperatur = daysForecast[data-index-day].data[data-index-hour].temperature
+    - precipitation = daysForecast[data-index-day].data[data-index-hour].precipitation
+    - humidity = daysForecast[data-index-day].data[data-index-hour].humidity
+    - windspeed = daysForecast[data-index-day].data[data-index-hour].windspeed
+    - Time = daysForecast[data-index-day].data[data-index-hour].time
+
+- click on Day Card, change currentweather to first hour object in data array with
+  index of the data-index-day attribute of the clicked day card
+  and change/create hour sections with new data-index-hour and data-index-day
+    - currentweather
+        - icon = daysForecast[data-index-day].data[0].getIconLink()
+        - Temperatur = daysForecast[data-index-day].data[0].temperature
+        - precipitation = daysForecast[data-index-day].data[0].precipitation
+        - humidity = daysForecast[data-index-day].data[0].humidity
+        - windspeed = daysForecast[data-index-day].data[0].windspeed
+        - Day and Month Date = daysForecast[data-index-day].getMonthAndDayDate("DE")
+        - Time = daysForecast[data-index-day].data[0].time
+    
+    - hour section
+        daysForecast[data-index-day].data.forEach((hour,i)=>{
+            domTime = hour.time;
+            domIcon = hour.getIconLink();
+            domTemp = hour.temperature;
+            data-index-hour = i;
+            data-index-day = data-index-day;
+        })
 
