@@ -42,7 +42,9 @@ on pageload body.innerHTML = html code als string
     - create day Cards, number representing the length of daysForecast
         - next day cards : 
             for (let i = 0; i < daysForecast.length;i += 1) {
-                domWeekday = daysForecast[i].getWeekDay();
+                domWeekday = daysForecast[i].getWeekDay()!==currentWeather.getWeekDay() ? 
+                             daysForecast[i].getWeekDay() : 
+                             "today";
                 domMonthandData = daysForecast[i].getMonthAndDayDate();
                 domIcon = daysForecast[i].getIconLink();
                 domMinTemp = daysForecast[i].getMinTemp();

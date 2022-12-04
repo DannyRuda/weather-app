@@ -1,7 +1,16 @@
 /* eslint-disable prefer-promise-reject-errors */
-import { writeWeatherintoObjects } from "./helperFunctions";
+import {
+  writeWeatherintoObjects,
+  kelvinToFahrenheit,
+  kelvinToCelsius,
+  fahrenheitToCelsius,
+  celsiusToFahrenheit,
+} from "./helperFunctions";
 
 import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
+
+import { testPageLoadData } from "./testing";
+
 import "./style.css";
 
 let city = "";
@@ -55,22 +64,9 @@ new Promise((resolve, reject) => {
     )
   )
   .then((weatherObjects) => {
-    console.log(weatherObjects);
-    // tests object creation and object methods
-    weatherObjects[0]
-      .getCityNameAndCountryCode()
-      .then((cityandcountry) => console.log(cityandcountry));
-    console.log(weatherObjects[0].getMonthAndDayDate("DE"));
-    console.log(weatherObjects[0].getCurrentTime());
-    console.log(weatherObjects[0].getWeekDay());
-    console.log(weatherObjects[1][0].getMonthAndDayDate("DE"));
-    console.log(weatherObjects[1][0].getMinTemp());
-    console.log(weatherObjects[1][0].getMaxTemp());
-    console.log(weatherObjects[1][0].getDominatingWeathericon());
-    console.log(weatherObjects[1][0].getWeekDay());
-    console.log(weatherObjects[1][0].date);
     // eslint-disable-next-line prefer-destructuring
     [currentWeather, daysForecast] = weatherObjects;
+    testPageLoadData(currentWeather,daysForecast,kelvinToCelsius,kelvinToFahrenheit);
   })
   .catch((err) => {
     throw err;
@@ -80,6 +76,4 @@ new Promise((resolve, reject) => {
 <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
 </video><div class="overlay"><div class="currentW"><img class="icon" src="${currentWeather.getIconLink()}"></div></div>
 `;
-    console.log(currentWeather);
-    console.log(daysForecast);
   });
