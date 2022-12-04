@@ -37,10 +37,41 @@ function splitIntoDays(forecastData) {
   return dayDataArrays;
 }
 
+function addCurrentWeatherToForecast(currentWeather, daysForecast) {
+  if(currentWeather.getWeekDay() === daysForecast[0].getWeekDay) {
+    const currentHour = {
+      date: currentWeather.date,
+      time: currentWeather.getCurrentTime(),
+      temperature: currentWeather.temperature,
+      precipitation: currentWeather.precipitation,
+      humidity: currentWeather.humidity,
+      windspeed: currentWeather.windspeed,
+      weathercon: currentWeather.weathercon,
+      getIconLink: currentWeather.getIconLink,
+      getBackgroundLink: currentWeather.getBackgroundLink
+    }
+    daysForecast[0].data.splice(0,0,currentHour);
+  } else {
+      const currentHour = {
+      date: currentWeather.date,
+      time: currentWeather.getCurrentTime(),
+      temperature: currentWeather.temperature,
+      precipitation: currentWeather.precipitation,
+      humidity: currentWeather.humidity,
+      windspeed: currentWeather.windspeed,
+      weathercon: currentWeather.weathercon,
+      getIconLink: currentWeather.getIconLink,
+      getBackgroundLink: currentWeather.getBackgroundLink
+    };
+    const today = createDayObject([currentHour]);
+    daysForecast.splice(0,0,today);
+  }
+}
+
 async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
   return new Promise((resolve, reject) => {
     Promise.all([currentWeatherPromise, forecastPromise]).then((values) => {
-      const dayWeatherObjects = [];
+      const daysForecast = [];
       const currentData = values[0];
       const forecast = values[1];
       const weatherDataDays = splitIntoDays(values[1]);
@@ -56,9 +87,10 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
       );
       for (let i = 0; i < weatherDataDays.length; i += 1) {
         const dayData = weatherDataDays[i];
-        dayWeatherObjects[i] = createDayObject(dayData);
+        daysForecast[i] = createDayObject(dayData);
       }
-      resolve([currentWeather, dayWeatherObjects]);
+      addCurrentWeatherToForecast(currentWeather,daysForecast);
+      resolve([currentWeather, daysForecast]);
     });
   });
 }

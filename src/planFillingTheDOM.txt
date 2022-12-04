@@ -28,40 +28,25 @@ on pageload body.innerHTML = html code als string
     - load Current Time
         dom Element = currentWeather.getCurrentTime();
 
-    - create number of hour elements depending on how many hour data the day similar
-      to the current day has left + the current weather if 
-      currentWeather.getCurrentTime !== dayObjects[0].data[0].time
-        - first element :
-            domTime = currentWeather.getCurrentTime();
-            domIcon = currentWeather.getIconLink();
-            domTemp = currentWeather.temperature;
-
-        - next Elements if currentWeather.getWeekDay() === dayObjects[0].getWeekDay(): 
-            loop over first data array of the first object in the days array
-            for(let i = 0; i < dayObjects([0].data.length; i += 1) {
-                domTIme = dayObjects[0].data[i].time;
-                domIcon = dayObjects[0].data[i].getIconLink();
-                domTemp = dayObjects[0].data[i].temperature;
+    - create number of hour elements of the current day. First day in daysForecast 
+      already contains currentweather as an hourData in the data array 
+        - all elements :
+            loop over data array of the first object in the daysForecast
+            for(let i = 0; i < daysForecast([0].data.length; i += 1) {
+                domTIme = daysForecast[0].data[i].time;
+                domIcon = daysForecast[0].data[i].getIconLink();
+                domTemp = daysForecast[0].data[i].temperature;
             } 
 
-            else if currentWeather.getWeekDay() !== dayObjects[0].getWeekDay()
-                no new elements
 
-    - create day Cards, number representing the length of dayObjects array plus one
-      if currentWeather.getWeekDay() !== dayObjects[0].getWeekDay()
-        - first day Card :
-            domWeekday = "Today";
-            domMonthandData = currentWeather.getMonthAndDayDate();
-            domIcon = currentWeather.getIconLink();
-            domTempScale = currentWeather.temperature;
-        
+    - create day Cards, number representing the length of daysForecast
         - next day cards : 
-            for (let i = 0; i < dayObjects.length;i += 1) {
-                domWeekday = dayObjects[i].getWeekDay();
-                domMonthandData = dayObjects[i].getMonthAndDayDate();
-                domIcon = dayObjects[i].getIconLink();
-                domMinTemp = dayObjects[i].getMinTemp();
-                domMaxTemp = dayObjects[i].getMaxTemp();
+            for (let i = 0; i < daysForecast.length;i += 1) {
+                domWeekday = daysForecast[i].getWeekDay();
+                domMonthandData = daysForecast[i].getMonthAndDayDate();
+                domIcon = daysForecast[i].getIconLink();
+                domMinTemp = daysForecast[i].getMinTemp();
+                domMaxTemp = daysForecast[i].getMaxTemp();
             }
 
-        
+

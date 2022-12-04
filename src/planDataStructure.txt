@@ -387,6 +387,37 @@ function createDayObject(data) {
     return {date,data,getMinTemp,getMaxTemp,getDominatingWeathericon,getWeekday}
 }
 
+function addCurrentWeatherToForecast(currentWeather, daysForecast) {
+  if(currentWeather.getWeekDay() === daysForecast[0].getWeekDay) {
+    const currentHour = {
+      date: currentWeather.date,
+      time: currentWeather.getCurrentTime(),
+      temperature: currentWeather.temperature,
+      precipitation: currentWeather.precipitation,
+      humidity: currentWeather.humidity,
+      windspeed: currentWeather.windspeed,
+      weathercon: currentWeather.weathercon,
+      getIconLink: currentWeather.getIconLink,
+      getBackgroundLink: currentWeather.getBackgroundLink
+    }
+    daysForecast[0].data.splice(0,0,currentHour);
+  } else {
+      const currentHour = {
+      date: currentWeather.date,
+      time: currentWeather.getCurrentTime(),
+      temperature: currentWeather.temperature,
+      precipitation: currentWeather.precipitation,
+      humidity: currentWeather.humidity,
+      windspeed: currentWeather.windspeed,
+      weathercon: currentWeather.weathercon,
+      getIconLink: currentWeather.getIconLink,
+      getBackgroundLink: currentWeather.getBackgroundLink
+    };
+    const today = createDayObject([currentHour]);
+    daysForecast.splice(0,0,today);
+  }
+}
+
 async function writeWeatherintoObjects() {
     return new Promise((resolve,reject)=>{
         Promise.all(promise current weather,promise forecast)
@@ -409,6 +440,7 @@ async function writeWeatherintoObjects() {
                 const dayData = weatherDataDays[i];
                 dayWeatherObjects[i] = createDayObject(dayData);
             }
+            addCurrentWeatherToForecast(currentWeather,dayWeatherObjects)
             resolve([currentWeather,dayWeatherObjects]);
         })
     })
