@@ -96,19 +96,19 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
 }
 
 function kelvinToFahrenheit(temp) {
-  return (temp - 273.15) * 1.8 + 32.0;
+  return Math.round((temp - 273.15) * 1.8 + 32.0);
 }
 
 function kelvinToCelsius(temp) {
-  return temp - 273.15;
+  return Math.round(temp - 273.15);
 }
 
 function fahrenheitToCelsius(temp) {
-  return (temp - 32) / 1.8;
+  return Math.round((temp - 32) / 1.8);
 }
 
 function celsiusToFahrenheit(temp) {
-  return temp * 1.8 + 32;
+  return Math.round(temp * 1.8 + 32)
 }
 export {
   numberToWord,
