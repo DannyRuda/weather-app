@@ -38,7 +38,7 @@ function splitIntoDays(forecastData) {
 }
 
 function addCurrentWeatherToForecast(currentWeather, daysForecast) {
-  if(currentWeather.getWeekDay() === daysForecast[0].getWeekDay) {
+  if(currentWeather.getWeekDay() === daysForecast[0].getWeekDay()) {
     const currentHour = {
       date: currentWeather.date,
       time: currentWeather.getCurrentTime(),
