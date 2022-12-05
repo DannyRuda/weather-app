@@ -11,6 +11,8 @@ import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
 
 import { testPageLoadData } from "./testing";
 
+import { pageLoad } from "./domCreation";
+
 import "./style.css";
 
 let city = "";
@@ -77,15 +79,5 @@ new Promise((resolve, reject) => {
     throw err;
   })
   .then(() => {
-    document.body.innerHTML = `<video class ="video" autoplay muted loop id="myVideo">
-<source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
-</video><div class="overlay"><div class="currentW"><img class="icon" src="${currentWeather.getIconLink()}"></div></div>
-`;
-    console.log(document.querySelector("source").src);
-    if (
-      document.querySelector("source").src ===
-      currentWeather.getBackgroundLink()
-    ) {
-      console.log(currentWeather.getBackgroundLink());
-    }
+    pageLoad(currentWeather,daysForecast);
   });

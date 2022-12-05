@@ -20,10 +20,10 @@
     height: 90%;
     border-radius: 30px;
     backdrop-filter: blur(100px);
-    
+    overflow: scroll;
 }
 
-.currentW {
+div.currentW {
     width: 85%;
     height: 70%;
     background-color: white;
@@ -33,7 +33,9 @@
     left:50%;
     transform: translate(-50%, -30%) scale(1);
     filter: drop-shadow(0 1px 1px black);
+    overflow:scroll;
 }
+
 .icon {
     width: 100px;
 }
