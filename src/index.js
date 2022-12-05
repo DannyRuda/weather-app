@@ -66,7 +66,12 @@ new Promise((resolve, reject) => {
   .then((weatherObjects) => {
     // eslint-disable-next-line prefer-destructuring
     [currentWeather, daysForecast] = weatherObjects;
-    testPageLoadData(currentWeather,daysForecast,kelvinToCelsius,kelvinToFahrenheit);
+    testPageLoadData(
+      currentWeather,
+      daysForecast,
+      kelvinToCelsius,
+      kelvinToFahrenheit
+    );
   })
   .catch((err) => {
     throw err;
@@ -76,4 +81,11 @@ new Promise((resolve, reject) => {
 <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
 </video><div class="overlay"><div class="currentW"><img class="icon" src="${currentWeather.getIconLink()}"></div></div>
 `;
+    console.log(document.querySelector("source").src);
+    if (
+      document.querySelector("source").src ===
+      currentWeather.getBackgroundLink()
+    ) {
+      console.log(currentWeather.getBackgroundLink());
+    }
   });

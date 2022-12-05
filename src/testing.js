@@ -1,6 +1,7 @@
 function testPageLoadData(currentWeather, daysForecast, kelvinToCelsius,kelvinToFahrenheit) {
   console.log("CURRENT WEATHER CARD!!!!!!!!!!!!!!");
   console.log("Icon: ", currentWeather.getIconLink());
+  console.log("Background: ", currentWeather.getBackgroundLink());
   console.log(
     "temperature in °C: ",
     kelvinToCelsius(currentWeather.temperature)
