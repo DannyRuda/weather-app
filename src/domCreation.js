@@ -55,7 +55,7 @@ function pageLoad(currentWeather, daysForecast) {
     </video>
     <div class="overlay">
         <div class="currentW">
-            <p class="currentW" id="date">${currentWeather.getMonthAndDayDate(
+            <p class="currentW" id="date">${currentWeather.getWeekDay()}, ${currentWeather.getMonthAndDayDate(
               "DE"
             )}</p>
             <p class="currentW" id="city">${cityAndCountry}</p>

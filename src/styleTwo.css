@@ -1,0 +1,169 @@
+.video {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: 100%;
+
+}
+
+.overlay {
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(1);
+    max-height: 100vh;
+    z-index: 4;
+    width: 80%;
+    height: 90%;
+    border-radius: 30px;
+    backdrop-filter: blur(100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+p {
+    font-family: poppins;
+    font-size: 24px;
+    margin: 10px 0;
+}
+
+header {
+    display:flex;
+}
+
+.logo {
+    display:inline-flex;
+    font-weight: 600;
+}
+
+input {
+    display:inline-block;
+}
+
+.socials {
+    display:inline-flex;
+}
+
+
+.detailed {
+    width: 85%;
+    height: 70%;
+    background-color: white;
+    border-radius: 30px;
+    filter: drop-shadow(0 1px 1px black);
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.selectedWeather {
+    display:flex;
+}
+
+.weatherData {
+    text-align: start;
+}
+
+.iconAndTemp {
+    display:flex;
+}
+
+.iconAndTemp .temp {
+    font-size: 30px;
+}
+
+.text {
+    display: inline-block;
+}
+
+.variables {
+    display: inline-block;
+}
+
+.metaData {
+    text-align: end;
+}
+
+.metaData .date {
+    font-size: 28px;
+}
+
+.time {
+    display:flex;
+    justify-content: end;
+}
+
+.hourSection {
+    display:flex;
+    flex-wrap: nowrap;
+    overflow-y: scroll;
+
+}
+
+ /* Hide scrollbar for Chrome, Safari and Opera */
+ .hourSection::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .hourSection {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  } 
+
+  .hourData {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .daySection {
+    display:flex;
+  }
+
+  .dayData {
+    padding:10px;
+    background-color: white;
+    filter: drop-shadow(0 1px 1px black);
+    border-radius: 30px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .metaAndIcon {
+    display:flex;
+  }
+
+  .meta {
+    text-align: start;
+  }
+
+  .weekday {
+    font-size: 28px;
+  }
+
+  .tempScale {
+    display:flex;
+    align-items: center;
+  }
+
+  .spacer {
+    font-size: 50px;
+  }
+
+  .backArrow {
+    width: 0px;
+    height: 0px;
+    border-right: 30px solid white;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+  }
+
+  .forwardArrow {
+    width: 0px;
+    height: 0px;
+    border-left: 30px solid right;
+  }
