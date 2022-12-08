@@ -62,6 +62,33 @@ const mediaLinks = (state) => ({
     }
     return iconLink;
   },
+
+  getBackgroundGradient() {
+    let BackgroundGradient = "";
+    const weathercon = state.weathercon
+      ? state.weathercon
+      : state.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        BackgroundGradient = "rgba(161, 164, 165, 1)0%, rgba(161, 164, 165, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        break;
+      case "Clear":
+        BackgroundGradient = "rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%";
+        break;
+      case "Snow":
+        BackgroundGradient = "rgba(226, 232, 237, 1)0%, rgba(226, 232, 237, 1) 20%,rgba(117, 116, 113, 1) 100%";
+        break;
+      case "Rain":
+        BackgroundGradient = "rgba(74, 90, 72, 1)0%, rgba(74, 90, 72, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        break;
+      case "Drizzle":
+        BackgroundGradient = "rgba(74, 90, 72, 1)0%, rgba(74, 90, 72, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return BackgroundGradient;
+  },
 });
 
 const dateData = (state) => ({
