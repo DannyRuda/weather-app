@@ -1,7 +1,6 @@
 import Clear from "./media/clear.mp4";
 import Clouds from "./media/cloudy.mp4";
 import Rain from "./media/rain.mp4";
-import Drizzle from "./media/drizzle.mp4";
 import Snow from "./media/snow.mp4";
 import ClearIcon from "./media/clearIcon.svg";
 import CloudsIcon from "./media/cloudyIcon.svg";
@@ -29,7 +28,7 @@ const mediaLinks = (state) => ({
         videoLink = `${Rain}`;
         break;
       case "Drizzle":
-        videoLink = `${Drizzle}`;
+        videoLink = `${Rain}`;
         break;
       default:
         alert("no weathercon set yet");
