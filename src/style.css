@@ -2,7 +2,8 @@
 
     font-family: 'Poppins';
   
-    src: url("./media/Poppins-Regular.ttf") format('truetype');
+    src: url("./media/Poppins-Regular.ttf") format('truetype'), 
+    url("./media/Poppins-SemiBold.ttf") format("truetype");
   
     font-weight: 400;
   

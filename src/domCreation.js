@@ -34,13 +34,19 @@ function createDayElements(currentWeather, daysForecast) {
                         <img src="${day.getIconLink()}" width="80" height="80"/>
                       </div>
                       <div class="tempScale">
-                        <p class="temp celsius">${kelvinToCelsius(
-                          day.getMinTemp()
-                        )}°C</p>
-                        <p class="spacer">-</p>
-                        <p class="temp celsius">${kelvinToCelsius(
-                          day.getMaxTemp()
-                        )}°C</p>
+                      ${
+                        day.data.length > 1
+                          ? `<p class="temp celsius">${kelvinToCelsius(
+                              day.getMinTemp()
+                            )}°C</p>
+                      <p class="spacer">-</p>
+                      <p class="temp celsius">${kelvinToCelsius(
+                        day.getMaxTemp()
+                      )}°C</p>`
+                          : `<p class="temp celsius">${kelvinToCelsius(
+                              day.data[0].temperature
+                            )}°C</p>`
+                      }
                       </div>
                     </div>`;
   });
