@@ -68,7 +68,7 @@ function pageLoad(currentWeather, daysForecast) {
     <video class ="video" autoplay muted loop id="myVideo">
         <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
     </video>
-    <div class="overlay">
+    <div class="overlay" style="background: linear-gradient(${currentWeather.getBackgroundGradient()});">
       <header>
         <div class="logo">
             <img src="${ClearIcon}" width="50" height="50">
