@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet"> 
+    <link href="reset.css" rel="stylesheet">
+    <link href="styleTwo.css" rel="stylesheet">
+
+    <title>TEst</title>
+</head>
+<body>
+    <video class ="video" autoplay muted loop id="myVideo">
+        <source src="./media/clear.mp4" type="video/mp4">
+    </video>
+    <div class="overlay">
+        <header>
+            <div class="logo">
+                <img src="./media/clearIcon.svg" width="50" height="50">
+                <p class="siteName">Weather App</p>
+            </div>
+            <input class="search" lang="DE" type="search" placeholder="Stadt, Landcode(DE)"/>
+            <input type="range" min="0" max="1" value="1" class="units"/>
+            <div class="socials">
+                <p class="myName">By DannyRuda</p>
+                <img src="./media/githubIcon.svg" width="30" height="30"/>
+                <img src="./media/linkedinIcon.svg" width="30" height="30"/>
+            </div>
+        </header>
+        <div class="detailed">
+            <div class="selectedWeather">
+                <div class="weatherData">
+                    <div class="iconAndTemp">
+                        <img src="./media/clearIcon.svg" width="85" height="75" class="icon selected"/>
+                        <p class="temp celsius">16°C</p>
+                    </div>
+                    <div class="text">
+                        <p lang="DE">Niederschlag:</p>
+                        <p lang="DE">Luftfeuchte:</p>
+                        <p lang="DE">Windgeschw:</p>
+                    </div>
+                    <div class="variables">
+                        <p class="pop">13%</p>
+                        <p class="humid">65%</p>
+                        <p class="wind metric">3 km/h</p>
+                    </div>
+                </div>
+                <div class="metaData">
+                    <p class="date">Monday, March 29</p>
+                    <p class="city country">Duisburg, DE</p>
+                    <div class="time">
+                        <img src="./media/clockIcon.svg" width="30" height="30"/>
+                        <p class="time">12:32</p>
+                    </div>
+                </div>
+            </div>
+            <div class="hourSection">
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+                <div class="hourData">
+                    <p class="time">01:00</p>
+                    <img src="./media/drizzleIcon.svg" width="70" height="70"/>
+                    <p class="temp celsius">16°C</p>
+                </div>
+            </div>
+            
+        </div>
+        <div class="daySlider">
+            <div class="backArrow">
+
+            </div>
+            <div class="daySection">
+                <div class="dayData">
+                    <div class="metaAndIcon">
+                        <div class="meta">
+                            <p class="weekday">Thuesday</p>
+                            <p class="date">06.Dezember</p>
+                        </div>
+                        <img src="./media/drizzleIcon.svg" width="80" height="80"/>
+                    </div>
+                    <div class="tempScale">
+                        <p class="temp celsius">18°C</p>
+                        <p class="spacer">-</p>
+                        <p class="temp celsius">25°C</p>
+                    </div>
+                </div>
+                <div class="dayData">
+                    <div class="metaAndIcon">
+                        <div class="meta">
+                            <p class="weekday">Thuesday</p>
+                            <p class="date">06.Dezember</p>
+                        </div>
+                        <img src="./media/drizzleIcon.svg" width="80" height="80"/>
+                    </div>
+                    <div class="tempScale">
+                        <p class="temp celsius">18°C</p>
+                        <p class="spacer">-</p>
+                        <p class="temp celsius">25°C</p>
+                    </div>
+                </div>
+                <div class="dayData">
+                    <div class="metaAndIcon">
+                        <div class="meta">
+                            <p class="weekday">Thuesday</p>
+                            <p class="date">06.Dezember</p>
+                        </div>
+                        <img src="./media/drizzleIcon.svg" width="80" height="80"/>
+                    </div>
+                    <div class="tempScale">
+                        <p class="temp celsius">18°C</p>
+                        <p class="spacer">-</p>
+                        <p class="temp celsius">25°C</p>
+                    </div>
+                </div>
+                <div class="dayData">
+                    <div class="metaAndIcon">
+                        <div class="meta">
+                            <p class="weekday">Thuesday</p>
+                            <p class="date">06.Dezember</p>
+                        </div>
+                        <img src="./media/drizzleIcon.svg" width="80" height="80"/>
+                    </div>
+                    <div class="tempScale">
+                        <p class="temp celsius">18°C</p>
+                        <p class="spacer">-</p>
+                        <p class="temp celsius">25°C</p>
+                    </div>
+                </div>
+                <div class="dayData">
+                    <div class="metaAndIcon">
+                        <div class="meta">
+                            <p class="weekday">Thuesday</p>
+                            <p class="date">06.Dezember</p>
+                        </div>
+                        <img src="./media/drizzleIcon.svg" width="80" height="80"/>
+                    </div>
+                    <div class="tempScale">
+                        <p class="temp celsius">18°C</p>
+                        <p class="spacer">-</p>
+                        <p class="temp celsius">25°C</p>
+                    </div>
+                </div>
+            </div>
+            <div class="forwardArrow">
+
+            </div>
+        </div>
+        
+    </div>
+</body>
+</html>
