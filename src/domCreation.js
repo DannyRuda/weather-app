@@ -1,12 +1,16 @@
 import { kelvinToCelsius } from "./helperFunctions";
+import ClearIcon from "./media/clearIcon.svg"
+import GithubIcon from "./media/githubIcon.svg"
+import LinkedinIcon from "./media/linkedinIcon.svg"
+import ClockIcon from "./media/clockIcon.svg"
 
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
   day.data.forEach((hour, i) => {
-    htmlString += `<div class="hour" data-index-hour="${i}" data-index-day="${dayIndex}">
-                            <p id="time">${hour.time}</p>
-                            <img class="icon" src="${hour.getIconLink()}">
-                            <p id="temp">${kelvinToCelsius(
+    htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
+                            <p class="time">${hour.time}</p>
+                            <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
+                            <p class="temp celsius">${kelvinToCelsius(
                               hour.temperature
                             )}°C</p>
                         </div>`;
@@ -17,22 +21,19 @@ function createHourElements(day, dayIndex) {
 function createDayElements(currentWeather, daysForecast) {
   let htmlString = ``;
   daysForecast.forEach((day, i) => {
-    htmlString += `<div class="day" data-index-day="${i}">
-                        <p id="weekday">${
-                          day.getWeekDay() !== currentWeather.getWeekDay()
-                            ? day.getWeekDay()
-                            : "today"
-                        }</p>
-                        <img class="icon" src="${day.getIconLink()}">
-                        <p>${
-                          day.data.length > 1
-                            ? `<span id="minTemp">${kelvinToCelsius(
-                                day.getMinTemp()
-                              )}</span>°C - <span id="maxTemp">${kelvinToCelsius(
-                                day.getMaxTemp()
-                              )}</span>°C`
-                            : kelvinToCelsius(day.data[0].temperature)
-                        }</p>
+    htmlString += `<div class="dayData" data-index-day="${i}">
+                      <div class="metaAndIcon">
+                        <div class="meta">
+                            <p class="weekday">${day.getWeekDay()}</p>
+                            <p class="date">${day.getMonthAndDayDate("DE")}</p>
+                        </div>
+                        <img src="${day.getIconLink()}" width="80" height="80"/>
+                      </div>
+                      <div class="tempScale">
+                        <p class="temp celsius">${kelvinToCelsius(day.getMinTemp())}°C</p>
+                        <p class="spacer">-</p>
+                        <p class="temp celsius">${kelvinToCelsius(day.getMaxTemp())}°C</p>
+                      </div>
                     </div>`;
   });
   return htmlString;
@@ -54,32 +55,62 @@ function pageLoad(currentWeather, daysForecast) {
         <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
     </video>
     <div class="overlay">
-        <div class="currentW">
-            <p class="currentW" id="date">${currentWeather.getWeekDay()}, ${currentWeather.getMonthAndDayDate(
-              "DE"
-            )}</p>
-            <p class="currentW" id="city">${cityAndCountry}</p>
-            <p class="currentW" id="time">${currentWeather.getCurrentTime()}</p>
-            <img class="icon" src="${currentWeather.getIconLink()}">
-            <p class="currentW" id="temp">${kelvinToCelsius(
-              currentWeather.temperature
-            )}°C</p>
-            <p class="currentW">Niederschlag: <span id="pop">${
-              currentWeather.precipitation * 100
-            }</span>% </p>
-            <p class="currentW">Luftfeuchte: <span id="humid">${
-              currentWeather.humidity
-            }</span>% </p>
-            <p class="currentW">Windgeschw: <span id="wind">${
-              currentWeather.windspeed
-            }</span>km/h </p>
-            <div class="hourSection">
-            ${hoursHtml}
+      <header>
+        <div class="logo">
+            <img src="${ClearIcon}" width="50" height="50">
+            <p class="siteName">Weather App</p>
+        </div>
+        <input class="search" lang="DE" type="search" placeholder="Stadt, Landcode(DE)"/>
+        <input type="range" min="0" max="1" value="1" class="units"/>
+        <div class="socials">
+            <p class="myName">By DannyRuda</p>
+            <img src="${GithubIcon}" width="30" height="30"/>
+            <img src="${LinkedinIcon}" width="30" height="30"/>
+        </div>
+      </header>
+      <div class="detailed">
+        <div class="selectedWeather">
+          <div class="weatherData">
+            <div class="iconAndTemp">
+                <img src="${currentWeather.getIconLink()}" width="85" height="75" class="icon selected"/>
+                <p class="temp celsius">${kelvinToCelsius(currentWeather.temperature)}°C</p>
             </div>
+            <div class="text">
+                <p lang="DE">Niederschlag:</p>
+                <p lang="DE">Luftfeuchte:</p>
+                <p lang="DE">Windgeschw:</p>
+            </div>
+            <div class="variables">
+                <p class="pop">${currentWeather.precipitation}%</p>
+                <p class="humid">${currentWeather.humidity}%</p>
+                <p class="wind metric">${currentWeather.windspeed} km/h</p>
+            </div>
+          </div>
+          <div class="metaData">
+            <p class="date">${currentWeather.getWeekDay()}, ${currentWeather.getMonthAndDayDate("DE")}</p>
+            <p class="city country">${cityAndCountry}</p>
+            <div class="time">
+                <img src="${ClockIcon}" width="30" height="30"/>
+                <p class="time">${currentWeather.getCurrentTime()}</p>
+            </div>
+          </div>
+      </div>
+      <div class="hourSection">
+        ${hoursHtml}
+      </div>
+    
+    </div>
+      <div class="daySlider">
+        <div class="backArrow">
+
         </div>
         <div class="daySection">
-            ${daysHtml}
+          ${daysHtml}
         </div>
+      <div class="forwardArrow">
+
+    </div>
+</div>
     </div>`;
   });
 }

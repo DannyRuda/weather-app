@@ -13,6 +13,7 @@ import { testPageLoadData } from "./testing";
 
 import { pageLoad } from "./domCreation";
 
+import "./reset.css";
 import "./style.css";
 
 let city = "";
