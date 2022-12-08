@@ -14,10 +14,11 @@
     transform: translate(-50%, -50%) scale(1);
     max-height: 100vh;
     z-index: 4;
-    width: 80%;
-    height: 90%;
+    width: 66%;
+    height: 88%;
     border-radius: 30px;
-    backdrop-filter: blur(100px);
+    background: linear-gradient(rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%);
+    /*background: linear-gradient(rgba(169, 204, 237, 1)0%, rgba(169, 204, 237, 1) 25%,rgba(213, 214, 163, 1) 100%);*/
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -31,47 +32,85 @@ p {
 
 header {
     display:flex;
+    margin: 31px 0px;
+    width:90%;
+    justify-content: space-between;
 }
 
 .logo {
     display:inline-flex;
     font-weight: 600;
+    gap:21px;
+}
+
+.siteName {
+  font-size: 32px;
 }
 
 input {
     display:inline-block;
 }
 
+.search {
+  border-radius:23px;
+  width: 335px;
+  height:52px;
+}
+
 .socials {
     display:inline-flex;
+    align-items: center;
+    font-weight: 600;
+    gap:10px;
 }
 
 
 .detailed {
-    width: 85%;
-    height: 70%;
+    width: 81.6%;
+    height: 55%;
     background-color: white;
     border-radius: 30px;
     filter: drop-shadow(0 1px 1px black);
     display:flex;
     flex-direction: column;
     align-items: center;
+    margin-bottom:38px;
+    margin-top: 10px;
 }
 
 .selectedWeather {
     display:flex;
+    width: 84%;
+    justify-content: space-between;
+    margin:20px 0px;
 }
 
 .weatherData {
     text-align: start;
+    font-size: 20px;
+}
+
+.text p,.variables p {
+  font-size: 20px;
+}
+
+.text {
+  margin-right: 16px;
+}
+
+.weatherData .temp {
+  font-size: 36px;
 }
 
 .iconAndTemp {
     display:flex;
+    align-items: center;
 }
 
-.iconAndTemp .temp {
+.iconAndTemp p {
     font-size: 30px;
+    margin-left: 16px;
+    font-weight: 600;
 }
 
 .text {
@@ -88,30 +127,36 @@ input {
 
 .metaData .date {
     font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.city {
+  font-size: 20px;
+  margin-bottom: 5px
 }
 
 .time {
     display:flex;
     justify-content: end;
+    align-items: center;
+    font-size: 20px;
 }
 
 .hourSection {
     display:flex;
     flex-wrap: nowrap;
     overflow-y: scroll;
-
+    width: 84%;
+    gap: 50px;
+    margin-top:60px;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }
 
  /* Hide scrollbar for Chrome, Safari and Opera */
  .hourSection::-webkit-scrollbar {
     display: none;
   }
-  
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .hourSection {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  } 
 
   .hourData {
     display: flex;
@@ -119,9 +164,27 @@ input {
     align-items: center;
   }
 
+  .daySlider {
+    display:flex;
+    align-items: center;
+    width: 90%;
+    gap:20px;
+  }
+
   .daySection {
     display:flex;
+    width: 91%;
+    gap: 32px;
+    overflow-y: scroll;
+
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
   }
+
+   /* Hide scrollbar for Chrome, Safari and Opera */
+.daySection::-webkit-scrollbar {
+  display: none;
+}
 
   .dayData {
     padding:10px;
@@ -129,12 +192,18 @@ input {
     filter: drop-shadow(0 1px 1px black);
     border-radius: 30px;
     display:flex;
+    flex-shrink: 0;
     flex-direction: column;
     align-items: center;
+    height:150px;
+    width: 300px;
   }
 
   .metaAndIcon {
     display:flex;
+    width: 100%;
+    justify-content: space-around;
+    margin-top: 10px;
   }
 
   .meta {
@@ -143,15 +212,23 @@ input {
 
   .weekday {
     font-size: 28px;
+    margin-top: 5px;
+  }
+
+  .meta .date {
+    font-size: 18px;
   }
 
   .tempScale {
     display:flex;
     align-items: center;
+    width: 60%;
+
+    justify-content: space-around;
   }
 
   .spacer {
-    font-size: 50px;
+    font-size: 35px;
   }
 
   .backArrow {
@@ -165,5 +242,7 @@ input {
   .forwardArrow {
     width: 0px;
     height: 0px;
-    border-left: 30px solid right;
+    border-left: 30px solid white;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
   }
