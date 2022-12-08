@@ -1,8 +1,8 @@
 import { kelvinToCelsius } from "./helperFunctions";
-import ClearIcon from "./media/clearIcon.svg"
-import GithubIcon from "./media/githubIcon.svg"
-import LinkedinIcon from "./media/linkedinIcon.svg"
-import ClockIcon from "./media/clockIcon.svg"
+import ClearIcon from "./media/clearIcon.svg";
+import GithubIcon from "./media/githubIcon.svg";
+import LinkedinIcon from "./media/linkedinIcon.svg";
+import ClockIcon from "./media/clockIcon.svg";
 
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
@@ -24,15 +24,23 @@ function createDayElements(currentWeather, daysForecast) {
     htmlString += `<div class="dayData" data-index-day="${i}">
                       <div class="metaAndIcon">
                         <div class="meta">
-                            <p class="weekday">${day.getWeekDay()}</p>
+                            <p class="weekday">${
+                              day.getWeekDay() !== currentWeather.getWeekDay()
+                                ? day.getWeekDay()
+                                : "today"
+                            }</p>
                             <p class="date">${day.getMonthAndDayDate("DE")}</p>
                         </div>
                         <img src="${day.getIconLink()}" width="80" height="80"/>
                       </div>
                       <div class="tempScale">
-                        <p class="temp celsius">${kelvinToCelsius(day.getMinTemp())}°C</p>
+                        <p class="temp celsius">${kelvinToCelsius(
+                          day.getMinTemp()
+                        )}°C</p>
                         <p class="spacer">-</p>
-                        <p class="temp celsius">${kelvinToCelsius(day.getMaxTemp())}°C</p>
+                        <p class="temp celsius">${kelvinToCelsius(
+                          day.getMaxTemp()
+                        )}°C</p>
                       </div>
                     </div>`;
   });
@@ -73,7 +81,9 @@ function pageLoad(currentWeather, daysForecast) {
           <div class="weatherData">
             <div class="iconAndTemp">
                 <img src="${currentWeather.getIconLink()}" width="85" height="75" class="icon selected"/>
-                <p class="temp celsius">${kelvinToCelsius(currentWeather.temperature)}°C</p>
+                <p class="temp celsius">${kelvinToCelsius(
+                  currentWeather.temperature
+                )}°C</p>
             </div>
             <div class="text">
                 <p lang="DE">Niederschlag:</p>
@@ -87,7 +97,9 @@ function pageLoad(currentWeather, daysForecast) {
             </div>
           </div>
           <div class="metaData">
-            <p class="date">${currentWeather.getWeekDay()}, ${currentWeather.getMonthAndDayDate("DE")}</p>
+            <p class="date">${currentWeather.getWeekDay()}, ${currentWeather.getMonthAndDayDate(
+      "DE"
+    )}</p>
             <p class="city country">${cityAndCountry}</p>
             <div class="time">
                 <img src="${ClockIcon}" width="30" height="30"/>
