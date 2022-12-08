@@ -21,7 +21,7 @@ function createHourElements(day, dayIndex) {
 function createDayElements(currentWeather, daysForecast) {
   let htmlString = ``;
   daysForecast.forEach((day, i) => {
-    htmlString += `<div class="dayData" data-index-day="${i}">
+    htmlString += `<div class="dayData" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
                       <div class="metaAndIcon">
                         <div class="meta">
                             <p class="weekday">${
@@ -82,7 +82,7 @@ function pageLoad(currentWeather, daysForecast) {
             <img src="${LinkedinIcon}" width="30" height="30"/>
         </div>
       </header>
-      <div class="detailed">
+      <div class="detailed" style="background-color: ${currentWeather.getBackgroundColor()};">
         <div class="selectedWeather">
           <div class="weatherData">
             <div class="iconAndTemp">

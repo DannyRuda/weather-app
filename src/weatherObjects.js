@@ -89,6 +89,33 @@ const mediaLinks = (state) => ({
     }
     return BackgroundGradient;
   },
+
+  getBackgroundColor() {
+    let BackgroundColor = "";
+    const weathercon = state.weathercon
+      ? state.weathercon
+      : state.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        BackgroundColor = "rgba(225, 225, 225, 1)";
+        break;
+      case "Clear":
+        BackgroundColor = "rgba(253, 252, 242, 1)";
+        break;
+      case "Snow":
+        BackgroundColor = "rgba(241, 241, 241, 1)";
+        break;
+      case "Rain":
+        BackgroundColor = "rgba(233, 241, 233, 1)";
+        break;
+      case "Drizzle":
+        BackgroundColor = "rgba(233, 241, 233, 1)";
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return BackgroundColor;
+  },
 });
 
 const dateData = (state) => ({
