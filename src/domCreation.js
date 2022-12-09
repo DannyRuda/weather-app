@@ -27,7 +27,7 @@ function createDayElements(currentWeather, daysForecast) {
                             <p class="weekday">${
                               day.getWeekDay() !== currentWeather.getWeekDay()
                                 ? day.getWeekDay()
-                                : "today"
+                                : "Today"
                             }</p>
                             <p class="date">${day.getMonthAndDayDate("DE")}</p>
                         </div>
