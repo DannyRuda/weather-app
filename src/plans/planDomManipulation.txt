@@ -19,7 +19,7 @@ function updateSelectedWeather
         get wind element
         set icon src to getIconLink of the clicked hour or the first hour of the clicked day
         set temp innerText to kelvinToCelsius(clickedHour.temperature)°C or kelvinToFahrenheit(clickedHour.temperature)°F
-        set pop number 
+        set pop number to 
 
 function updateDetailedSection
     updateSelectedWeather()
@@ -41,5 +41,7 @@ function updateHourSection(event) {
 }
 
 function updateSelectedWeather(event) {
-
+    const icon = document.querySelector(".iconAndTemp .icon");
+    const temp = document.querySelector(".iconAndTemp .temp");
+    
 }
