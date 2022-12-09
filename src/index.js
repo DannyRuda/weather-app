@@ -30,10 +30,7 @@ writeWeatherintoObjects(
     [currentWeather, daysForecast] = weatherObjects;
   })
   .then(() => {
-    document.body.innerHTML = `<video class ="video" autoplay muted loop id="myVideo">
-    <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
-    </video><div class="overlay"><div class="currentW"><img class="icon" src="${currentWeather.getIconLink()}"></div></div>
-    `;
+    pageLoad(currentWeather,daysForecast);
   });
 
 new Promise((resolve, reject) => {
