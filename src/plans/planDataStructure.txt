@@ -1,0 +1,796 @@
+Für das Projekt relevante Daten, die die api senden kann:
+
+    current weather:
+        - weather.main: thunderstorm, drizzle, rain, snow, clear, clouds
+        - weather.desciption: more precise description of weather main
+        - main.temp: temperatur in kelvin by default, settable to celsius and fahrenheit
+        - main.humidity: Luftfeuchtigkeit
+        - wind.speed: windgeschwindigkeit in m/s 
+        - clouds.all: cloudiness in percent
+        - dt: unix time UTC 
+        - name: city name 
+        - coord.lon: longitude
+        - coord.lat: latitude
+
+    5 day 3 hour forecast:
+        - list: Array mit objects als items wobei ein object die wetterdaten zu einer Stunde enthält. Fängt vermutlich bei 00:00 UTC des aktuellen tages an und dann im 3 stunden tackt
+          each list item contains:
+            - dt: unix timestamp in UTC timezone
+            - main.temp: Temperatur in kelvin, alternativ celsius oder fahrenheit mit settings
+            - main.humidity: Luftfeuchtigkeit
+            - weather[0].main: thunderstorm, drizzle, rain, snow, clear, clouds
+            - weather.desciption: more precise desciption of weather main
+            - clouds.all: cloudiness in %
+            - wind.speed: windgeschwindigkeit in m/s
+            - pop: niederschlagswahrscheinlichkeit
+        - city.name: city name
+        - city.country: country code like DE 
+        - city.coord.lat: latitude
+        - city.coord.lon: longitude
+
+
+Daten, die in den bereichen der app gebraucht werden
+
+    current weather card
+        detailed information:
+            - Temperatur current weather
+            - niederschlagswahrscheinlichkeit der selected hour oder wenn 
+              current weather, dann der closest hour   
+            - Luftfeuchtigkeit current weather
+            - windgeschwindigkeit current weather
+            - wettericon current weather
+            - Tag 
+            - Datum (Monat Tagesnummer)
+            - Stadtname
+            - Country code
+            - Uhrzeit 
+        
+        short overview each 3 hours
+            - Uhrzeit (03:00 )
+            - wettericon
+            - Temperatur (Temperatur der Stunde)
+
+    day weather cards
+        - lowest temperature of the day
+        - highest temperature of the day
+        - Day
+        - Date (month, tagesnummer)
+        - wettericon 
+
+
+Datenstruktur Variante 1
+- ein object für jeden zweck
+
+        object detailedSelectedWeather {
+            temperature: 
+            precipitation:
+            humidity:
+            windspeed:
+            weathericon:
+            day:
+            Date:
+            Time:
+            city:
+            country:
+        }
+
+        object hourlyOverview {
+            Time:
+            weathericon:
+            temperature:
+        }
+
+        object dailyWeather {
+            minTemperature:
+            maxTemperature:
+            day:
+            Date:
+            weathericon
+        }
+
+        detailedSelectedWeather und hourlyOverview ändern Daten abhängig 
+        vom ausgewählten Tag und der ausgewählten Stunde. 
+        --> entweder bei jedem klick auf stunde oder tag daten neu fetchen oder
+            Daten zwischenspeichern in seperaten objects/variablen
+        
+            let currentweather = fetch(weather) response
+            let forecastWeather = fetch(forecast) response
+
+        oder
+
+            object currentWeatherData {
+                temperature: 
+                precipitation:
+                humidity:
+                windspeed:
+                weathericon:
+                day:
+                Date:
+                Time:
+                city:
+                country:
+            }
+
+            object forecastData {
+                city:
+                country:
+                hours: [
+                    {
+                        day:
+                        date:
+                        time:
+                        temperature:
+                        humidity:
+                        weathericon:
+                        windspeed:
+                        precipitation:
+                    },
+                    {
+                        day:
+                        date:
+                        time:
+                        temperature:
+                        humidity:
+                        weathericon:
+                        windspeed:
+                        precipitation:
+                    }
+                ]
+            }
+
+
+        function write currentWeatherData data in detailedSelectedWeather and
+        then write detailedSelectedWeather in dom elements
+
+        function write 
+
+        man merkt schon, viel zu kompliziert 
+
+
+
+Datenstruktur Variante 2
+    Ein object für current daten und je ein object für einen tag des forecasts jeweils
+    mit methoden, die entsprechende werte für die dom elemente liefern
+
+        object currentWeatherData {
+            date: new Date(unix*1000)
+            lon:
+            lat:
+            temperature: 
+            precipitation:
+            humidity:
+            windspeed:
+            weathercon:
+
+            function getMonthAndDayDate(languageTag) {
+                return new Date(null,this.date.getMonth(),this.date.getDate()).toLocalDateString(`${languageTag}`, {month:'long'})
+            }
+
+            async function getCityNameAndCountryCode() {
+                return fetch(api url with lon and lat)
+            }
+
+            function getCurrentTime() {
+                return `${this.date.getHours()}:${this.date.getMinutes()}`
+            }
+
+            function getWeekday() {
+                const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                return week[this.date.getDay()];
+            }
+
+            function getIconName() {
+
+            }
+        }
+
+        object dayOne {
+            date: new Date(unix*1000)
+            data: [
+                {
+                    time:
+                    temperature:
+                    precipitation:
+                    humidity:
+                    windspeed:
+                    weathercon:   
+                },
+                {
+                    time:
+                    temperature:
+                    precipitation:
+                    humidity:
+                    windspeed:
+                    weathercon: 
+                },
+                ...
+            ]
+
+            function getMonthAndDayDate(languageTag) {
+                return new Date(null,this.date.getMonth(),this.date.getDate()).toLocalDateString(`${languageTag}`, {month:'long'})
+            }
+
+            function getMinTemp() {
+                return data.reduce((accum,current)=> accum < current ? accum : current);
+            }
+
+            function getMaxTemp() {
+                return data.reduce((accum,current)=> accum > current ? accum : current);
+            }
+
+            function getDominatingWeathericon() {
+                let thunder = data.filter((element)=>element.weathercon === 'Thunder');
+                let drizzle = data.filter((element)=>element.weathercon === 'Drizzle');
+                let rain = data.filter((element)=>element.weathercon === 'Rain');
+                let snow = data.filter((element)=>element.weathercon === 'Snow');
+                let clear = data.filter((element)=>element.weathercon === 'Clear');
+                let clouds = data.filter((element)=>element.weathercon === 'Clouds');
+                let sortedWeather = [thunder,drizzle,rain,snow,clear,clouds].sort((a,b)=>b-a);
+                return sortedWeather[0].weathercon
+            }
+
+            function getWeekday() {
+                const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                return week[this.date.getDay()];
+            }
+        }
+
+        object daytwo {
+            date: new Date(unix*1000)
+            data: [
+                {
+                    time:
+                    temperature:
+                    precipitation:
+                    humidity:
+                    windspeed:
+                    weatherIconName:   
+                },
+                {
+                    time:
+                    temperature:
+                    precipitation:
+                    humidity:
+                    windspeed:
+                    weatherIconName: 
+                },
+                ...
+            ]
+
+            function getMinTemp() {
+                return data.reduce((accum,current)=> accum < current ? accum : current);
+            }
+
+            function getMaxTemp() {
+                return data.reduce((accum,current)=> accum > current ? accum : current);
+            }
+
+            function getDominatingWeathericon() {
+                let thunder = data.filter((element)=>element.weathercon === 'Thunder');
+                let drizzle = data.filter((element)=>element.weathercon === 'Drizzle');
+                let rain = data.filter((element)=>element.weathercon === 'Rain');
+                let snow = data.filter((element)=>element.weathercon === 'Snow');
+                let clear = data.filter((element)=>element.weathercon === 'Clear');
+                let clouds = data.filter((element)=>element.weathercon === 'Clouds');
+                let sortedWeather = [thunder,drizzle,rain,snow,clear,clouds].sort((a,b)=>b-a);
+                return sortedWeather[0].weathercon
+            }
+
+            function getWeekday() {
+                const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                return week[date.getDay()];
+            }
+        }
+
+
+Funktionen um daten aus api response in die objects zu verstauen
+
+function createCurrentWeather(date,lon,lat,temperature,precipitation,humidity,windspeed,weathercon) {
+    
+    function getMonthAndDayDate(languageTag) {
+        return new Date(null,date.getMonth(),date.getDate()).toLocalDateString(`${languageTag}`, {month:'long'})
+    } 
+
+    async function getCityNameAndCountryCode() {
+        return fetch(api url with lon and lat)
+    }
+
+    function getCurrentTime() {
+        return `${date.getHours()}:${date.getMinutes()}`
+    }
+
+    function getWeekday() {
+        const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return week[date.getDay()];
+    }
+
+    function getIconName() {
+
+    }
+
+    return {temperature,precipitation,humidity,windspeed,getCityNameAndCountryCode,getMonthAndDayDate,getCurrentTime,getWeekday,getIconName}
+}
+
+
+function PH1 return an array where each item is an array of hourly weather data for one day
+    returns array[ dayone[ {hour1},{hour4},{hour10}... ] , daytwo[ {hour1}...]... ]
+
+        function splitIntoDays(forecastData) {
+            const hourlyDataObjects = [];
+            const dayDataArrays = [];
+            for (let hourData of forecastData.list) {
+                hourlyDataObjects.push(createHourObject(hourData))
+            }
+            if (hourlyDataObjects[0].date.getHours() > 2) {
+                for (let j = 0; j < 6 ; j += 1) {
+                    const startingDayDate = hourlyDataObjects[0].date.getDate(); 
+                    const dayData = hourlyDataObjects.filter((hourData)=>hourData.date.getDate() === hourlyDataObjects[0].date.getDate()))
+                    hourlyDataObjects.splice(0,dayArray.length);
+                    dayDataArrays.push(dayArray);
+                }
+            }
+            else {
+                for (let j = 0; j < 5 ; j += 1) {
+                    const startingDayDate = hourlyDataObjects[0].date.getDate(); 
+                    const dayData = hourlyDataObjects.filter((hourData)=>hourData.date.getDate() === hourlyDataObjects[0].date.getDate()))
+                    hourlyDataObjects.splice(0,dayArray.length);
+                    dayDataArrays.push(dayArray);
+                }
+            }
+            return dayDataArrays;    
+        }
+
+function numberToWord(number) {
+    const numbers = ['one','two','three','four','five','six']
+    return numbers[number]
+}
+
+function createHourObject(hourData) {
+    const date = new Date(hourData.dt*1000);
+    const time = `${date.getHours()}:${date.getMinutes}`;
+    const temperature = hourData.main.temp;
+    const precipitation = hourData.pop;
+    const humidity = hourData.main.humidity;
+    const windspeed = hourData.wind.speed;
+    const weathercon = hourData.weather[0].main;
+    return {date,time,temperature,precipitation,humidity,windspeed,weathercon}    
+}
+
+function createDayObject(data) {
+
+    const date = new Date(data[0].dt*1000);
+
+    function getMinTemp() {
+        return data.reduce((accum,current)=> accum < current ? accum : current);
+    }
+
+    function getMaxTemp() {
+        return data.reduce((accum,current)=> accum > current ? accum : current);
+    }
+
+    function getDominatingWeathericon() {
+        let thunder = data.filter((element)=>element.weathercon === 'Thunder');
+        let drizzle = data.filter((element)=>element.weathercon === 'Drizzle');
+        let rain = data.filter((element)=>element.weathercon === 'Rain');
+        let snow = data.filter((element)=>element.weathercon === 'Snow');
+        let clear = data.filter((element)=>element.weathercon === 'Clear');
+        let clouds = data.filter((element)=>element.weathercon === 'Clouds');
+        let sortedWeather = [thunder,drizzle,rain,snow,clear,clouds].sort((a,b)=>b-a);
+        return sortedWeather[0].weathercon
+    }
+
+    function getWeekday() {
+        const week = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        return week[this.date.getDay()];
+    }
+
+    return {date,data,getMinTemp,getMaxTemp,getDominatingWeathericon,getWeekday}
+}
+
+function addCurrentWeatherToForecast(currentWeather, daysForecast) {
+  if(currentWeather.getWeekDay() === daysForecast[0].getWeekDay) {
+    const currentHour = {
+      date: currentWeather.date,
+      time: currentWeather.getCurrentTime(),
+      temperature: currentWeather.temperature,
+      precipitation: currentWeather.precipitation,
+      humidity: currentWeather.humidity,
+      windspeed: currentWeather.windspeed,
+      weathercon: currentWeather.weathercon,
+      getIconLink: currentWeather.getIconLink,
+      getBackgroundLink: currentWeather.getBackgroundLink
+    }
+    daysForecast[0].data.splice(0,0,currentHour);
+  } else {
+      const currentHour = {
+      date: currentWeather.date,
+      time: currentWeather.getCurrentTime(),
+      temperature: currentWeather.temperature,
+      precipitation: currentWeather.precipitation,
+      humidity: currentWeather.humidity,
+      windspeed: currentWeather.windspeed,
+      weathercon: currentWeather.weathercon,
+      getIconLink: currentWeather.getIconLink,
+      getBackgroundLink: currentWeather.getBackgroundLink
+    };
+    const today = createDayObject([currentHour]);
+    daysForecast.splice(0,0,today);
+  }
+}
+
+async function writeWeatherintoObjects() {
+    return new Promise((resolve,reject)=>{
+        Promise.all(promise current weather,promise forecast)
+        .then((values)=>{
+            const dayWeatherObjects = []
+            const currentData = values[0];
+            const forecast = values[1];
+            const weatherDataDays = splitIntoDays(values[1]);
+            const currentWeather = createCurrentWeather(
+                new Date(currentData.dt*1000),
+                currentData.coord.lon,
+                currentData.coord.lat,
+                currentData.main.temp,
+                forecast.list[0].pop,
+                currentData.main.humidity,
+                currentData.wind.speed,
+                currentData.weather[0].main
+            );
+            for (let i = 0, i < weatherDataDays.length, i += 1) {
+                const dayData = weatherDataDays[i];
+                dayWeatherObjects[i] = createDayObject(dayData);
+            }
+            addCurrentWeatherToForecast(currentWeather,dayWeatherObjects)
+            resolve([currentWeather,dayWeatherObjects]);
+        })
+    })
+}
+
+
+------------------------------Object structure after that: ----------------------------------------------------------------------------
+
+function createCurrentWeather(
+  date,
+  lon,
+  lat,
+  temperature,
+  precipitation,
+  humidity,
+  windspeed,
+  weathercon
+) {
+
+  function getMonthAndDayDate(languageTag) {
+    return date.toLocaleDateString(`${languageTag}`, {
+      month: "long",
+      day: "2-digit",
+    });
+  }
+
+  async function getCityNameAndCountryCode() {
+    
+  }
+
+  // if minute is one digit, a 0 gets added to the minute to show a 2 digit minute count
+  function getCurrentTime() {
+    return `${date.getHours()}:${
+      date.getMinutes().toString().length < 2
+        ? `${date.getMinutes()}0`
+        : date.getMinutes()
+    }`;
+  }
+
+  function getWeekDay() {
+    const week = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return week[date.getDay()];
+  }
+
+  function getIconLink() {
+    let iconLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        iconLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        iconLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        iconLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        iconLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        iconLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return iconLink;
+  }
+
+  function getBackgroundLink() {
+    let videoLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
+  return {
+    date,
+    temperature,
+    precipitation,
+    humidity,
+    windspeed,
+    getCityNameAndCountryCode,
+    getMonthAndDayDate,
+    getCurrentTime,
+    getWeekDay,
+    getIconLink,
+    getBackgroundLink,
+  };
+}
+
+
+
+function createHourObject(hourData) {
+  const date = new Date(hourData.dt * 1000);
+  const time = `${date.getHours()}:${date.getMinutes()}0`;
+  const temperature = hourData.main.temp;
+  const precipitation = hourData.pop;
+  const { humidity } = hourData.main;
+  const windspeed = hourData.wind.speed;
+  const weathercon = hourData.weather[0].main;
+
+  function getIconLink() {
+    let iconLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        iconLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        iconLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        iconLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        iconLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        iconLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return iconLink;
+  }
+
+  function getBackgroundLink() {
+    let videoLink = "";
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
+  return {
+    date,
+    time,
+    temperature,
+    precipitation,
+    humidity,
+    windspeed,
+    weathercon,
+    getIconLink,
+    getBackgroundLink,
+  };
+}
+
+function createDayObject(data) {
+  const { date } = data[0];
+
+  function getMonthAndDayDate(languageTag) {
+    return date.toLocaleDateString(`${languageTag}`, {
+      month: "long",
+      day: "2-digit",
+    });
+  }
+
+  function getMinTemp() {
+    const coldestHour = data.reduce(
+      (accum, current) =>
+        accum.temperature < current.temperature ? accum : current,
+      data[0]
+    );
+    return coldestHour.temperature;
+  }
+
+  function getMaxTemp() {
+    const hottestHour = data.reduce(
+      (accum, current) =>
+        accum.temperature > current.temperature ? accum : current,
+      data[0]
+    );
+    return hottestHour.temperature;
+  }
+
+  function getDominatingWeathericon() {
+    const thunder = data.filter((element) => element.weathercon === "Thunder");
+    const drizzle = data.filter((element) => element.weathercon === "Drizzle");
+    const rain = data.filter((element) => element.weathercon === "Rain");
+    const snow = data.filter((element) => element.weathercon === "Snow");
+    const clear = data.filter((element) => element.weathercon === "Clear");
+    const clouds = data.filter((element) => element.weathercon === "Clouds");
+    const sortedWeather = [thunder, drizzle, rain, snow, clear, clouds].sort(
+      (a, b) => b.length - a.length
+    );
+    return sortedWeather[0][0].weathercon;
+  }
+
+  function getIconLink() {
+    let iconLink = "";
+    const weathercon = this.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        iconLink = `${CloudsIcon}`;
+        break;
+      case "Clear":
+        iconLink = `${ClearIcon}`;
+        break;
+      case "Snow":
+        iconLink = `${SnowIcon}`;
+        break;
+      case "Rain":
+        iconLink = `${RainIcon}`;
+        break;
+      case "Drizzle":
+        iconLink = `${DrizzleIcon}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return iconLink;
+  }
+
+  function getBackgroundLink() {
+    let videoLink = "";
+    const weathercon = this.getDominatingWeathericon();
+    switch (weathercon) {
+      case "Clouds":
+        videoLink = `${Clouds}`;
+        break;
+      case "Clear":
+        videoLink = `${Clear}`;
+        break;
+      case "Snow":
+        videoLink = `${Snow}`;
+        break;
+      case "Rain":
+        videoLink = `${Rain}`;
+        break;
+      case "Drizzle":
+        videoLink = `${Drizzle}`;
+        break;
+      default:
+        alert("no weathercon set yet");
+    }
+    return videoLink;
+  }
+
+  function getWeekDay() {
+    const week = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    return week[date.getDay()];
+  }
+
+  return {
+    date,
+    data,
+    getMonthAndDayDate,
+    getMinTemp,
+    getMaxTemp,
+    getDominatingWeathericon,
+    getWeekDay,
+    getIconLink,
+    getBackgroundLink,
+  };
+}
+
+methods all three objects share:
+- getBackgroundLink()
+- getIconLink()
+
+methods that currentWeather and Dayobject share:
+- getWeekDay()
+- getMonthAndDayDate()
+
+const mediaLinks = {
+    getBackgroundLink() {
+
+    },
+
+    getIconLink() {
+
+    }
+};
+
+const dateData = {
+    getWeekDay() {
+
+    },
+
+    getMonthAndDayDate() {
+
+    }
+};
+
+function factoryDay(imput) {
+    function 1
+    function 2
+    function 3
+
+    return Object.assign({
+        value1,
+        value2,
+        value3,
+    }, 
+    dateData({
+        value1,
+        value2,
+        value3,
+    }),
+    mediaLinks({
+        value1,
+        value2,
+        value3,
+    })
+}

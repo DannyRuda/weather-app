@@ -1,0 +1,60 @@
+Anforderungen:
+
+Beim öffnen der Seite werden: 
+    in der current weather section die current weather daten des aktuellen zeitpunkts entsprechend des standortes des users angezeigt
+        - abrufen des user standortes mit html geolocation api
+        - current weather daten bekommen entsprechend des standortes
+            wetterdaten fetchen
+            daten temperatur, niederschlag, windgeschw, Luftfeuchte, Tag, Datum, Stadt, Country Code, Uhrzeit und wetterstand zwischenspeichern in rawWeatherData object speichern
+
+        - current weather daten displayen
+
+    in der current weather section die einzelnen wetterdaten des tages in 3 stunden tackt angezeigt (temperatur, wettericon, Uhrzeit)
+        - forecast weatherdata von jeder dritten stunde des aktuellen tages bekommen mit dem aktuellen standort des users
+        - forecast weatherdata von jeder dritten stunde displayen
+
+    unter der current weather section die zusammengefassten wetterdaten der kommenden Tage displayed auf jeweils einer card für einen tag
+        - get the following data: Day, Date, dominant weather condition, min temp of the day, max temp of the day 
+        - write data in corresponding html elements
+
+
+Beim anklicken einer der 3stündigen wetterdaten im current weather bereich, werden:  
+    die current weather daten im oberen bereich mit denen der entsprechend angeklickten stunde überschrieben
+    der div, in dem die zusammenfassung der 3 stunden daten im unteren bereich des current weather bereichs angezeigt werden, wird erhöht positioniert
+
+Beim anklicken einer der Tagescards mit den zusammengefassten wetterdaten des tages wird: 
+    die current weather section mit den daten des angeklickten tages aktualisiert wobei die current daten von der mitte des tages genommen werden also 12:00Uhr UTC
+    die angeklickte sektion angehoben
+    der hinteregrund dem aktuell angezeigtem wetterstand angepasst
+    das wettericon dem wetterstand angepasst
+    die farbe des divs der tagescard angepasst
+    die Farbe des divs der current weather area angepasst
+    
+Wenn eine korrekte Stadt mit country code eingegeben wurde und dann enter oder die lupe gedrückt wird: 
+    findet das gleiche wie beim page load mit der eingegebenen stadt statt
+        - die eingegebene stadt in latitude und longitude umwandeln
+        - latitude und longitude in die üblichen weather fetching functions geben.
+
+
+
+
+
+
+
+Sprache ändern und Content auf Seite live übersetzen in die andere Sprache
+    -vielleicht html attribute "lang" nutzen und alle Elemente, die übersetzt werden müssen, in jeder zu 
+     unterstützenden Sprache schreiben und alle elemente mit lang attribute != dem aktiven lang attribute eine class hinzufügen, die die elemente auf display: hidden/none stellen
+
+Ändern der Temperatureinheit zwischen celsius und farenheit
+    -allen temperaturelementen eine class zuweisen und beim switch für alle elemente 
+     if(element.innerText.indexOf('°C')===-1){element.innerText.replace('°C','°F')} else {element.innerText.replace('°F','°C')}
+     ODER
+     alle Temperaturelemente jeweils 2 mal erstellen, einmal mit class celsius und einmal mit class farenheit und dann beim switch eine class mit display hidden hinzufügen/entfernen
+
+    - der switch button ändert seine position und auf dem button ändert sich die einheit auch
+        ...
+    
+    - der switch button ändert die einheit und position on hover und fällt in den normalen zustand zurück wenn man mit der maus wieder weg geht (vielleicht animiert)
+        ...
+
+    - der Zahlenwert bei einer Temperatur wird von der jeweiligen Einheit in die andere Einheit umgewandelt
