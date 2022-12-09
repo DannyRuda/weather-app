@@ -171,7 +171,7 @@ function createCurrentWeather(
   function getCurrentTime() {
     return `${date.getHours()}:${
       date.getMinutes().toString().length < 2
-        ? `${date.getMinutes()}0`
+        ? `0${date.getMinutes()}`
         : date.getMinutes()
     }`;
   }
