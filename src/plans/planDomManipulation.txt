@@ -1,0 +1,45 @@
+function updateHourSection
+    create new Hour Objects and remove the old hour objects 
+        call createHourElements()
+            get the day idex of the clicked day, const dayIndex = event.target.dataset.indexDay;
+            const hoursHtml = createHourElements(daysForecast[dayIndex],dayIndex);
+
+        add hoursHtml to dom element hour daySection
+            document.querySelector(".hourSection").innerHTML = hoursHtml;
+
+    add new event handlers to the new hour objects 
+        loop over hourObjects, for each set hourobject.addEventListener()
+
+function updateSelectedWeather
+    update specific values of the elements with data of the clicked element
+        get icon element
+        get temp element
+        get pop number element
+        get humid element
+        get wind element
+        set icon src to getIconLink of the clicked hour or the first hour of the clicked day
+        set temp innerText to kelvinToCelsius(clickedHour.temperature)°C or kelvinToFahrenheit(clickedHour.temperature)°F
+        set pop number 
+
+function updateDetailedSection
+    updateSelectedWeather()
+    updateHourSection()
+
+
+function addEventListenersToElements(elements,handlerFunction) {
+    for(let element of elements) {
+        element.addEventListener('click',handlerFunction);
+    }
+}
+
+function updateHourSection(event) {
+    const dayIndex = event.target.dataset.indexDay;
+    const hoursHtml = createHourElements(daysForecast[dayIndex],dayIndex);
+    document.querySelector(".hourSection").innerHTML = hoursHtml;
+    const hourElements = document.querySelector(".hourSection").children;
+    addEventListenersToElements(hourElements,updateSelectedWeather)
+}
+
+function updateSelectedWeather(event) {
+
+}
