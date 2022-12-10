@@ -30,6 +30,17 @@ const mediaLinks = (state) => ({
       case "Drizzle":
         videoLink = `${Rain}`;
         break;
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+      case "Tornado":
+        videoLink = `${Clouds}`;
+        break;
       default:
         alert("no weathercon set yet");
     }
@@ -57,6 +68,17 @@ const mediaLinks = (state) => ({
       case "Drizzle":
         iconLink = `${DrizzleIcon}`;
         break;
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+      case "Tornado":
+        iconLink = `${CloudsIcon}`;
+        break;
       default:
         alert("no weathercon set yet");
     }
@@ -70,19 +92,36 @@ const mediaLinks = (state) => ({
       : state.getDominatingWeathericon();
     switch (weathercon) {
       case "Clouds":
-        BackgroundGradient = "rgba(161, 164, 165, 1)0%, rgba(161, 164, 165, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        BackgroundGradient =
+          "rgba(161, 164, 165, 1)0%, rgba(161, 164, 165, 1) 20%, rgba(85, 85, 82, 1) 100%";
         break;
       case "Clear":
-        BackgroundGradient = "rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%";
+        BackgroundGradient =
+          "rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%";
         break;
       case "Snow":
-        BackgroundGradient = "rgba(226, 232, 237, 1)0%, rgba(226, 232, 237, 1) 20%,rgba(117, 116, 113, 1) 100%";
+        BackgroundGradient =
+          "rgba(226, 232, 237, 1)0%, rgba(226, 232, 237, 1) 20%,rgba(117, 116, 113, 1) 100%";
         break;
       case "Rain":
-        BackgroundGradient = "rgba(74, 90, 72, 1)0%, rgba(74, 90, 72, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        BackgroundGradient =
+          "rgba(74, 90, 72, 1)0%, rgba(74, 90, 72, 1) 20%, rgba(85, 85, 82, 1) 100%";
         break;
       case "Drizzle":
-        BackgroundGradient = "rgba(74, 90, 72, 1)0%, rgba(74, 90, 72, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        BackgroundGradient =
+          "rgba(74, 90, 72, 1)0%, rgba(74, 90, 72, 1) 20%, rgba(85, 85, 82, 1) 100%";
+        break;
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+      case "Tornado":
+        BackgroundGradient =
+          "rgba(161, 164, 165, 1)0%, rgba(161, 164, 165, 1) 20%, rgba(85, 85, 82, 1) 100%";
         break;
       default:
         alert("no weathercon set yet");
@@ -110,6 +149,17 @@ const mediaLinks = (state) => ({
         break;
       case "Drizzle":
         BackgroundColor = "rgba(233, 241, 233, 1)";
+        break;
+      case "Mist":
+      case "Smoke":
+      case "Haze":
+      case "Dust":
+      case "Fog":
+      case "Sand":
+      case "Ash":
+      case "Squall":
+      case "Tornado":
+        BackgroundColor = "rgba(225, 225, 225, 1)";
         break;
       default:
         alert("no weathercon set yet");
@@ -210,8 +260,15 @@ function createCurrentWeather(
 }
 
 function createHourObject(hourData) {
-  const date = new Date(hourData.dt * 1000);
-  const time = `${date.getHours()}:${date.getMinutes()}0`;
+  // checks if hourData.dt is already a date object, true when an hourObject gets created out of currentWeather Data
+  const date = !hourData.dt.getMinutes
+    ? new Date(hourData.dt * 1000)
+    : hourData.dt;
+  const time = `${date.getHours()}:${
+    date.getMinutes().toString().length < 2
+      ? `0${date.getMinutes()}`
+      : date.getMinutes()
+  }`;
   const temperature = hourData.main.temp;
   const precipitation = hourData.pop;
   const { humidity } = hourData.main;
