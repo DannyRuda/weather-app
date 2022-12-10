@@ -12,14 +12,21 @@ function updateHourSection
 
 function updateSelectedWeather
     update specific values of the elements with data of the clicked element
+        get background video
+        get overlay
+        get detailed element
+        get dayElements
         get icon element
         get temp element
         get pop number element
         get humid element
         get wind element
+        set background video src to getBackgroundLink()
         set icon src to getIconLink of the clicked hour or the first hour of the clicked day
         set temp innerText to kelvinToCelsius(clickedHour.temperature)°C or kelvinToFahrenheit(clickedHour.temperature)°F
-        set pop number to 
+        set pop number to clickedHour.precipitation
+        set humid to clickedHour.humidity
+        set wind to clickedHour.windspeed
 
 function updateDetailedSection
     updateSelectedWeather()
@@ -41,7 +48,28 @@ function updateHourSection(event) {
 }
 
 function updateSelectedWeather(event) {
+    const background = document.querySelector("source");
+    const overlay = document.querySelector(".overlay");
+    const detailedCard = document.querySelector(".detialed");
+    const dayCards = document.getElementsByClassName("dayData");
     const icon = document.querySelector(".iconAndTemp .icon");
     const temp = document.querySelector(".iconAndTemp .temp");
-    
+    const pop = document.querySelector(".pop");
+    const humid = document.querySelector(".humid");
+    const wind = document.querySelector(".wind");
+    const indexDay = event.target.dataset.indexDay;
+    const indexHour = event.target.dataset.indexHour;
+    cont hourData = indexHour ? daysForecast[indexDay].data[indexHour] : daysForecast[indexDay].data[0]
+    background.src = `"${hourData.getBackgroundLink()}"`
+    overlay.style.background = `linear-gradient(${hourData.getBackgroundGradient()})`;
+    icon.src = `"${hourData.getIconLink()}"`;
+    temp.innerText = temp.classList.contains("celsius") ? `${hourData.temperature}°C` : `${hourData.temperature}°F`
+    pop.innerText = `${hourData.precipitation}%`;
+    humid.innerText = `${hourData.humidity}%`;
+    wind.innerText = `${hourData.windspeed} km/h`;
+}
+
+function updateDetailedSection(event) {
+    updateSelectedWeather(event);
+    updateHourSection(event);
 }

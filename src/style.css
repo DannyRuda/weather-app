@@ -196,6 +196,10 @@ input {
     align-items: center;
   }
 
+  .hourData .time, .hourData .icon, .hourData .temp {
+    pointer-events: none;
+  }
+
   .daySlider {
     display:flex;
     align-items: center;
@@ -236,6 +240,7 @@ input {
     width: 100%;
     justify-content: space-around;
     margin-top: 10px;
+    pointer-events: none;
   }
 
   .meta {
@@ -255,8 +260,8 @@ input {
     display:flex;
     align-items: center;
     width: 60%;
-
     justify-content: space-around;
+    pointer-events: none;
   }
 
   .spacer {

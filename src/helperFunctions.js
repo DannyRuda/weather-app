@@ -38,33 +38,24 @@ function splitIntoDays(forecastData) {
 }
 
 function addCurrentWeatherToForecast(currentWeather, daysForecast) {
-  if(currentWeather.getWeekDay() === daysForecast[0].getWeekDay()) {
-    const currentHour = {
-      date: currentWeather.date,
-      time: currentWeather.getCurrentTime(),
-      temperature: currentWeather.temperature,
-      precipitation: currentWeather.precipitation,
-      humidity: currentWeather.humidity,
-      windspeed: currentWeather.windspeed,
-      weathercon: currentWeather.weathercon,
-      getIconLink: currentWeather.getIconLink,
-      getBackgroundLink: currentWeather.getBackgroundLink
-    }
-    daysForecast[0].data.splice(0,0,currentHour);
+  // create hourData object resembling the structure of api forecast response data item so that createHourObject can be used
+  // to make sure we have seperation of concerns and methods are dealed with from createHourObject across the project
+  const hourData = {}
+    hourData.dt = currentWeather.date;
+    hourData.main = {};
+    hourData.main.temp = currentWeather.temperature;
+    hourData.pop = currentWeather.precipitation;
+    hourData.main.humidity = currentWeather.humidity;
+    hourData.wind = {};
+    hourData.wind.speed = currentWeather.windspeed;
+    hourData.weather = [{}];
+    hourData.weather[0].main = currentWeather.weathercon;
+    const hourObject = createHourObject(hourData);
+  if (currentWeather.getWeekDay() === daysForecast[0].getWeekDay()) {
+    daysForecast[0].data.splice(0, 0, hourObject);
   } else {
-      const currentHour = {
-      date: currentWeather.date,
-      time: currentWeather.getCurrentTime(),
-      temperature: currentWeather.temperature,
-      precipitation: currentWeather.precipitation,
-      humidity: currentWeather.humidity,
-      windspeed: currentWeather.windspeed,
-      weathercon: currentWeather.weathercon,
-      getIconLink: currentWeather.getIconLink,
-      getBackgroundLink: currentWeather.getBackgroundLink
-    };
-    const today = createDayObject([currentHour]);
-    daysForecast.splice(0,0,today);
+    const today = createDayObject([hourObject]);
+    daysForecast.splice(0, 0, today);
   }
 }
 
@@ -89,7 +80,7 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
         const dayData = weatherDataDays[i];
         daysForecast[i] = createDayObject(dayData);
       }
-      addCurrentWeatherToForecast(currentWeather,daysForecast);
+      addCurrentWeatherToForecast(currentWeather, daysForecast);
       resolve([currentWeather, daysForecast]);
     });
   });
@@ -108,7 +99,7 @@ function fahrenheitToCelsius(temp) {
 }
 
 function celsiusToFahrenheit(temp) {
-  return Math.round(temp * 1.8 + 32)
+  return Math.round(temp * 1.8 + 32);
 }
 export {
   numberToWord,

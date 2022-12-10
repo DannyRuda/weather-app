@@ -11,7 +11,12 @@ import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
 
 import { testPageLoadData } from "./testing";
 
-import { pageLoad } from "./domCreation";
+import {
+  pageLoad,
+  updateSelectedWeather,
+  updateDetailedSection,
+  addEventListenersToElements,
+} from "./domCreation";
 
 import "./reset.css";
 import "./style.css";
@@ -22,6 +27,16 @@ let country = "";
 let currentWeather = {};
 let daysForecast = {};
 
+const wrapUpdateSelectedWeather = function (event) {
+  console.log("hourElement clicked");
+  console.log(event);
+  updateSelectedWeather(event, daysForecast);
+};
+
+const wrapUpdateDetailedSection = function (event) {
+  updateDetailedSection(event, daysForecast);
+};
+
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
   getFiveDayForecast("sidney", "AU")
@@ -29,8 +44,12 @@ writeWeatherintoObjects(
   .then((weatherObjects) => {
     [currentWeather, daysForecast] = weatherObjects;
   })
+  .then(() => pageLoad(currentWeather, daysForecast))
   .then(() => {
-    pageLoad(currentWeather,daysForecast);
+    const hourElements = document.querySelector(".hourSection").children;
+    const dayElements = document.querySelector(".daySection").children;
+    addEventListenersToElements(hourElements, wrapUpdateSelectedWeather);
+    addEventListenersToElements(dayElements, wrapUpdateDetailedSection);
   });
 
 new Promise((resolve, reject) => {
@@ -66,16 +85,14 @@ new Promise((resolve, reject) => {
   .then((weatherObjects) => {
     // eslint-disable-next-line prefer-destructuring
     [currentWeather, daysForecast] = weatherObjects;
-    testPageLoadData(
-      currentWeather,
-      daysForecast,
-      kelvinToCelsius,
-      kelvinToFahrenheit
-    );
   })
   .catch((err) => {
     throw err;
   })
+  .then(() => pageLoad(currentWeather, daysForecast))
   .then(() => {
-    pageLoad(currentWeather,daysForecast);
+    const hourElements = document.querySelector(".hourSection").children;
+    const dayElements = document.querySelector(".daySection").children;
+    addEventListenersToElements(hourElements, wrapUpdateSelectedWeather);
+    addEventListenersToElements(dayElements, wrapUpdateDetailedSection);
   });
