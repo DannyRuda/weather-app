@@ -141,6 +141,16 @@ function addEventListenersToElements(elements, handlerFunction, daysForecast) {
   }
 }
 
+function removeEventListenersFromElements(elements, handlerFunction, daysForecast) {
+  const wrapHandlerFunction = function (event) {
+    handlerFunction(event, daysForecast);
+  };
+  // eslint-disable-next-line no-restricted-syntax
+  for (const element of elements) {
+    element.removeEventListener("click", wrapHandlerFunction);
+  }
+}
+
 function changeBackgroundVideo(hourData) {
   const backgroundVideo = document.querySelector("video");
   const backgroundSource = document.querySelector("source");
@@ -190,12 +200,12 @@ function updateSelectedWeather(event, daysForecast) {
 }
 
 function updateHourSection(event, daysForecast) {
+  let hourElements = document.querySelector(".hourSection").children;
+  removeEventListenersFromElements(hourElements,updateSelectedWeather,daysForecast);
   const dayIndex = event.target.dataset.indexDay;
-  console.log("dayindex inside updateHour", dayIndex);
-  console.log(dayIndex);
   const hoursHtml = createHourElements(daysForecast[dayIndex], dayIndex);
   document.querySelector(".hourSection").innerHTML = hoursHtml;
-  const hourElements = document.querySelector(".hourSection").children;
+  hourElements = document.querySelector(".hourSection").children;
   addEventListenersToElements(
     hourElements,
     updateSelectedWeather,
