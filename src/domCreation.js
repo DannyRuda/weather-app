@@ -7,6 +7,7 @@ import ClockIcon from "./media/clockIcon.svg";
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
   day.data.forEach((hour, i) => {
+    console.log("indexday in createHourElement", i);
     htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
@@ -21,6 +22,7 @@ function createHourElements(day, dayIndex) {
 function createDayElements(currentWeather, daysForecast) {
   let htmlString = ``;
   daysForecast.forEach((day, i) => {
+    console.log("indexday in createdayelement", i);
     htmlString += `<div class="dayData" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
                       <div class="metaAndIcon">
                         <div class="meta">
@@ -52,19 +54,13 @@ function createDayElements(currentWeather, daysForecast) {
   });
   return htmlString;
 }
-/*
-function changeBackground() {
-  document.querySelector(source).src =
-    daysForecast[data - index - day].data[
-      data - index - hour
-    ].getBackgroundLink();
-}
-*/
-function pageLoad(currentWeather, daysForecast) {
+
+async function pageLoad(currentWeather, daysForecast) {
   const hoursHtml = createHourElements(daysForecast[0], 0);
   const daysHtml = createDayElements(currentWeather, daysForecast);
-  currentWeather.getCityNameAndCountryCode().then((cityAndCountry) => {
-    document.querySelector("body").innerHTML = `
+  const cityAndCountry = await currentWeather.getCityNameAndCountryCode();
+  console.log("cityAndCountry", cityAndCountry);
+  document.querySelector("body").innerHTML = `
     <video class ="video" autoplay muted loop id="myVideo">
         <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
     </video>
@@ -104,8 +100,8 @@ function pageLoad(currentWeather, daysForecast) {
           </div>
           <div class="metaData">
             <p class="date">${currentWeather.getWeekDay()}, ${currentWeather.getMonthAndDayDate(
-      "DE"
-    )}</p>
+    "DE"
+  )}</p>
             <p class="city country">${cityAndCountry}</p>
             <div class="time">
                 <img src="${ClockIcon}" width="30" height="30"/>
@@ -130,6 +126,92 @@ function pageLoad(currentWeather, daysForecast) {
     </div>
 </div>
     </div>`;
-  });
+  console.log(
+    "end of pageload, elements with corresponding indexes should exist"
+  );
 }
-export { pageLoad };
+
+function addEventListenersToElements(elements, handlerFunction, daysForecast) {
+  const wrapHandlerFunction = function (event) {
+    handlerFunction(event, daysForecast);
+  };
+  // eslint-disable-next-line no-restricted-syntax
+  for (const element of elements) {
+    element.addEventListener("click", wrapHandlerFunction);
+  }
+}
+
+function changeBackgroundVideo(hourData) {
+  const backgroundVideo = document.querySelector("video");
+  const backgroundSource = document.querySelector("source");
+  backgroundSource.src = `${hourData.getBackgroundLink()}`;
+  backgroundVideo.load();
+}
+
+function changeBackgroundColors(hourData) {
+  const dayCards = document.getElementsByClassName("dayData");
+  const overlay = document.querySelector(".overlay");
+  const detailedCard = document.querySelector(".detailed");
+  // eslint-disable-next-line no-restricted-syntax
+  for (const card of dayCards) {
+    card.style.backgroundColor = hourData.getBackgroundColor();
+  }
+  overlay.style.background = `linear-gradient(${hourData.getBackgroundGradient()})`;
+  detailedCard.style.backgroundColor = `${hourData.getBackgroundColor()}`;
+}
+
+function updateSelectedWeather(event, daysForecast) {
+  const icon = document.querySelector(".iconAndTemp .icon");
+  const temp = document.querySelector(".iconAndTemp .temp");
+  const pop = document.querySelector(".pop");
+  const humid = document.querySelector(".humid");
+  const wind = document.querySelector(".wind");
+  const selectedDate = document.querySelector(".selectedWeather .date");
+  const selectedTime = document.querySelector(".selectedWeather .time .time");
+  const { indexDay } = event.target.dataset;
+  const { indexHour } = event.target.dataset;
+  const hourData = indexHour
+    ? daysForecast[indexDay].data[indexHour]
+    : daysForecast[indexDay].data[0];
+  const day = daysForecast[indexDay];
+  changeBackgroundVideo(hourData);
+  changeBackgroundColors(hourData);
+  icon.src = `${hourData.getIconLink()}`;
+  temp.innerText = temp.classList.contains("celsius")
+    ? `${kelvinToCelsius(hourData.temperature)}°C`
+    : `${kelvinToCelsius(hourData.temperature)}°F`;
+  pop.innerText = `${hourData.precipitation}%`;
+  humid.innerText = `${hourData.humidity}%`;
+  wind.innerText = `${hourData.windspeed} km/h`;
+  selectedDate.innerText = `${day.getWeekDay()}, ${day.getMonthAndDayDate(
+    "DE"
+  )}`;
+  selectedTime.innerText = `${hourData.time}`;
+}
+
+function updateHourSection(event, daysForecast) {
+  const dayIndex = event.target.dataset.indexDay;
+  console.log("dayindex inside updateHour", dayIndex);
+  console.log(dayIndex);
+  const hoursHtml = createHourElements(daysForecast[dayIndex], dayIndex);
+  document.querySelector(".hourSection").innerHTML = hoursHtml;
+  const hourElements = document.querySelector(".hourSection").children;
+  addEventListenersToElements(
+    hourElements,
+    updateSelectedWeather,
+    daysForecast
+  );
+}
+
+function updateDetailedSection(event, daysForecast) {
+  console.log("update detailed");
+  updateSelectedWeather(event, daysForecast);
+  updateHourSection(event, daysForecast);
+}
+
+export {
+  pageLoad,
+  updateSelectedWeather,
+  updateDetailedSection,
+  addEventListenersToElements,
+};
