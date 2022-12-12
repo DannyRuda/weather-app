@@ -8,6 +8,7 @@ function createHourElements(day, dayIndex) {
   let htmlString = ``;
   day.data.forEach((hour, i) => {
     console.log("indexday in createHourElement", i);
+    console.log("weathercon: ", hour.weathercon)
     htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
@@ -59,7 +60,7 @@ async function pageLoad(currentWeather, daysForecast) {
   const hoursHtml = createHourElements(daysForecast[0], 0);
   const daysHtml = createDayElements(currentWeather, daysForecast);
   const cityAndCountry = await currentWeather.getCityNameAndCountryCode();
-  console.log("cityAndCountry", cityAndCountry);
+  console.log("Weathercon", currentWeather.weathercon);
   document.querySelector("body").innerHTML = `
     <video class ="video" autoplay muted loop id="myVideo">
         <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">

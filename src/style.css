@@ -101,7 +101,7 @@ input {
     height: 55%;
     background-color: white;
     border-radius: 30px;
-    filter: drop-shadow(0 1px 1px black);
+    /*filter: drop-shadow(0 1px 1px black);*/
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -225,7 +225,7 @@ input {
   .dayData {
     padding:10px;
     background-color: white;
-    filter: drop-shadow(0 1px 1px black);
+    /*filter: drop-shadow(0 1px 1px black);*/
     border-radius: 30px;
     display:flex;
     flex-shrink: 0;

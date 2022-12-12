@@ -7,6 +7,7 @@ import CloudsIcon from "./media/cloudyIcon.svg";
 import RainIcon from "./media/rainIcon.svg";
 import DrizzleIcon from "./media/drizzleIcon.svg";
 import SnowIcon from "./media/snowIcon.svg";
+import ThunderIcon from "./media/thunderIcon.svg";
 
 const mediaLinks = (state) => ({
   getBackgroundLink() {
@@ -68,6 +69,8 @@ const mediaLinks = (state) => ({
       case "Drizzle":
         iconLink = `${DrizzleIcon}`;
         break;
+      case "Thunderstorm":
+        iconLink = `${ThunderIcon}`;
       case "Mist":
       case "Smoke":
       case "Haze":
@@ -120,6 +123,7 @@ const mediaLinks = (state) => ({
       case "Ash":
       case "Squall":
       case "Tornado":
+      case "Thunderstorm":
         BackgroundGradient =
           "rgba(161, 164, 165, 1)0%, rgba(161, 164, 165, 1) 20%, rgba(85, 85, 82, 1) 100%";
         break;
@@ -159,6 +163,7 @@ const mediaLinks = (state) => ({
       case "Ash":
       case "Squall":
       case "Tornado":
+      case "Thunderstorm":
         BackgroundColor = "rgba(225, 225, 225, 1)";
         break;
       default:
