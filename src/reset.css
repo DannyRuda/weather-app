@@ -48,7 +48,7 @@ table {
 }
 
 /*Opera sets a red outline on focussed buttons which messes with animations or transitions. This stops Opera from doing so*/
-button:focus {
+button:focus, input:focus {
     border:none;
     outline: none;
 }
