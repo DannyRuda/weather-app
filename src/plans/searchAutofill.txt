@@ -1,2 +1,56 @@
 Planning autofill feature for search bar and overall search bar functionality
 
+when typing into search bar, suggest all cities with country code that match the so far entered city.
+    - define necessary variables
+        const search = document.querySelector(".search");
+        const suggestions = document,querySelector(".suggestions");
+
+    - have an event listener on the search bar that listens for the event "input" or "keyup"
+        search.addEventListener('input',()=>{
+            suggestions.classList.remove("hide");
+        })
+
+    - get entered value and call geocoder api to get possible city+countrycode combinations
+        - get entered value 
+            const searchValue = document.querySelector(".search").value.toLowerCase()
+
+        - get possible citys+countryCodes array
+            getMatchingCities(searchValue)
+            .then((possibleCities)=>{
+                do stuff here 
+            })
+
+    - pass each city name and country code combination into an object and pass that object into an array
+        function createCity(possibleCity,i) {
+            const name = possibleCity.name;
+            const country = possibleCity.country;
+            const latAndLon = [possibleCity.lat, possibleCity.lon];
+            const index = i;
+            return {name,country,latAndLon, index};
+        }
+        let citiesArray = possibleCities.map((possibleCity,i)=>createCity(possibleCity,i));
+
+    - iterate over array and fill suggestions section with "City, Country" for each object in the array
+        function fillSuggestions(citiesArray,suggestions) {
+            citiesArray.forEach((city)=>{
+                const suggestion = Document.createElement("p");
+                suggestion.innerText = `${city.name}, ${city.country}`;
+                suggestion.dataset.index = city.index;
+                suggestions.append(suggestion);
+            })
+        }
+
+when leaving the search bar or removing all characters from the search bar, hide suggestions
+    document.querySelector(".search").addEventListener('blur',()=>{
+        suggestions.classList.add("hide");
+    })
+
+    and
+
+    within the input event handler:
+        if (search.value.length === 0) {
+            suggenstions.classList.add("hide")
+        }
+
+when pressing enter or the search icon, start a weather request with the entered value as a city name
+    add event listener to search icon div and to search bar
