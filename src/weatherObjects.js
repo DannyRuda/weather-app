@@ -71,6 +71,7 @@ const mediaLinks = (state) => ({
         break;
       case "Thunderstorm":
         iconLink = `${ThunderIcon}`;
+        break;
       case "Mist":
       case "Smoke":
       case "Haze":
