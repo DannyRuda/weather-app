@@ -1,46 +1,49 @@
 .video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    min-height: 100%;
-
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 .overlay {
-    position: fixed;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%) scale(1);
-    max-height: 100vh;
-    z-index: 4;
-    width: 66%;
-    height: 88%;
-    border-radius: 30px;
-    background: linear-gradient(rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%);
-    /*background: linear-gradient(rgba(169, 204, 237, 1)0%, rgba(169, 204, 237, 1) 25%,rgba(213, 214, 163, 1) 100%);*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  max-height: 100vh;
+  z-index: 4;
+  width: 66%;
+  height: 88%;
+  border-radius: 30px;
+  background: linear-gradient(
+    rgba(144, 189, 231, 1) 0%,
+    rgba(144, 189, 231, 1) 20%,
+    rgba(209, 220, 138, 1) 100%
+  );
+  /*background: linear-gradient(rgba(169, 204, 237, 1)0%, rgba(169, 204, 237, 1) 25%,rgba(213, 214, 163, 1) 100%);*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 p {
-    font-family: poppins;
-    font-size: 24px;
-    margin: 10px 0;
+  font-family: poppins;
+  font-size: 24px;
+  margin: 10px 0;
 }
 
 header {
-    display:flex;
-    margin: 31px 0px;
-    width:90%;
-    justify-content: space-between;
+  display: flex;
+  margin: 31px 0px;
+  width: 90%;
+  justify-content: space-between;
 }
 
 .logo {
-    display:inline-flex;
-    font-weight: 600;
-    gap:21px;
+  display: inline-flex;
+  font-weight: 600;
+  gap: 21px;
 }
 
 .siteName {
@@ -48,49 +51,93 @@ header {
 }
 
 input {
-    display:inline-block;
+  display: inline-block;
+}
+
+.wrapperP {
+  width: 335px;
+}
+
+.wrapper {
+  width: 335px;
+  border-radius: 20px;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.15);
+  position: absolute;
+  background-color: white;
+  z-index: 5;
 }
 
 .search {
-  border-radius:23px;
+  border-radius: 30px;
   width: 335px;
-  height:52px;
+  height: 52px;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 1;
+  color: black;
+}
+
+.results {
+  margin-top: 5px;
+  display:;
+}
+
+.results p {
+  font-size: 20px;
+  margin: 0px 0px;
+  padding: 10px 10px;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+  border-radius: 30px;
+  cursor:pointer;
+}
+
+.results p:hover {
+  background-color: rgb(243, 243, 243);
+}
+
+.searchIcon {
+  position:fixed;
+  transform: translate(830%,18%) scale(1);
+  cursor: pointer;
 }
 
 .socials {
-    display:inline-flex;
-    align-items: center;
-    font-weight: 600;
-    gap:10px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 10px;
 }
 
-
 .detailed {
-    width: 81.6%;
-    height: 55%;
-    background-color: white;
-    border-radius: 30px;
-    filter: drop-shadow(0 1px 1px black);
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom:38px;
-    margin-top: 10px;
+  width: 81.6%;
+  height: 55%;
+  background-color: white;
+  border-radius: 30px;
+  filter: drop-shadow(0 1px 1px black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 38px;
+  margin-top: 10px;
 }
 
 .selectedWeather {
-    display:flex;
-    width: 84%;
-    justify-content: space-between;
-    margin:20px 0px;
+  display: flex;
+  width: 84%;
+  justify-content: space-between;
+  margin: 20px 0px;
 }
 
 .weatherData {
-    text-align: start;
-    font-size: 20px;
+  text-align: start;
+  font-size: 20px;
 }
 
-.text p,.variables p {
+.text p,
+.variables p {
   font-size: 20px;
 }
 
@@ -103,146 +150,146 @@ input {
 }
 
 .iconAndTemp {
-    display:flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .iconAndTemp p {
-    font-size: 30px;
-    margin-left: 16px;
-    font-weight: 600;
+  font-size: 30px;
+  margin-left: 16px;
+  font-weight: 600;
 }
 
 .text {
-    display: inline-block;
+  display: inline-block;
 }
 
 .variables {
-    display: inline-block;
+  display: inline-block;
 }
 
 .metaData {
-    text-align: end;
+  text-align: end;
 }
 
 .metaData .date {
-    font-size: 28px;
-    margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
 .city {
   font-size: 20px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 .time {
-    display:flex;
-    justify-content: end;
-    align-items: center;
-    font-size: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  font-size: 20px;
 }
 
 .hourSection {
-    display:flex;
-    flex-wrap: nowrap;
-    overflow-y: scroll;
-    width: 84%;
-    gap: 50px;
-    margin-top:60px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: scroll;
+  width: 84%;
+  gap: 50px;
+  margin-top: 60px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
- /* Hide scrollbar for Chrome, Safari and Opera */
- .hourSection::-webkit-scrollbar {
-    display: none;
-  }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hourSection::-webkit-scrollbar {
+  display: none;
+}
 
-  .hourData {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.hourData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .daySlider {
-    display:flex;
-    align-items: center;
-    width: 90%;
-    gap:20px;
-  }
+.daySlider {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  gap: 20px;
+}
 
-  .daySection {
-    display:flex;
-    width: 91%;
-    gap: 32px;
-    overflow-y: scroll;
+.daySection {
+  display: flex;
+  width: 91%;
+  gap: 32px;
+  overflow-y: scroll;
 
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
-   /* Hide scrollbar for Chrome, Safari and Opera */
+/* Hide scrollbar for Chrome, Safari and Opera */
 .daySection::-webkit-scrollbar {
   display: none;
 }
 
-  .dayData {
-    padding:10px;
-    background-color: white;
-    filter: drop-shadow(0 1px 1px black);
-    border-radius: 30px;
-    display:flex;
-    flex-shrink: 0;
-    flex-direction: column;
-    align-items: center;
-    height:150px;
-    width: 300px;
-  }
+.dayData {
+  padding: 10px;
+  background-color: white;
+  filter: drop-shadow(0 1px 1px black);
+  border-radius: 30px;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  height: 150px;
+  width: 300px;
+}
 
-  .metaAndIcon {
-    display:flex;
-    width: 100%;
-    justify-content: space-around;
-    margin-top: 10px;
-  }
+.metaAndIcon {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 10px;
+}
 
-  .meta {
-    text-align: start;
-  }
+.meta {
+  text-align: start;
+}
 
-  .weekday {
-    font-size: 28px;
-    margin-top: 5px;
-  }
+.weekday {
+  font-size: 28px;
+  margin-top: 5px;
+}
 
-  .meta .date {
-    font-size: 18px;
-  }
+.meta .date {
+  font-size: 18px;
+}
 
-  .tempScale {
-    display:flex;
-    align-items: center;
-    width: 60%;
+.tempScale {
+  display: flex;
+  align-items: center;
+  width: 60%;
 
-    justify-content: space-around;
-  }
+  justify-content: space-around;
+}
 
-  .spacer {
-    font-size: 35px;
-  }
+.spacer {
+  font-size: 35px;
+}
 
-  .backArrow {
-    width: 0px;
-    height: 0px;
-    border-right: 30px solid white;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-  }
+.backArrow {
+  width: 0px;
+  height: 0px;
+  border-right: 30px solid white;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+}
 
-  .forwardArrow {
-    width: 0px;
-    height: 0px;
-    border-left: 30px solid white;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-  }
+.forwardArrow {
+  width: 0px;
+  height: 0px;
+  border-left: 30px solid white;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+}
