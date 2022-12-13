@@ -54,6 +54,10 @@ input {
   display: inline-block;
 }
 
+.hide {
+  display:none;
+}
+
 .wrapperP {
   width: 335px;
 }
@@ -80,12 +84,11 @@ input {
   color: black;
 }
 
-.results {
+.suggestions {
   margin-top: 5px;
-  display:;
 }
 
-.results p {
+.suggestions p {
   font-size: 20px;
   margin: 0px 0px;
   padding: 10px 10px;
@@ -94,7 +97,7 @@ input {
   cursor:pointer;
 }
 
-.results p:hover {
+.suggestions p:hover {
   background-color: rgb(243, 243, 243);
 }
 
