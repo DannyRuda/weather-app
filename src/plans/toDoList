@@ -1,0 +1,9 @@
+- implement search bar so that searching for a city and or city with country code will do a pageload with the entered city data
+
+- implement side scrolling for day section
+
+- implement unit switching with slider
+
+- style slider
+
+- style search bar
