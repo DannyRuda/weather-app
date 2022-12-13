@@ -20,6 +20,26 @@ function getCityCoordinates(cityName, country) {
   });
 }
 
+function getMatchingCities(cityName) {
+  return new Promise((resolve, reject) => {
+    fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q={${cityName}}&appid=d145974fac8fb803900422c2cc1d620e`
+    )
+      .then((response) => {
+        if (response.status === 200) {
+          console.log("status was 200");
+          return response.json();
+        }
+      })
+      .then((value) => {
+        resolve(value);
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 function getCurrentWeather(city, country) {
   if (arguments.length === 2) {
     return new Promise((resolve, reject) => {
@@ -88,4 +108,4 @@ function getFiveDayForecast(city, country) {
   }
 }
 
-export { getCityCoordinates, getCurrentWeather, getFiveDayForecast };
+export {getCityCoordinates, getMatchingCities, getCurrentWeather, getFiveDayForecast };
