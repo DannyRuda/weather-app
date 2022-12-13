@@ -9,48 +9,50 @@ function numberToWord(number) {
   return numbers[number];
 }
 
+// function returns an array that contains arrays where each array contains objects representing the hourly data of the forecast for one day.
 function splitIntoDays(forecastData) {
+  // hourlyDataObjects will contain objects representing the weather data for each 3 hour interval returned by the api call
   const hourlyDataObjects = [];
+
+  // dayDataArrays will contain the arrays that contain the hourlyDataObjects for one day each
   const dayDataArrays = [];
+
+  // forecastData will contain the object returned by the openweathermap 5 day forecast api and the list property contains the 3hour weather objects
   forecastData.list.forEach((item) => {
     hourlyDataObjects.push(createHourObject(item));
   });
-  if (hourlyDataObjects[0].date.getHours() > 2) {
-    for (let j = 0; j < 6; j += 1) {
-      const startingDayDate = hourlyDataObjects[0].date.getDate();
-      const dayData = hourlyDataObjects.filter(
-        (hourData) => hourData.date.getDate() === startingDayDate
-      );
-      hourlyDataObjects.splice(0, dayData.length);
-      dayDataArrays.push(dayData);
-    }
-  } else {
-    for (let j = 0; j < 5; j += 1) {
-      const startingDayDate = hourlyDataObjects[0].date.getDate();
-      const dayData = hourlyDataObjects.filter(
-        (hourData) => hourData.date.getDate() === startingDayDate
-      );
-      hourlyDataObjects.splice(0, dayData.length);
-      dayDataArrays.push(dayData);
-    }
-  }
+
+  // loops as long as hourlyDataObjects contains another hourlyDataObject. Each Loop 
+  do {
+    const startingDayDate = hourlyDataObjects[0].date.getDate();
+
+    // returns an array to dayData containing all hourData objects that stem from the same day as the first object in the hourlyDataObjects array, collecting all Hour Data Objects from one day
+    const dayData = hourlyDataObjects.filter(
+      (hourData) => hourData.date.getDate() === startingDayDate
+    );
+
+    // deletes the hourData Objects from the current day of the loop from the hourlyDataObjects array so the next iteration will start with data from the next day
+    hourlyDataObjects.splice(0, dayData.length);
+    dayDataArrays.push(dayData);
+  } while (hourlyDataObjects[0]);
+
   return dayDataArrays;
 }
 
 function addCurrentWeatherToForecast(currentWeather, daysForecast) {
   // create hourData object resembling the structure of api forecast response data item so that createHourObject can be used
   // to make sure we have seperation of concerns and methods are dealed with from createHourObject across the project
-  const hourData = {}
-    hourData.dt = currentWeather.date;
-    hourData.main = {};
-    hourData.main.temp = currentWeather.temperature;
-    hourData.pop = currentWeather.precipitation;
-    hourData.main.humidity = currentWeather.humidity;
-    hourData.wind = {};
-    hourData.wind.speed = currentWeather.windspeed;
-    hourData.weather = [{}];
-    hourData.weather[0].main = currentWeather.weathercon;
-    const hourObject = createHourObject(hourData);
+  const hourData = {};
+  hourData.dt = currentWeather.date;
+  hourData.main = {};
+  hourData.main.temp = currentWeather.temperature;
+  hourData.pop = currentWeather.precipitation;
+  hourData.main.humidity = currentWeather.humidity;
+  hourData.wind = {};
+  hourData.wind.speed = currentWeather.windspeed;
+  hourData.weather = [{}];
+  hourData.weather[0].main = currentWeather.weathercon;
+  const hourObject = createHourObject(hourData);
   if (currentWeather.getWeekDay() === daysForecast[0].getWeekDay()) {
     daysForecast[0].data.splice(0, 0, hourObject);
   } else {
