@@ -82,10 +82,57 @@ input {
     display:inline-block;
 }
 
-.search {
-  border-radius:23px;
+.hide {
+  display:none;
+}
+
+.wrapperP {
   width: 335px;
-  height:52px;
+}
+
+.wrapper {
+  width: 335px;
+  border-radius: 20px;
+  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.15);
+  position: absolute;
+  background-color: white;
+  z-index: 5;
+}
+
+.search {
+  border-radius: 30px;
+  width: 335px;
+  height: 52px;
+  font-size: 1rem;
+  border: none;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
+  font-size: 20px;
+  font-weight: 400;
+  opacity: 1;
+  color: black;
+}
+
+.suggestions {
+  margin-top: 5px;
+}
+
+.suggestions p {
+  font-size: 20px;
+  margin: 0px 0px;
+  padding: 10px 10px;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+  border-radius: 30px;
+  cursor:pointer;
+}
+
+.suggestions p:hover {
+  background-color: rgb(243, 243, 243);
+}
+
+.searchIcon {
+  position:fixed;
+  transform: translate(830%,18%) scale(1);
+  cursor: pointer;
 }
 
 .socials {
