@@ -24,8 +24,6 @@ import "./reset.css";
 import "./style.css";
 
 let suggestedCities = [];
-let cityCoords = [];
-let country = "";
 let currentWeather = {};
 let daysForecast = {};
 
