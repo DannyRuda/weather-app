@@ -22,7 +22,7 @@ function splitIntoDays(forecastData) {
     hourlyDataObjects.push(createHourObject(item));
   });
 
-  // loops as long as hourlyDataObjects contains another hourlyDataObject. Each Loop 
+  // loops as long as hourlyDataObjects contains another hourlyDataObject.
   do {
     const startingDayDate = hourlyDataObjects[0].date.getDate();
 
