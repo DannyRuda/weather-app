@@ -5,11 +5,13 @@ import {
   kelvinToCelsius,
   fahrenheitToCelsius,
   celsiusToFahrenheit,
+  getCity,
+  getCountry,
 } from "./helperFunctions";
 
 import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
 
-import { testPageLoadData } from "./testing";
+import { getAndFillSuggestions } from "./searchbar";
 
 import {
   pageLoad,
@@ -21,20 +23,58 @@ import {
 import "./reset.css";
 import "./style.css";
 
-let city = "";
+let suggestedCities = [];
 let cityCoords = [];
 let country = "";
 let currentWeather = {};
 let daysForecast = {};
 
 const wrapUpdateSelectedWeather = function (event) {
-  console.log("hourElement clicked");
-  console.log(event);
   updateSelectedWeather(event, daysForecast);
 };
 
 const wrapUpdateDetailedSection = function (event) {
   updateDetailedSection(event, daysForecast);
+};
+
+const wrapClickedSuggestionLoad = function (event) {
+  const clickedSuggestion = event.target;
+  const city = suggestedCities[clickedSuggestion.dataset.index];
+  console.log(city)
+  const coords = city.latAndLon
+  console.log(coords);
+  writeWeatherintoObjects(
+    getCurrentWeather(coords),
+    getFiveDayForecast(coords)
+  )
+    .then((weatherObjects) => {
+      [currentWeather, daysForecast] = weatherObjects;
+    })
+    .then(() => pageLoad(currentWeather, daysForecast))
+    .then(() => {
+      const search = document.querySelector(".search");
+      const suggestions = document.querySelector(".suggestions");
+      const suggestionElements = suggestions.children;
+
+      search.addEventListener("input", (e) => {
+        if (search.value.length >= 1) {
+          suggestions.classList.remove("hide");
+        } else {
+          suggestions.classList.add("hide");
+        }
+        getAndFillSuggestions(e).then((citiesArray) => {
+          suggestedCities = citiesArray;
+          addEventListenersToElements(
+            suggestionElements,
+            wrapClickedSuggestionLoad
+          );
+        });
+      });
+      const hourElements = document.querySelector(".hourSection").children;
+      const dayElements = document.querySelector(".daySection").children;
+      addEventListenersToElements(hourElements, wrapUpdateSelectedWeather);
+      addEventListenersToElements(dayElements, wrapUpdateDetailedSection);
+    });
 };
 
 writeWeatherintoObjects(
@@ -46,6 +86,24 @@ writeWeatherintoObjects(
   })
   .then(() => pageLoad(currentWeather, daysForecast))
   .then(() => {
+    const search = document.querySelector(".search");
+    const suggestions = document.querySelector(".suggestions");
+    const suggestionElements = suggestions.children;
+
+    search.addEventListener("input", (event) => {
+      if (search.value.length >= 1) {
+        suggestions.classList.remove("hide");
+      } else {
+        suggestions.classList.add("hide");
+      }
+      getAndFillSuggestions(event).then((citiesArray) => {
+        suggestedCities = citiesArray;
+        addEventListenersToElements(
+          suggestionElements,
+          wrapClickedSuggestionLoad
+        );
+      });
+    });
     const hourElements = document.querySelector(".hourSection").children;
     const dayElements = document.querySelector(".daySection").children;
     addEventListenersToElements(hourElements, wrapUpdateSelectedWeather);
@@ -91,6 +149,24 @@ new Promise((resolve, reject) => {
   })
   .then(() => pageLoad(currentWeather, daysForecast))
   .then(() => {
+    const search = document.querySelector(".search");
+    const suggestions = document.querySelector(".suggestions");
+    const suggestionElements = suggestions.children;
+
+    search.addEventListener("input", (event) => {
+      if (search.value.length >= 1) {
+        suggestions.classList.remove("hide");
+      } else {
+        suggestions.classList.add("hide");
+      }
+      getAndFillSuggestions(event).then((citiesArray) => {
+        suggestedCities = citiesArray;
+        addEventListenersToElements(
+          suggestionElements,
+          wrapClickedSuggestionLoad
+        );
+      });
+    });
     const hourElements = document.querySelector(".hourSection").children;
     const dayElements = document.querySelector(".daySection").children;
     addEventListenersToElements(hourElements, wrapUpdateSelectedWeather);
