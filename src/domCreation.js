@@ -3,6 +3,7 @@ import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
 import LinkedinIcon from "./media/linkedinIcon.svg";
 import ClockIcon from "./media/clockIcon.svg";
+import SearchIcon from "./media/searchIcon.svg";
 
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
@@ -71,7 +72,16 @@ async function pageLoad(currentWeather, daysForecast) {
             <img src="${ClearIcon}" width="50" height="50">
             <p class="siteName">Weather App</p>
         </div>
-        <input class="search" lang="DE" type="search" placeholder="Stadt, Landcode(DE)"/>
+        <div class="wrapperP">
+                <div class="wrapper">
+                    <div class="searchIcon">
+                        <img src="${SearchIcon}" width="35" height="35" id="searchIcon"/>
+                    </div>
+                    <input class="search" lang="DE" type="search" placeholder="Stadt, Landcode(DE)"/>
+                    <div class="suggestions hide">
+                    </div>
+                </div>
+        </div>
         <input type="range" min="0" max="1" value="1" class="units"/>
         <div class="socials">
             <p class="myName">By DannyRuda</p>
@@ -132,9 +142,10 @@ async function pageLoad(currentWeather, daysForecast) {
   );
 }
 
-function addEventListenersToElements(elements, handlerFunction, daysForecast) {
+function addEventListenersToElements(elements, handlerFunction ) {
+  console.log("inside addeventlistener")
   const wrapHandlerFunction = function (event) {
-    handlerFunction(event, daysForecast);
+    handlerFunction(event);
   };
   // eslint-disable-next-line no-restricted-syntax
   for (const element of elements) {
@@ -142,9 +153,9 @@ function addEventListenersToElements(elements, handlerFunction, daysForecast) {
   }
 }
 
-function removeEventListenersFromElements(elements, handlerFunction, daysForecast) {
+function removeEventListenersFromElements(elements, handlerFunction) {
   const wrapHandlerFunction = function (event) {
-    handlerFunction(event, daysForecast);
+    handlerFunction(event);
   };
   // eslint-disable-next-line no-restricted-syntax
   for (const element of elements) {
