@@ -23,7 +23,7 @@ function getCityCoordinates(cityName, country) {
 function getMatchingCities(cityName) {
   return new Promise((resolve, reject) => {
     fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q={${cityName}}&appid=d145974fac8fb803900422c2cc1d620e`
+      `http://api.openweathermap.org/geo/1.0/direct?q={${cityName}}&limit=5&appid=d145974fac8fb803900422c2cc1d620e`
     )
       .then((response) => {
         if (response.status === 200) {
