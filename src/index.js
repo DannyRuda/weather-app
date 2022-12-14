@@ -38,13 +38,10 @@ const wrapUpdateDetailedSection = function (event) {
 const wrapClickedSuggestionLoad = function (event) {
   const clickedSuggestion = event.target;
   const city = suggestedCities[clickedSuggestion.dataset.index];
-  console.log(city)
-  const coords = city.latAndLon
+  console.log(city);
+  const coords = city.latAndLon;
   console.log(coords);
-  writeWeatherintoObjects(
-    getCurrentWeather(coords),
-    getFiveDayForecast(coords)
-  )
+  writeWeatherintoObjects(getCurrentWeather(coords), getFiveDayForecast(coords))
     .then((weatherObjects) => {
       [currentWeather, daysForecast] = weatherObjects;
     })
@@ -53,9 +50,14 @@ const wrapClickedSuggestionLoad = function (event) {
       const search = document.querySelector(".search");
       const suggestions = document.querySelector(".suggestions");
       const suggestionElements = suggestions.children;
-
+      const searchIcon = document.querySelector(".searchIcon");
+      // eslint-disable-next-line no-use-before-define
+      searchIcon.addEventListener("click", wrapEnteredValueLoad);
       search.addEventListener("input", (e) => {
-        if (search.value.length >= 1) {
+        if(e.key === "Enter" && search.value.length>0) {
+          wrapEnteredValueLoad();
+        }
+        else if (search.value.length >= 1) {
           suggestions.classList.remove("hide");
         } else {
           suggestions.classList.add("hide");
@@ -64,6 +66,47 @@ const wrapClickedSuggestionLoad = function (event) {
           suggestedCities = citiesArray;
           addEventListenersToElements(
             suggestionElements,
+            wrapClickedSuggestionLoad
+          );
+        });
+      });
+      const hourElements = document.querySelector(".hourSection").children;
+      const dayElements = document.querySelector(".daySection").children;
+      addEventListenersToElements(hourElements, wrapUpdateSelectedWeather);
+      addEventListenersToElements(dayElements, wrapUpdateDetailedSection);
+    });
+};
+
+const wrapEnteredValueLoad = function () {
+  const search = document.querySelector(".search");
+  const cityAndCountry = document.querySelector(".search").value.split(", ");
+  writeWeatherintoObjects(
+    getCurrentWeather(cityAndCountry[0], cityAndCountry[1]),
+    getFiveDayForecast(cityAndCountry[0], cityAndCountry[1])
+  )
+    .then((weatherObjects) => {
+      [currentWeather, daysForecast] = weatherObjects;
+    })
+    .then(() => pageLoad(currentWeather, daysForecast))
+    .then(() => {
+      const searchNew = document.querySelector(".search");
+      const suggestionsNew = document.querySelector(".suggestions");
+      const suggestionElementsNew = suggestionsNew.children;
+      const searchIcon = document.querySelector(".searchIcon");
+      searchIcon.addEventListener("click", wrapEnteredValueLoad);
+      searchNew.addEventListener("keyup", (e) => {
+        if(e.key === "Enter" && search.value.length>0) {
+          wrapEnteredValueLoad();
+        }
+        else if (searchNew.value.length >= 1) {
+          suggestionsNew.classList.remove("hide");
+        } else {
+          suggestionsNew.classList.add("hide");
+        }
+        getAndFillSuggestions(e).then((citiesArray) => {
+          suggestedCities = citiesArray;
+          addEventListenersToElements(
+            suggestionElementsNew,
             wrapClickedSuggestionLoad
           );
         });
@@ -87,9 +130,13 @@ writeWeatherintoObjects(
     const search = document.querySelector(".search");
     const suggestions = document.querySelector(".suggestions");
     const suggestionElements = suggestions.children;
-
-    search.addEventListener("input", (event) => {
-      if (search.value.length >= 1) {
+    const searchIcon = document.querySelector(".searchIcon");
+    searchIcon.addEventListener("click", wrapEnteredValueLoad);
+    search.addEventListener("keyup", (event) => {
+      if(event.key === "Enter" && search.value.length>0) {
+        wrapEnteredValueLoad();
+      }
+      else if (search.value.length >= 1) {
         suggestions.classList.remove("hide");
       } else {
         suggestions.classList.add("hide");
@@ -150,9 +197,13 @@ new Promise((resolve, reject) => {
     const search = document.querySelector(".search");
     const suggestions = document.querySelector(".suggestions");
     const suggestionElements = suggestions.children;
-
-    search.addEventListener("input", (event) => {
-      if (search.value.length >= 1) {
+    const searchIcon = document.querySelector(".searchIcon");
+    searchIcon.addEventListener("click", wrapEnteredValueLoad);
+    search.addEventListener("keyup", (event) => {
+      if(event.key === "Enter" && search.value.length>0) {
+        wrapEnteredValueLoad();
+      }
+      else if (search.value.length >= 1) {
         suggestions.classList.remove("hide");
       } else {
         suggestions.classList.add("hide");
