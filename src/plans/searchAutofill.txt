@@ -6,8 +6,13 @@ when typing into search bar, suggest all cities with country code that match the
         const suggestions = document,querySelector(".suggestions");
 
     - have an event listener on the search bar that listens for the event "input" or "keyup"
-        search.addEventListener('input',()=>{
-            suggestions.classList.remove("hide");
+        search.addEventListener('input',(event)=>{
+            const search = event.target;
+            if(search.value >= 1){
+                suggestions.classList.remove("hide");
+            } else {
+                suggenstions.classList.add("hide");
+            }
         })
 
     - get entered value and call geocoder api to get possible city+countrycode combinations
@@ -39,6 +44,32 @@ when typing into search bar, suggest all cities with country code that match the
                 suggestions.append(suggestion);
             })
         }
+    
+    function createCity(possibleCity,i) {
+            const name = possibleCity.name;
+            const country = possibleCity.country;
+            const latAndLon = [possibleCity.lat, possibleCity.lon];
+            const index = i;
+            return {name,country,latAndLon, index};
+        }
+
+    // used as event handler for input on search bar
+    function getAndFillSuggestions(event) {
+        const search = event.target;
+        const searchText = search.value.toLowerCase();
+        getMatchingCities(searchText)
+        .then((possibleCities)=>{
+            let citiesArray = possibleCities.map((possibleCity,i)=>createCity(possibleCity,i));
+            const suggestions = document.querySelector(".suggestions");
+            citiesArray.forEach((city)=>{
+                const suggestion = Document.createElement("p");
+                suggestion.innerText = `${city.name}, ${city.country}`;
+                suggestion.dataset.index = city.index;
+                suggestions.append(suggestion);
+            });
+        })
+    }
+
 
 when leaving the search bar or removing all characters from the search bar, hide suggestions
     document.querySelector(".search").addEventListener('blur',()=>{
@@ -51,6 +82,23 @@ when leaving the search bar or removing all characters from the search bar, hide
         if (search.value.length === 0) {
             suggenstions.classList.add("hide")
         }
+
+
+    function hideElement(element) {
+        if(!element.classList.contains("hide")) {
+            element.classList.add("hide");
+        }
+        element.classList.add("hide");
+    }
+
+
+    function showElement(element) {
+        if (element.classList.contains("hide")) {
+            element.classList.remove("hide")
+        }
+    }
+
+    
 
 when pressing enter or the search icon, start a weather request with the entered value as a city name
     add event listener to search icon div and to search bar
