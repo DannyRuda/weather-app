@@ -142,10 +142,10 @@ async function pageLoad(currentWeather, daysForecast) {
   );
 }
 
-function addEventListenersToElements(elements, handlerFunction ) {
+function addEventListenersToElements(elements, handlerFunction, daysForecast ) {
   console.log("inside addeventlistener")
   const wrapHandlerFunction = function (event) {
-    handlerFunction(event);
+    handlerFunction(event,daysForecast);
   };
   // eslint-disable-next-line no-restricted-syntax
   for (const element of elements) {
@@ -153,9 +153,9 @@ function addEventListenersToElements(elements, handlerFunction ) {
   }
 }
 
-function removeEventListenersFromElements(elements, handlerFunction) {
+function removeEventListenersFromElements(elements, handlerFunction, daysForecast) {
   const wrapHandlerFunction = function (event) {
-    handlerFunction(event);
+    handlerFunction(event,daysForecast);
   };
   // eslint-disable-next-line no-restricted-syntax
   for (const element of elements) {
