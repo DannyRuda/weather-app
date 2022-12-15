@@ -38,9 +38,7 @@ const wrapUpdateDetailedSection = function (event) {
 const wrapClickedSuggestionLoad = function (event) {
   const clickedSuggestion = event.target;
   const city = suggestedCities[clickedSuggestion.dataset.index];
-  console.log(city);
   const coords = city.latAndLon;
-  console.log(coords);
   writeWeatherintoObjects(getCurrentWeather(coords), getFiveDayForecast(coords))
     .then((weatherObjects) => {
       [currentWeather, daysForecast] = weatherObjects;
@@ -78,7 +76,6 @@ const wrapClickedSuggestionLoad = function (event) {
 };
 
 const wrapEnteredValueLoad = function () {
-  const search = document.querySelector(".search");
   const cityAndCountry = document.querySelector(".search").value.split(", ");
   writeWeatherintoObjects(
     getCurrentWeather(cityAndCountry[0], cityAndCountry[1]),
@@ -95,7 +92,7 @@ const wrapEnteredValueLoad = function () {
       const searchIcon = document.querySelector(".searchIcon");
       searchIcon.addEventListener("click", wrapEnteredValueLoad);
       searchNew.addEventListener("keyup", (e) => {
-        if(e.key === "Enter" && search.value.length>0) {
+        if(e.key === "Enter" && searchNew.value.length>0) {
           wrapEnteredValueLoad();
         }
         else if (searchNew.value.length >= 1) {
