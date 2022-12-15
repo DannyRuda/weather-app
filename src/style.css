@@ -64,7 +64,7 @@ header {
     margin: 31px 0px;
     width:90%;
     justify-content: space-between;
-    align-items: center;
+
 }
 
 .logo {
@@ -152,15 +152,15 @@ input {
     display:flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom:38px;
     margin-top: 10px;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
 }
 
 .selectedWeather {
     display:flex;
     width: 84%;
     justify-content: space-between;
-    margin:20px 0px;
+    margin-top:20px;
 }
 
 .weatherData {
@@ -230,6 +230,8 @@ input {
     margin-top:60px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
+    padding-top:20px;
+
 }
 
  /* Hide scrollbar for Chrome, Safari and Opera */
@@ -241,6 +243,12 @@ input {
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+
+  .hourData:hover {
+    transform: translateY(-10%);
   }
 
   .hourData .time, .hourData .icon, .hourData .temp {
@@ -259,7 +267,8 @@ input {
     width: 91%;
     gap: 32px;
     overflow-y: scroll;
-
+    padding-top:38px;
+    padding-bottom: 10px;
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
@@ -280,6 +289,15 @@ input {
     align-items: center;
     height:150px;
     width: 300px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .dayData:hover {
+
+    
+    transform: translateY(-10%);
   }
 
   .metaAndIcon {
