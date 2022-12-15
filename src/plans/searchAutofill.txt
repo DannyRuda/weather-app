@@ -102,3 +102,26 @@ when leaving the search bar or removing all characters from the search bar, hide
 
 when pressing enter or the search icon, start a weather request with the entered value as a city name
     add event listener to search icon div and to search bar
+
+
+
+sort functions:
+
+one function that gets executed when a sugestion is clicked
+
+    function LoadClickedSuggestion
+        make weather api call with event targets index and  the global 
+        suggestedCities array
+
+            // needs to return weatherObjects so global currentWeather and daysForecast
+            // can get the weather assigned
+            async function callWeather(e) {
+                const clickedSuggestion = event.target;
+                const city = suggestedCities[clickedSuggestion.dataset.index];
+                const coords = city.latAndLon;
+                const weatherObjects = await writeWeatherintoObjects(getCurrentWeather(coords), getFiveDayForecast(coords));
+                return weatherObjects;
+            } 
+
+// on global level in index.js 
+[currentWeather,daysForecast] = await callWeather(e)
