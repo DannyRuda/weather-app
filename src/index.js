@@ -9,6 +9,15 @@ import {
   getCountry,
 } from "./helperFunctions";
 
+import {
+  setCurrentWeatherObject,
+  setDaysForecast,
+  setSuggestedCities,
+  getCurrentWeatherObject,
+  getDaysForecast,
+  getSuggestedCities,
+} from "./globalVar";
+
 import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
 
 import { getAndFillSuggestions } from "./searchbar";
@@ -23,27 +32,24 @@ import {
 import "./reset.css";
 import "./style.css";
 
-let suggestedCities = [];
-let currentWeather = {};
-let daysForecast = {};
-
 const wrapUpdateSelectedWeather = function (event) {
-  updateSelectedWeather(event, daysForecast);
+  updateSelectedWeather(event, getDaysForecast());
 };
 
 const wrapUpdateDetailedSection = function (event) {
-  updateDetailedSection(event, daysForecast);
+  updateDetailedSection(event, getDaysForecast());
 };
 
 const wrapClickedSuggestionLoad = function (event) {
   const clickedSuggestion = event.target;
-  const city = suggestedCities[clickedSuggestion.dataset.index];
+  const city = getSuggestedCities()[clickedSuggestion.dataset.index];
   const coords = city.latAndLon;
   writeWeatherintoObjects(getCurrentWeather(coords), getFiveDayForecast(coords))
     .then((weatherObjects) => {
-      [currentWeather, daysForecast] = weatherObjects;
+      setCurrentWeatherObject(weatherObjects[0]);
+      setDaysForecast(weatherObjects[1]);
     })
-    .then(() => pageLoad(currentWeather, daysForecast))
+    .then(() => pageLoad(getCurrentWeatherObject(), getDaysForecast()))
     .then(() => {
       const search = document.querySelector(".search");
       const suggestions = document.querySelector(".suggestions");
@@ -52,16 +58,15 @@ const wrapClickedSuggestionLoad = function (event) {
       // eslint-disable-next-line no-use-before-define
       searchIcon.addEventListener("click", wrapEnteredValueLoad);
       search.addEventListener("input", (e) => {
-        if(e.key === "Enter" && search.value.length>0) {
+        if (e.key === "Enter" && search.value.length > 0) {
           wrapEnteredValueLoad();
-        }
-        else if (search.value.length >= 1) {
+        } else if (search.value.length >= 1) {
           suggestions.classList.remove("hide");
         } else {
           suggestions.classList.add("hide");
         }
         getAndFillSuggestions(e).then((citiesArray) => {
-          suggestedCities = citiesArray;
+          setSuggestedCities(citiesArray);
           addEventListenersToElements(
             suggestionElements,
             wrapClickedSuggestionLoad
@@ -82,9 +87,10 @@ const wrapEnteredValueLoad = function () {
     getFiveDayForecast(cityAndCountry[0], cityAndCountry[1])
   )
     .then((weatherObjects) => {
-      [currentWeather, daysForecast] = weatherObjects;
+      setCurrentWeatherObject(weatherObjects[0]);
+      setDaysForecast(weatherObjects[1]);
     })
-    .then(() => pageLoad(currentWeather, daysForecast))
+    .then(() => pageLoad(getCurrentWeatherObject(), getDaysForecast()))
     .then(() => {
       const searchNew = document.querySelector(".search");
       const suggestionsNew = document.querySelector(".suggestions");
@@ -92,16 +98,15 @@ const wrapEnteredValueLoad = function () {
       const searchIcon = document.querySelector(".searchIcon");
       searchIcon.addEventListener("click", wrapEnteredValueLoad);
       searchNew.addEventListener("keyup", (e) => {
-        if(e.key === "Enter" && searchNew.value.length>0) {
+        if (e.key === "Enter" && searchNew.value.length > 0) {
           wrapEnteredValueLoad();
-        }
-        else if (searchNew.value.length >= 1) {
+        } else if (searchNew.value.length >= 1) {
           suggestionsNew.classList.remove("hide");
         } else {
           suggestionsNew.classList.add("hide");
         }
         getAndFillSuggestions(e).then((citiesArray) => {
-          suggestedCities = citiesArray;
+          setSuggestedCities(citiesArray);
           addEventListenersToElements(
             suggestionElementsNew,
             wrapClickedSuggestionLoad
@@ -120,9 +125,10 @@ writeWeatherintoObjects(
   getFiveDayForecast("sidney", "AU")
 )
   .then((weatherObjects) => {
-    [currentWeather, daysForecast] = weatherObjects;
+    setCurrentWeatherObject(weatherObjects[0]);
+    setDaysForecast(weatherObjects[1]);
   })
-  .then(() => pageLoad(currentWeather, daysForecast))
+  .then(() => pageLoad(getCurrentWeatherObject(), getDaysForecast()))
   .then(() => {
     const search = document.querySelector(".search");
     const suggestions = document.querySelector(".suggestions");
@@ -130,16 +136,15 @@ writeWeatherintoObjects(
     const searchIcon = document.querySelector(".searchIcon");
     searchIcon.addEventListener("click", wrapEnteredValueLoad);
     search.addEventListener("keyup", (event) => {
-      if(event.key === "Enter" && search.value.length>0) {
+      if (event.key === "Enter" && search.value.length > 0) {
         wrapEnteredValueLoad();
-      }
-      else if (search.value.length >= 1) {
+      } else if (search.value.length >= 1) {
         suggestions.classList.remove("hide");
       } else {
         suggestions.classList.add("hide");
       }
       getAndFillSuggestions(event).then((citiesArray) => {
-        suggestedCities = citiesArray;
+        setSuggestedCities(citiesArray);
         addEventListenersToElements(
           suggestionElements,
           wrapClickedSuggestionLoad
@@ -184,12 +189,13 @@ new Promise((resolve, reject) => {
   )
   .then((weatherObjects) => {
     // eslint-disable-next-line prefer-destructuring
-    [currentWeather, daysForecast] = weatherObjects;
+    setCurrentWeatherObject(weatherObjects[0]);
+    setDaysForecast(weatherObjects[1]);
   })
   .catch((err) => {
     throw err;
   })
-  .then(() => pageLoad(currentWeather, daysForecast))
+  .then(() => pageLoad(getCurrentWeatherObject(), getDaysForecast()))
   .then(() => {
     const search = document.querySelector(".search");
     const suggestions = document.querySelector(".suggestions");
@@ -197,16 +203,15 @@ new Promise((resolve, reject) => {
     const searchIcon = document.querySelector(".searchIcon");
     searchIcon.addEventListener("click", wrapEnteredValueLoad);
     search.addEventListener("keyup", (event) => {
-      if(event.key === "Enter" && search.value.length>0) {
+      if (event.key === "Enter" && search.value.length > 0) {
         wrapEnteredValueLoad();
-      }
-      else if (search.value.length >= 1) {
+      } else if (search.value.length >= 1) {
         suggestions.classList.remove("hide");
       } else {
         suggestions.classList.add("hide");
       }
       getAndFillSuggestions(event).then((citiesArray) => {
-        suggestedCities = citiesArray;
+        setSuggestedCities(citiesArray);
         addEventListenersToElements(
           suggestionElements,
           wrapClickedSuggestionLoad
