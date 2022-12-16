@@ -73,7 +73,7 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
         currentData.coord.lon,
         currentData.coord.lat,
         currentData.main.temp,
-        forecast.list[0].pop,
+        forecast.list[0].pop*100,
         currentData.main.humidity,
         currentData.wind.speed,
         currentData.weather[0].main

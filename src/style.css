@@ -239,6 +239,10 @@ input {
     display: none;
   }
 
+  .selected {
+    transform: translateY(-10%);
+  }
+
   .hourData {
     display: flex;
     flex-direction: column;
@@ -295,8 +299,6 @@ input {
   }
 
   .dayData:hover {
-
-    
     transform: translateY(-10%);
   }
 

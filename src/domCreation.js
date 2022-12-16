@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import { kelvinToCelsius } from "./helperFunctions";
 
 import { daysForecast,currentWeather } from "./globalVar";
@@ -10,13 +11,23 @@ import SearchIcon from "./media/searchIcon.svg";
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
   day.data.forEach((hour, i) => {
-    htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
+    if (i!==0) {
+      htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
                             <p class="temp celsius">${kelvinToCelsius(
                               hour.temperature
                             )}°C</p>
                         </div>`;
+    } else {
+      htmlString += `<div class="hourData selected" data-index-hour="${i}" data-index-day="${dayIndex}">
+                            <p class="time">${hour.time}</p>
+                            <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
+                            <p class="temp celsius">${kelvinToCelsius(
+                              hour.temperature
+                            )}°C</p>
+                        </div>`;
+    }
   });
   return htmlString;
 }
@@ -24,7 +35,7 @@ function createHourElements(day, dayIndex) {
 function createDayElements() {
   let htmlString = ``;
   daysForecast.forEach((day, i) => {
-    htmlString += `<div class="dayData" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
+    htmlString += `<div class="dayData${i !== 0 ? "" : " selected"}" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
                       <div class="metaAndIcon">
                         <div class="meta">
                             <p class="weekday">${
@@ -201,14 +212,19 @@ function updateSelectedWeather(event) {
 
 function updateHourSection(event) {
   let hourElements = document.querySelector(".hourSection").children;
-  removeEventListenersFromElements(hourElements,updateSelectedWeather,daysForecast);
+  removeEventListenersFromElements(hourElements,updateSelectedWeather);
   const dayIndex = event.target.dataset.indexDay;
   const hoursHtml = createHourElements(daysForecast[dayIndex], dayIndex);
   document.querySelector(".hourSection").innerHTML = hoursHtml;
   hourElements = document.querySelector(".hourSection").children;
+
   addEventListenersToElements(
     hourElements,
     updateSelectedWeather
+  );
+  addEventListenersToElements(
+    hourElements,
+    elevateSelectedElement
   );
 }
 
@@ -217,11 +233,22 @@ function updateDetailedSection(event) {
   updateHourSection(event);
 }
 
+function elevateSelectedElement(e) {
+  const clickedElementClass = e.target.classList.item(0);
+  const elevatedElement = document.querySelector(`.${clickedElementClass}.selected`);
+  if(elevatedElement) {
+    elevatedElement.classList.remove("selected")
+  }
+  e.target.classList.add("selected")
+}
+
 function addListenersToHourAndDataElements() {
   const hourElements = document.querySelector(".hourSection").children;
   const dayElements = document.querySelector(".daySection").children;
   addEventListenersToElements(hourElements, updateSelectedWeather);
   addEventListenersToElements(dayElements, updateDetailedSection);
+  addEventListenersToElements(dayElements, elevateSelectedElement);
+  addEventListenersToElements(hourElements, elevateSelectedElement);
 }
 
 export {
