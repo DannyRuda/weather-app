@@ -276,7 +276,7 @@ function createHourObject(hourData) {
       : date.getMinutes()
   }`;
   const temperature = hourData.main.temp;
-  const precipitation = hourData.pop;
+  const precipitation = Math.round(hourData.pop * 100);
   const { humidity } = hourData.main;
   const windspeed = hourData.wind.speed;
   const weathercon = hourData.weather[0].main;
@@ -323,15 +323,40 @@ function createDayObject(data) {
   }
 
   function getDominatingWeathericon() {
-    const thunder = data.filter((element) => element.weathercon === "Thunder");
+    const thunderstrom = data.filter(
+      (element) => element.weathercon === "Thunderstorm"
+    );
     const drizzle = data.filter((element) => element.weathercon === "Drizzle");
     const rain = data.filter((element) => element.weathercon === "Rain");
     const snow = data.filter((element) => element.weathercon === "Snow");
     const clear = data.filter((element) => element.weathercon === "Clear");
     const clouds = data.filter((element) => element.weathercon === "Clouds");
-    const sortedWeather = [thunder, drizzle, rain, snow, clear, clouds].sort(
-      (a, b) => b.length - a.length
-    );
+    const mist = data.filter((element) => element.weathercon === "Mist");
+    const smoke = data.filter((element) => element.weathercon === "Smoke");
+    const haze = data.filter((element) => element.weathercon === "Haze");
+    const dust = data.filter((element) => element.weathercon === "Dust");
+    const fog = data.filter((element) => element.weathercon === "Fog");
+    const sand = data.filter((element) => element.weathercon === "Sand");
+    const ash = data.filter((element) => element.weathercon === "Ash");
+    const squall = data.filter((element) => element.weathercon === "Squall");
+    const tornado = data.filter((element) => element.weathercon === "Tornado");
+    const sortedWeather = [
+      thunderstrom,
+      drizzle,
+      rain,
+      snow,
+      clear,
+      clouds,
+      mist,
+      smoke,
+      haze,
+      dust,
+      fog,
+      sand,
+      ash,
+      squall,
+      tornado,
+    ].sort((a, b) => b.length - a.length);
     return sortedWeather[0][0].weathercon;
   }
 
