@@ -1,4 +1,6 @@
 import { kelvinToCelsius } from "./helperFunctions";
+
+import { daysForecast,currentWeather } from "./globalVar";
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
 import LinkedinIcon from "./media/linkedinIcon.svg";
@@ -8,8 +10,6 @@ import SearchIcon from "./media/searchIcon.svg";
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
   day.data.forEach((hour, i) => {
-    console.log("indexday in createHourElement", i);
-    console.log("weathercon: ", hour.weathercon)
     htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
@@ -21,10 +21,9 @@ function createHourElements(day, dayIndex) {
   return htmlString;
 }
 
-function createDayElements(currentWeather, daysForecast) {
+function createDayElements() {
   let htmlString = ``;
   daysForecast.forEach((day, i) => {
-    console.log("indexday in createdayelement", i);
     htmlString += `<div class="dayData" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
                       <div class="metaAndIcon">
                         <div class="meta">
@@ -57,11 +56,10 @@ function createDayElements(currentWeather, daysForecast) {
   return htmlString;
 }
 
-async function pageLoad(currentWeather, daysForecast) {
+async function pageLoad() {
   const hoursHtml = createHourElements(daysForecast[0], 0);
-  const daysHtml = createDayElements(currentWeather, daysForecast);
+  const daysHtml = createDayElements();
   const cityAndCountry = await currentWeather.getCityNameAndCountryCode();
-  console.log("Weathercon", currentWeather.weathercon);
   document.querySelector("body").innerHTML = `
     <video class ="video" autoplay muted loop id="myVideo">
         <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
@@ -137,29 +135,19 @@ async function pageLoad(currentWeather, daysForecast) {
     </div>
 </div>
     </div>`;
-  console.log(
-    "end of pageload, elements with corresponding indexes should exist"
-  );
 }
 
-function addEventListenersToElements(elements, handlerFunction, daysForecast ) {
-  console.log("inside addeventlistener")
-  const wrapHandlerFunction = function (event) {
-    handlerFunction(event,daysForecast);
-  };
+function addEventListenersToElements(elements, handlerFunction) {
   // eslint-disable-next-line no-restricted-syntax
   for (const element of elements) {
-    element.addEventListener("click", wrapHandlerFunction);
+    element.addEventListener("click", handlerFunction);
   }
 }
 
-function removeEventListenersFromElements(elements, handlerFunction, daysForecast) {
-  const wrapHandlerFunction = function (event) {
-    handlerFunction(event,daysForecast);
-  };
+function removeEventListenersFromElements(elements, handlerFunction) {
   // eslint-disable-next-line no-restricted-syntax
   for (const element of elements) {
-    element.removeEventListener("click", wrapHandlerFunction);
+    element.removeEventListener("click", handlerFunction);
   }
 }
 
@@ -182,7 +170,7 @@ function changeBackgroundColors(hourData) {
   detailedCard.style.backgroundColor = `${hourData.getBackgroundColor()}`;
 }
 
-function updateSelectedWeather(event, daysForecast) {
+function updateSelectedWeather(event) {
   const icon = document.querySelector(".iconAndTemp .icon");
   const temp = document.querySelector(".iconAndTemp .temp");
   const pop = document.querySelector(".pop");
@@ -211,7 +199,7 @@ function updateSelectedWeather(event, daysForecast) {
   selectedTime.innerText = `${hourData.time}`;
 }
 
-function updateHourSection(event, daysForecast) {
+function updateHourSection(event) {
   let hourElements = document.querySelector(".hourSection").children;
   removeEventListenersFromElements(hourElements,updateSelectedWeather,daysForecast);
   const dayIndex = event.target.dataset.indexDay;
@@ -220,15 +208,20 @@ function updateHourSection(event, daysForecast) {
   hourElements = document.querySelector(".hourSection").children;
   addEventListenersToElements(
     hourElements,
-    updateSelectedWeather,
-    daysForecast
+    updateSelectedWeather
   );
 }
 
-function updateDetailedSection(event, daysForecast) {
-  console.log("update detailed");
-  updateSelectedWeather(event, daysForecast);
-  updateHourSection(event, daysForecast);
+function updateDetailedSection(event) {
+  updateSelectedWeather(event);
+  updateHourSection(event);
+}
+
+function addListenersToHourAndDataElements() {
+  const hourElements = document.querySelector(".hourSection").children;
+  const dayElements = document.querySelector(".daySection").children;
+  addEventListenersToElements(hourElements, updateSelectedWeather);
+  addEventListenersToElements(dayElements, updateDetailedSection);
 }
 
 export {
@@ -236,4 +229,5 @@ export {
   updateSelectedWeather,
   updateDetailedSection,
   addEventListenersToElements,
+  addListenersToHourAndDataElements,
 };

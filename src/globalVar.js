@@ -1,37 +1,25 @@
 // eslint-disable-next-line import/no-mutable-exports
-let currentWeatherObject = {};
+let currentWeather = {};
 let daysForecast = {};
 let suggestedCities = [];
 
-function setCurrentWeatherObject(newValue) {
-  currentWeatherObject = newValue;
-}
-
-function getCurrentWeatherObject() {
-  return currentWeatherObject;
+function setCurrentWeather(newValue) {
+  currentWeather = newValue;
 }
 
 function setDaysForecast(newValue) {
   daysForecast = newValue;
 }
 
-function getDaysForecast() {
-  return daysForecast;
-}
-
 function setSuggestedCities(newValue) {
   suggestedCities = newValue;
 }
 
-function getSuggestedCities() {
-  return suggestedCities;
-}
-
 export {
-  setCurrentWeatherObject,
+  setCurrentWeather,
   setDaysForecast,
   setSuggestedCities,
-  getCurrentWeatherObject,
-  getDaysForecast,
-  getSuggestedCities,
+  currentWeather,
+  daysForecast,
+  suggestedCities
 };

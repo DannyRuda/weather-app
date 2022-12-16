@@ -107,7 +107,24 @@ when pressing enter or the search icon, start a weather request with the entered
 
 sort functions:
 
-one function that gets executed when a sugestion is clicked
+in searchbar.js module define variables as follows
+
+let search = "";
+let suggestions = "";
+let suggestionElements = "";
+let searchIcon = "";
+
+function updateSearchVariables() {
+    search = document.querySelector(".search")
+    searchIcon = document.querySelector(".searchIcon")
+}
+
+function updateSuggestionVariables() {
+    suggestions = document.querySelector(".suggestions");
+    suggestionElements = suggestions.children;
+}
+
+one function that gets executed when a suggestion is clicked
 
     function LoadClickedSuggestion
         make weather api call with event targets index and  the global 
@@ -116,12 +133,39 @@ one function that gets executed when a sugestion is clicked
             // needs to return weatherObjects so global currentWeather and daysForecast
             // can get the weather assigned
             async function callWeather(e) {
-                const clickedSuggestion = event.target;
-                const city = suggestedCities[clickedSuggestion.dataset.index];
+                const clickedSuggestion = e.target;
+                const city = getSuggestedCities()[clickedSuggestion.dataset.index];
                 const coords = city.latAndLon;
                 const weatherObjects = await writeWeatherintoObjects(getCurrentWeather(coords), getFiveDayForecast(coords));
-                return weatherObjects;
-            } 
+                setCurrentWeatherObject(weatherObjects[0]);
+                setDaysForecast(weatherObjects[1]);
+                pageLoad()
+            }
 
-// on global level in index.js 
-[currentWeather,daysForecast] = await callWeather(e)
+            function addListenersToSearchbar() {
+                searchIcon.addEventListener("click", wrapEnteredValueLoad);
+                search.addEventListener("input", (e) => {
+                    if (e.key === "Enter" && search.value.length > 0) {
+                    wrapEnteredValueLoad();
+                    } else if (search.value.length >= 1) {
+                        suggestions.classList.remove("hide");
+                    } else {
+                        suggestions.classList.add("hide");
+                    }
+                } 
+            }
+    
+    async function LoadClickedSuggestion(e) {
+        const weatherObjects = await callWeather(e)setCurrentWeatherObject(weatherObjects[0]);
+                setDaysForecast(weatherObjects[1]);
+                pageLoad()
+        updateSearchVariables()
+        updateSuggestionVariables()
+        addListenersToSearchbar()
+        await getAndFillSuggestions(e)
+        addEventListenersToElements(
+            suggestionElements,
+            wrapClickedSuggestionLoad
+          );
+          addListenersToHourAndDataElements()
+    }

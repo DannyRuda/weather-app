@@ -7,7 +7,6 @@ function getCityCoordinates(cityName, country) {
     )
       .then((response) => {
         if (response.status === 200) {
-          console.log("status was 200");
           return response.json();
         }
       })
@@ -27,7 +26,6 @@ function getMatchingCities(cityName) {
     )
       .then((response) => {
         if (response.status === 200) {
-          console.log("status was 200");
           return response.json();
         }
       })
