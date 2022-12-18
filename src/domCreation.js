@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { kelvinToCelsius } from "./helperFunctions";
 
-import { daysForecast,currentWeather } from "./globalVar";
+import { daysForecast, currentWeather } from "./globalVar";
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
 import LinkedinIcon from "./media/linkedinIcon.svg";
@@ -11,7 +11,7 @@ import SearchIcon from "./media/searchIcon.svg";
 function createHourElements(day, dayIndex) {
   let htmlString = ``;
   day.data.forEach((hour, i) => {
-    if (i!==0) {
+    if (i !== 0) {
       htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
@@ -35,7 +35,9 @@ function createHourElements(day, dayIndex) {
 function createDayElements() {
   let htmlString = ``;
   daysForecast.forEach((day, i) => {
-    htmlString += `<div class="dayData${i !== 0 ? "" : " selected"}" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
+    htmlString += `<div class="dayData${
+      i !== 0 ? "" : " selected"
+    }" data-index-day="${i}" style="background-color: ${currentWeather.getBackgroundColor()};">
                       <div class="metaAndIcon">
                         <div class="meta">
                             <p class="weekday">${
@@ -91,7 +93,10 @@ async function pageLoad() {
                     </div>
                 </div>
         </div>
-        <input type="range" min="0" max="1" value="1" class="units"/>
+        <div class="toggleSwitch">
+                <input type="checkbox" class="celsius" id="check"/>
+                <label for="check"></label>
+        </div>
         <div class="socials">
             <p class="myName">By DannyRuda</p>
             <img src="${GithubIcon}" width="30" height="30"/>
@@ -212,20 +217,14 @@ function updateSelectedWeather(event) {
 
 function updateHourSection(event) {
   let hourElements = document.querySelector(".hourSection").children;
-  removeEventListenersFromElements(hourElements,updateSelectedWeather);
+  removeEventListenersFromElements(hourElements, updateSelectedWeather);
   const dayIndex = event.target.dataset.indexDay;
   const hoursHtml = createHourElements(daysForecast[dayIndex], dayIndex);
   document.querySelector(".hourSection").innerHTML = hoursHtml;
   hourElements = document.querySelector(".hourSection").children;
 
-  addEventListenersToElements(
-    hourElements,
-    updateSelectedWeather
-  );
-  addEventListenersToElements(
-    hourElements,
-    elevateSelectedElement
-  );
+  addEventListenersToElements(hourElements, updateSelectedWeather);
+  addEventListenersToElements(hourElements, elevateSelectedElement);
 }
 
 function updateDetailedSection(event) {
@@ -235,11 +234,13 @@ function updateDetailedSection(event) {
 
 function elevateSelectedElement(e) {
   const clickedElementClass = e.target.classList.item(0);
-  const elevatedElement = document.querySelector(`.${clickedElementClass}.selected`);
-  if(elevatedElement) {
-    elevatedElement.classList.remove("selected")
+  const elevatedElement = document.querySelector(
+    `.${clickedElementClass}.selected`
+  );
+  if (elevatedElement) {
+    elevatedElement.classList.remove("selected");
   }
-  e.target.classList.add("selected")
+  e.target.classList.add("selected");
 }
 
 function addListenersToHourAndDataElements() {

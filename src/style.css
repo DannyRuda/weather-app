@@ -135,6 +135,87 @@ input {
   cursor: pointer;
 }
 
+
+.toggleSwitch {
+  width: 100px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  position: absolute;
+  left: -5000px;
+  top: -5000px;
+}
+
+input[type="checkbox"] + label {
+  cursor: pointer;
+  display:flex;
+  align-items: center;
+}
+
+input[type="checkbox"].celsius + label::before {
+  content: "";
+  width: 5em;
+  height: 2.5em;
+  border-radius: 2.5em;
+  background-color: rgb(218, 218, 218);
+  transition: background-color 0.3s;
+}
+
+input[type="checkbox"].celsius + label::after {
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  content: "°C";
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: rgb(170, 22, 22);
+  position: absolute;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+input[type="checkbox"].celsius:hover + label::before {
+  content: "";
+  width: 5em;
+  height: 2.5em;
+  border-radius: 2.5em;
+  background-color: rgb(153, 147, 184);
+}
+
+input[type="checkbox"].celsius:hover + label::after {
+  content: "°F";
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: rgb(178, 197, 111);
+  transform: translateX(1em);
+}
+
+input[type="checkbox"].celsius:checked + label::before {
+  content: "";
+  width: 5em;
+  height: 2.5em;
+  border-radius: 2.5em;
+  background-color: rgb(139, 118, 231);
+}
+
+input[type="checkbox"].celsius:checked + label::after {
+  content: "°F";
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background-color: rgb(10, 97, 24);
+  transform: translateX(2em);
+}
+
+input[type="checkbox"].celsius:focus + label::before {
+  outline: 1px solid black;
+}
+
+
 .socials {
     display:inline-flex;
     align-items: center;
