@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-else-return */
+import { locationNotFound } from "./catchErrors";
+
 function getCityCoordinates(cityName, country) {
   return new Promise((resolve, reject) => {
     fetch(
@@ -53,7 +55,9 @@ function getCurrentWeather(city, country) {
           .catch((err) => {
             reject(err);
           });
-      });
+      }).catch(()=>{
+        locationNotFound();
+      })
     });
   } else if (arguments.length === 1) {
     return new Promise((resolve, reject) => {
@@ -87,7 +91,10 @@ function getFiveDayForecast(city, country) {
           .catch((err) => {
             reject(err);
           });
-      });
+      })
+      .catch((reason)=>{
+        locationNotFound();
+      })
     });
   } else if (arguments.length === 1) {
     return new Promise((resolve, reject) => {

@@ -73,14 +73,25 @@ async function getAndFillSuggestions() {
 }
 
 async function inputHandler(e) {
-  if (e.key === "Enter" && search.value.length > 0) {
+  // eslint-disable-next-line no-useless-escape
+  const specialCharacters = /[`!@#$%^&*()_+\-=\[\]{};':"\\|.<>\/?~]/;
+  console.log(search.value);
+  console.log(specialCharacters.test("t+est"));
+  if (
+    e.key === "Enter" &&
+    search.value.length > 0 &&
+    !specialCharacters.test(search.value)
+  ) {
     // eslint-disable-next-line no-use-before-define
     loadEnteredCity();
-  } else if (search.value.length >= 1) {
+  } else if (search.value.length >= 1 && !specialCharacters.test(search.value)) {
     suggestions.classList.remove("hide");
     await getAndFillSuggestions();
     // eslint-disable-next-line no-use-before-define
     addEventListenersToElements(suggestionElements, loadClickedSuggestion);
+  } else if (specialCharacters.test(search.value) && e.key==="Enter") {
+    console.log("hello?");
+    search.value = "No Special Characters allowed!";
   } else {
     suggestions.classList.add("hide");
   }

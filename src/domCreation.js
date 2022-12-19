@@ -151,7 +151,13 @@ async function pageLoad() {
 
     </div>
 </div>
-    </div>`;
+    </div>
+    <template id="error">
+      <div id="errorWrapper">
+        <p id="errorHeading">Location Not Found!</p>
+        <p id="errorText">Sorry, the server didn't find any locations for your query, please check the spelling and try again.</p>
+      </div>
+    </template>`;
 }
 
 function addEventListenersToElements(elements, handlerFunction) {

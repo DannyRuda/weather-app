@@ -90,7 +90,7 @@ input {
 
 .wrapper {
   width: 335px;
-  border-radius: 20px;
+  border-radius: 30px;
   box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.15);
   position: absolute;
   background-color: white;
@@ -101,6 +101,7 @@ input {
   border-radius: 30px;
   width: 335px;
   height: 52px;
+  padding-left: 10px;
   font-size: 1rem;
   border: none;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
@@ -158,8 +159,8 @@ input[type="checkbox"] + label {
 input[type="checkbox"].celsius + label::before {
   content: "";
   width: 5em;
-  height: 2.5em;
-  border-radius: 2.5em;
+  height: 40px;
+  border-radius: 40px;
   background-color: rgb(218, 218, 218);
 }
 
@@ -168,20 +169,22 @@ input[type="checkbox"].celsius + label::after {
   align-items: center;
   justify-content: center;
   content: "°C";
-  width: 3em;
-  height: 3em;
-  border:1px solid black;
+  width: 48px;
+  height: 48px;
+  border: 1px solid black;
   border-radius: 50%;
   background-color: rgb(255, 255, 255);
   position: absolute;
+  font-size: 26px;
+  font-family: Poppins;
 }
 
 /* general styling fahrenheit state */
 input[type="checkbox"].fahrenheit + label::before {
   content: "";
   width: 5em;
-  height: 2.5em;
-  border-radius: 2.5em;
+  height: 40px;
+  border-radius: 40px;
   background-color: rgb(218, 218, 218);
 }
 
@@ -190,13 +193,15 @@ input[type="checkbox"].fahrenheit + label::after {
   align-items: center;
   justify-content: center;
   content: "°F";
-  width: 3em;
-  height: 3em;
-  border:1px solid black;
+  width: 48px;
+  height: 48px;
+  border: 1px solid black;
   border-radius: 50%;
   background-color: rgb(255, 255, 255);
   position: absolute;
-  transform:translateX(2em)
+  transform: translateX(32px);
+  font-size: 26px;
+  font-family: RobotoMono;
 }
 
 /* Keyframes for hovering over toggle switch in celsius state */
@@ -205,7 +210,7 @@ input[type="checkbox"].fahrenheit + label::after {
   100% {
     content: "°F";
 
-    transform: translateX(1em);
+    transform: translateX(16px);
   }
 }
 
@@ -216,41 +221,38 @@ input[type="checkbox"].hover-enabled:not(:checked):hover + label::after {
 /* Keyframes for clicking on toggle switch in celsius state */
 
 @keyframes setToFahrenheitAfter {
-  0%{
+  0% {
     transform: translateX(0);
     content: "°C";
   }
   100% {
-
-    transform: translateX(2em);
+    transform: translateX(32px);
     content: "°F";
   }
 }
 
 input[type="checkbox"].transition-enabled:checked + label::after {
-  animation: setToFahrenheitAfter 0.4s 1 normal ;
-
+  animation: setToFahrenheitAfter 0.4s 1 normal;
 }
 
 /* Keyframe for clicking on toggle switch in fahrenheit state */
 
 @keyframes setToCelsiusAfter {
-  0%{
-    transform: translateX(2em);
+  0% {
+    transform: translateX(32px);
     content: "°F";
   }
   100% {
-
     transform: translateX(0);
     content: "°C";
   }
 }
 
 input[type="checkbox"].transition-enabled:not(:checked) + label::after {
-  animation: setToCelsiusAfter 0.4s 1 normal ;
+  animation: setToCelsiusAfter 0.4s 1 normal;
 }
 
-input[type="checkbox"]:focus + label::before{
+input[type="checkbox"]:focus + label::before {
   outline: 1px solid black;
 }
 
@@ -259,7 +261,7 @@ input[type="checkbox"]:focus + label::before{
 @keyframes hoverFahrenheitAfter {
   100% {
     content: "°C";
-    transform: translateX(1em);
+    transform: translateX(16px);
   }
 }
 
@@ -481,4 +483,27 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   border-left: 30px solid white;
   border-top: 30px solid transparent;
   border-bottom: 30px solid transparent;
+}
+
+#errorWrapper {
+  width: 100%;
+  height: 90%;
+  text-align: center;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:23px;
+}
+
+#errorHeading {
+  font-size: 32px;
+  font-family: poppins;
+}
+
+#errorText {
+  font-size: 20px;
+  width: 70%;
+  line-height: 1.5;
+  font-family: poppins;
 }
