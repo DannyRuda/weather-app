@@ -19,6 +19,8 @@ import {
   addListenersToHourAndDataElements,
 } from "./domCreation";
 
+import { toggleUnitsOnPage } from "./toggleUnits";
+
 let search = "";
 let suggestions = "";
 let suggestionElements = "";
@@ -33,7 +35,7 @@ function updateSearchbarVariables() {
 
 async function callWeather(e) {
   const clickedSuggestion = e.target;
-  
+
   const city = suggestedCities[clickedSuggestion.dataset.index];
   const coords = city.latAndLon;
   const weatherObjects = await writeWeatherintoObjects(
@@ -102,6 +104,9 @@ async function loadEnteredCity() {
   updateSearchbarVariables();
   addListenersToSearchbar();
   addListenersToHourAndDataElements();
+  document
+    .querySelector("#toggleSwitch")
+    .addEventListener("click", toggleUnitsOnPage);
 }
 
 async function loadClickedSuggestion(e) {
@@ -112,6 +117,9 @@ async function loadClickedSuggestion(e) {
   updateSearchbarVariables();
   addListenersToSearchbar();
   addListenersToHourAndDataElements();
+  document
+    .querySelector("#toggleSwitch")
+    .addEventListener("click", toggleUnitsOnPage);
 }
 
 export {

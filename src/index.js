@@ -1,27 +1,18 @@
 /* eslint-disable prefer-promise-reject-errors */
-import {
-  writeWeatherintoObjects,
-} from "./helperFunctions";
+import { writeWeatherintoObjects } from "./helperFunctions";
 
-import {
-  setCurrentWeather,
-  setDaysForecast,
-} from "./globalVar";
+import { setCurrentWeather, setDaysForecast } from "./globalVar";
 
 import { getCurrentWeather, getFiveDayForecast } from "./weatherAPI";
 
-import {
-  updateSearchbarVariables,
-  addListenersToSearchbar,
-} from "./searchbar";
+import { updateSearchbarVariables, addListenersToSearchbar } from "./searchbar";
 
-import {
-  pageLoad,
-  addListenersToHourAndDataElements,
-} from "./domCreation";
+import { pageLoad, addListenersToHourAndDataElements } from "./domCreation";
 
 import "./reset.css";
 import "./style.css";
+
+import { toggleUnitsOnPage } from "./toggleUnits";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
@@ -33,9 +24,12 @@ writeWeatherintoObjects(
   })
   .then(() => pageLoad())
   .then(() => {
-    updateSearchbarVariables()
-    addListenersToSearchbar()
+    updateSearchbarVariables();
+    addListenersToSearchbar();
     addListenersToHourAndDataElements();
+    document
+      .querySelector("#toggleSwitch")
+      .addEventListener("click", toggleUnitsOnPage);
   });
 
 new Promise((resolve, reject) => {
@@ -78,7 +72,10 @@ new Promise((resolve, reject) => {
   })
   .then(() => pageLoad())
   .then(() => {
-    updateSearchbarVariables()
-    addListenersToSearchbar()
+    updateSearchbarVariables();
+    addListenersToSearchbar();
     addListenersToHourAndDataElements();
+    document
+      .querySelector("#toggleSwitch")
+      .addEventListener("click", toggleUnitsOnPage);
   });

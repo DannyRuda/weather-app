@@ -1,14 +1,14 @@
-function testPageLoadData(currentWeather, daysForecast, kelvinToCelsius,kelvinToFahrenheit) {
+function testPageLoadData(currentWeather, daysForecast, kelvinToUnit,kelvinToUnit) {
   console.log("CURRENT WEATHER CARD!!!!!!!!!!!!!!");
   console.log("Icon: ", currentWeather.getIconLink());
   console.log("Background: ", currentWeather.getBackgroundLink());
   console.log(
     "temperature in °C: ",
-    kelvinToCelsius(currentWeather.temperature)
+    kelvinToUnit(currentWeather.temperature)
   );
   console.log(
     "temperature in °F: ",
-    kelvinToFahrenheit(currentWeather.temperature)
+    kelvinToUnit(currentWeather.temperature)
   );
   console.log("pop: ", currentWeather.precipitation);
   console.log("windspeed: ", currentWeather.windspeed);
@@ -26,8 +26,8 @@ function testPageLoadData(currentWeather, daysForecast, kelvinToCelsius,kelvinTo
       daysForecast[0].data.forEach((hour) => {
         console.log("Time: ", hour.time);
         console.log("Icon: ", hour.getIconLink());
-        console.log("Temperature in °C: ", kelvinToCelsius(hour.temperature));
-        console.log("Temperature in °F: ", kelvinToFahrenheit(hour.temperature));
+        console.log("Temperature in °C: ", kelvinToUnit(hour.temperature));
+        console.log("Temperature in °F: ", kelvinToUnit(hour.temperature));
       });
       console.log("DAY CARDS SECTION!!!!!!!!!!!!!!!!!");
       daysForecast.forEach((day) => {
@@ -39,10 +39,10 @@ function testPageLoadData(currentWeather, daysForecast, kelvinToCelsius,kelvinTo
         );
         console.log("MonthAndDay: ", day.getMonthAndDayDate("DE"));
         console.log("Icon: ", day.getIconLink());
-        console.log("Min Temperature in °C: ", kelvinToCelsius(day.getMinTemp()));
-        console.log("Max Temperature in °C: ", kelvinToCelsius(day.getMaxTemp()));
-        console.log("Min Temperature in °F: ", kelvinToFahrenheit(day.getMinTemp()));
-        console.log("Max Temperature in °F: ", kelvinToFahrenheit(day.getMaxTemp()));
+        console.log("Min Temperature in °C: ", kelvinToUnit(day.getMinTemp()));
+        console.log("Max Temperature in °C: ", kelvinToUnit(day.getMaxTemp()));
+        console.log("Min Temperature in °F: ", kelvinToUnit(day.getMinTemp()));
+        console.log("Max Temperature in °F: ", kelvinToUnit(day.getMaxTemp()));
       });
     });
 }

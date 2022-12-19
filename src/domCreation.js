@@ -1,7 +1,8 @@
 /* eslint-disable no-use-before-define */
-import { kelvinToCelsius } from "./helperFunctions";
+import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
-import { daysForecast, currentWeather } from "./globalVar";
+import { daysForecast, currentWeather, unit } from "./globalVar";
+
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
 import LinkedinIcon from "./media/linkedinIcon.svg";
@@ -15,17 +16,17 @@ function createHourElements(day, dayIndex) {
       htmlString += `<div class="hourData" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
-                            <p class="temp celsius">${kelvinToCelsius(
+                            <p class="temp">${kelvinToUnit(
                               hour.temperature
-                            )}°C</p>
+                            )}</p>
                         </div>`;
     } else {
       htmlString += `<div class="hourData selected" data-index-hour="${i}" data-index-day="${dayIndex}">
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
-                            <p class="temp celsius">${kelvinToCelsius(
+                            <p class="temp ${unit}">${kelvinToUnit(
                               hour.temperature
-                            )}°C</p>
+                            )}</p>
                         </div>`;
     }
   });
@@ -52,16 +53,16 @@ function createDayElements() {
                       <div class="tempScale">
                       ${
                         day.data.length > 1
-                          ? `<p class="temp celsius">${kelvinToCelsius(
+                          ? `<p class="temp min">${kelvinToUnit(
                               day.getMinTemp()
-                            )}°C</p>
+                            )}</p>
                       <p class="spacer">-</p>
-                      <p class="temp celsius">${kelvinToCelsius(
+                      <p class="temp max">${kelvinToUnit(
                         day.getMaxTemp()
-                      )}°C</p>`
-                          : `<p class="temp celsius">${kelvinToCelsius(
+                      )}</p>`
+                          : `<p class="temp">${kelvinToUnit(
                               day.data[0].temperature
-                            )}°C</p>`
+                            )}</p>`
                       }
                       </div>
                     </div>`;
@@ -94,8 +95,8 @@ async function pageLoad() {
                 </div>
         </div>
         <div class="toggleSwitch">
-                <input type="checkbox" class="celsius" id="check"/>
-                <label for="check"></label>
+                <input type="checkbox" class="hover-enabled ${unit}" id="toggleSwitch" ${unit==="fahrenheit" ? "checked":""}/>
+                <label for="toggleSwitch"></label>
         </div>
         <div class="socials">
             <p class="myName">By DannyRuda</p>
@@ -108,9 +109,9 @@ async function pageLoad() {
           <div class="weatherData">
             <div class="iconAndTemp">
                 <img src="${currentWeather.getIconLink()}" width="85" height="75" class="icon selected"/>
-                <p class="temp celsius">${kelvinToCelsius(
+                <p class="temp">${kelvinToUnit(
                   currentWeather.temperature
-                )}°C</p>
+                )}</p>
             </div>
             <div class="text">
                 <p lang="DE">Niederschlag:</p>
@@ -120,7 +121,7 @@ async function pageLoad() {
             <div class="variables">
                 <p class="pop">${currentWeather.precipitation}%</p>
                 <p class="humid">${currentWeather.humidity}%</p>
-                <p class="wind metric">${currentWeather.windspeed} km/h</p>
+                <p class="wind metric">${speedToUnit(currentWeather.windspeed)}</p>
             </div>
           </div>
           <div class="metaData">
@@ -203,12 +204,10 @@ function updateSelectedWeather(event) {
   changeBackgroundVideo(hourData);
   changeBackgroundColors(hourData);
   icon.src = `${hourData.getIconLink()}`;
-  temp.innerText = temp.classList.contains("celsius")
-    ? `${kelvinToCelsius(hourData.temperature)}°C`
-    : `${kelvinToCelsius(hourData.temperature)}°F`;
+  temp.innerText = kelvinToUnit(hourData.temperature);
   pop.innerText = `${hourData.precipitation}%`;
   humid.innerText = `${hourData.humidity}%`;
-  wind.innerText = `${hourData.windspeed} km/h`;
+  wind.innerText = `${speedToUnit(hourData.windspeed)}`;
   selectedDate.innerText = `${day.getWeekDay()}, ${day.getMonthAndDayDate(
     "DE"
   )}`;

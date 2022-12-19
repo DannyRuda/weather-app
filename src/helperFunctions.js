@@ -1,8 +1,11 @@
+/* eslint-disable consistent-return */
 import {
   createHourObject,
   createCurrentWeather,
   createDayObject,
 } from "./weatherObjects";
+
+import { unit } from "./globalVar";
 
 function numberToWord(number) {
   const numbers = ["one", "two", "three", "four", "five", "six"];
@@ -73,7 +76,7 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
         currentData.coord.lon,
         currentData.coord.lat,
         currentData.main.temp,
-        forecast.list[0].pop*100,
+        forecast.list[0].pop * 100,
         currentData.main.humidity,
         currentData.wind.speed,
         currentData.weather[0].main
@@ -88,27 +91,28 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
   });
 }
 
-function kelvinToFahrenheit(temp) {
-  return Math.round((temp - 273.15) * 1.8 + 32.0);
+function speedToUnit(speed) {
+  console.log(speed)
+  if(unit ==="celsius") {
+    return `${Math.round(speed*3.6 * 100)/100} km/h`;
+  } if(unit==="fahrenheit") {
+    return `${Math.round(speed*2.237 * 100)/100} mph`;
+  }
 }
 
-function kelvinToCelsius(temp) {
-  return Math.round(temp - 273.15);
+function kelvinToUnit(temp) {
+  if (unit === "celsius") {
+    return `${Math.round(temp - 273.15)}°C`;
+  }
+  if (unit === "fahrenheit") {
+    return `${Math.round((temp - 273.15) * 1.8 + 32.0)}°F`;
+  }
 }
 
-function fahrenheitToCelsius(temp) {
-  return Math.round((temp - 32) / 1.8);
-}
-
-function celsiusToFahrenheit(temp) {
-  return Math.round(temp * 1.8 + 32);
-}
 export {
   numberToWord,
   splitIntoDays,
   writeWeatherintoObjects,
-  kelvinToFahrenheit,
-  kelvinToCelsius,
-  fahrenheitToCelsius,
-  celsiusToFahrenheit,
+  speedToUnit,
+  kelvinToUnit,
 };

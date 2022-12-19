@@ -1,77 +1,75 @@
 @font-face {
+  font-family: "Poppins";
 
-    font-family: 'Poppins';
-  
-    src: url("./media/Poppins-Regular.ttf") format('truetype'), 
+  src: url("./media/Poppins-Regular.ttf") format("truetype"),
     url("./media/Poppins-SemiBold.ttf") format("truetype");
-  
-    font-weight: 400;
-  
-    font-style: normal;
-  
-  }
 
-  @font-face {
+  font-weight: 400;
 
-    font-family: 'RobotoMono';
-  
-    src: url("./media/RobotoMono-Regular.ttf") format('truetype');
-  
-    font-weight: 400;
-  
-    font-style: normal;
-  
-  }
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "RobotoMono";
+
+  src: url("./media/RobotoMono-Regular.ttf") format("truetype");
+
+  font-weight: 400;
+
+  font-style: normal;
+}
 
 .video {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    min-height: 100%;
-
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 100%;
 }
 
 .overlay {
-    position: fixed;
-    top:50%;
-    left:50%;
-    transform: translate(-50%, -50%) scale(1);
-    max-height: 100vh;
-    z-index: 4;
-    width: 66%;
-    height: 88%;
-    border-radius: 30px;
-    background: linear-gradient(rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%);
-    /*background: linear-gradient(rgba(169, 204, 237, 1)0%, rgba(169, 204, 237, 1) 25%,rgba(213, 214, 163, 1) 100%);*/
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  max-height: 100vh;
+  z-index: 4;
+  width: 66%;
+  height: 88%;
+  border-radius: 30px;
+  background: linear-gradient(
+    rgba(144, 189, 231, 1) 0%,
+    rgba(144, 189, 231, 1) 20%,
+    rgba(209, 220, 138, 1) 100%
+  );
+  /*background: linear-gradient(rgba(169, 204, 237, 1)0%, rgba(169, 204, 237, 1) 25%,rgba(213, 214, 163, 1) 100%);*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 p {
-    font-family: poppins, sans-serif;
-    font-size: 24px;
-    margin: 10px 0;
+  font-family: poppins, sans-serif;
+  font-size: 24px;
+  margin: 10px 0;
 }
 
 p.temp {
-    font-family: RobotoMono, monospace;
+  font-family: RobotoMono, monospace;
 }
 
 header {
-    display:flex;
-    margin: 31px 0px;
-    width:90%;
-    justify-content: space-between;
-
+  display: flex;
+  margin: 31px 0px;
+  width: 90%;
+  justify-content: space-between;
 }
 
 .logo {
-    display:inline-flex;
-    font-weight: 600;
-    gap:21px;
-    align-items: center;
+  display: inline-flex;
+  font-weight: 600;
+  gap: 21px;
+  align-items: center;
 }
 
 .siteName {
@@ -79,11 +77,11 @@ header {
 }
 
 input {
-    display:inline-block;
+  display: inline-block;
 }
 
 .hide {
-  display:none;
+  display: none;
 }
 
 .wrapperP {
@@ -93,7 +91,7 @@ input {
 .wrapper {
   width: 335px;
   border-radius: 20px;
-  box-shadow: 0px 1px 5px 3px rgba(0,0,0,0.15);
+  box-shadow: 0px 1px 5px 3px rgba(0, 0, 0, 0.15);
   position: absolute;
   background-color: white;
   z-index: 5;
@@ -105,7 +103,7 @@ input {
   height: 52px;
   font-size: 1rem;
   border: none;
-  box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
   font-size: 20px;
   font-weight: 400;
   opacity: 1;
@@ -120,9 +118,9 @@ input {
   font-size: 20px;
   margin: 0px 0px;
   padding: 10px 10px;
-  box-shadow: 0px 1px 4px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
   border-radius: 30px;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 .suggestions p:hover {
@@ -130,11 +128,12 @@ input {
 }
 
 .searchIcon {
-  position:fixed;
-  transform: translate(830%,18%) scale(1);
+  position: fixed;
+  transform: translate(830%, 18%) scale(1);
   cursor: pointer;
 }
 
+/* Styling for the toggle switch that switches between celsius/metric and fahrenheit/imperial */
 
 .toggleSwitch {
   width: 100px;
@@ -151,105 +150,157 @@ input[type="checkbox"] {
 
 input[type="checkbox"] + label {
   cursor: pointer;
-  display:flex;
+  display: flex;
   align-items: center;
 }
 
+/* general styling celsius state */
 input[type="checkbox"].celsius + label::before {
   content: "";
   width: 5em;
   height: 2.5em;
   border-radius: 2.5em;
   background-color: rgb(218, 218, 218);
-  transition: background-color 0.3s;
 }
 
 input[type="checkbox"].celsius + label::after {
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   content: "°C";
   width: 3em;
   height: 3em;
+  border:1px solid black;
   border-radius: 50%;
-  background-color: rgb(170, 22, 22);
+  background-color: rgb(255, 255, 255);
   position: absolute;
-  transition: background-color 0.3s, transform 0.3s;
 }
 
-input[type="checkbox"].celsius:hover + label::before {
+/* general styling fahrenheit state */
+input[type="checkbox"].fahrenheit + label::before {
   content: "";
   width: 5em;
   height: 2.5em;
   border-radius: 2.5em;
-  background-color: rgb(153, 147, 184);
+  background-color: rgb(218, 218, 218);
 }
 
-input[type="checkbox"].celsius:hover + label::after {
+input[type="checkbox"].fahrenheit + label::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   content: "°F";
   width: 3em;
   height: 3em;
+  border:1px solid black;
   border-radius: 50%;
-  background-color: rgb(178, 197, 111);
-  transform: translateX(1em);
+  background-color: rgb(255, 255, 255);
+  position: absolute;
+  transform:translateX(2em)
 }
 
-input[type="checkbox"].celsius:checked + label::before {
-  content: "";
-  width: 5em;
-  height: 2.5em;
-  border-radius: 2.5em;
-  background-color: rgb(139, 118, 231);
+/* Keyframes for hovering over toggle switch in celsius state */
+
+@keyframes hoverCelsiusAfter {
+  100% {
+    content: "°F";
+
+    transform: translateX(1em);
+  }
 }
 
-input[type="checkbox"].celsius:checked + label::after {
-  content: "°F";
-  width: 3em;
-  height: 3em;
-  border-radius: 50%;
-  background-color: rgb(10, 97, 24);
-  transform: translateX(2em);
+input[type="checkbox"].hover-enabled:not(:checked):hover + label::after {
+  animation: hoverCelsiusAfter 0.4s 0.25s 2 alternate;
 }
 
-input[type="checkbox"].celsius:focus + label::before {
+/* Keyframes for clicking on toggle switch in celsius state */
+
+@keyframes setToFahrenheitAfter {
+  0%{
+    transform: translateX(0);
+    content: "°C";
+  }
+  100% {
+
+    transform: translateX(2em);
+    content: "°F";
+  }
+}
+
+input[type="checkbox"].transition-enabled:checked + label::after {
+  animation: setToFahrenheitAfter 0.4s 1 normal ;
+
+}
+
+/* Keyframe for clicking on toggle switch in fahrenheit state */
+
+@keyframes setToCelsiusAfter {
+  0%{
+    transform: translateX(2em);
+    content: "°F";
+  }
+  100% {
+
+    transform: translateX(0);
+    content: "°C";
+  }
+}
+
+input[type="checkbox"].transition-enabled:not(:checked) + label::after {
+  animation: setToCelsiusAfter 0.4s 1 normal ;
+}
+
+input[type="checkbox"]:focus + label::before{
   outline: 1px solid black;
 }
 
+/* Keyframes for hovering over toggle switch in fahrenheit state */
 
-.socials {
-    display:inline-flex;
-    align-items: center;
-    font-weight: 600;
-    gap:10px;
+@keyframes hoverFahrenheitAfter {
+  100% {
+    content: "°C";
+    transform: translateX(1em);
+  }
 }
 
+input[type="checkbox"].hover-enabled:checked:hover + label::after {
+  animation: hoverFahrenheitAfter 0.4s 0.25s 2 alternate;
+}
+
+.socials {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+  gap: 10px;
+}
 
 .detailed {
-    width: 81.6%;
-    height: 55%;
-    background-color: white;
-    border-radius: 30px;
-    /*filter: drop-shadow(0 1px 1px black);*/
-    display:flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 10px;
-    box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
+  width: 81.6%;
+  height: 55%;
+  background-color: white;
+  border-radius: 30px;
+  /*filter: drop-shadow(0 1px 1px black);*/
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .selectedWeather {
-    display:flex;
-    width: 84%;
-    justify-content: space-between;
-    margin-top:20px;
+  display: flex;
+  width: 84%;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .weatherData {
-    text-align: start;
-    font-size: 20px;
+  text-align: start;
+  font-size: 20px;
 }
 
-.text p,.variables p {
+.text p,
+.variables p {
   font-size: 20px;
 }
 
@@ -259,175 +310,175 @@ input[type="checkbox"].celsius:focus + label::before {
 
 .weatherData .temp {
   font-size: 36px;
-
 }
 
 .iconAndTemp {
-    display:flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .iconAndTemp p {
-    font-size: 30px;
-    margin-left: 16px;
-    font-weight: 600;
+  font-size: 30px;
+  margin-left: 16px;
+  font-weight: 600;
 }
 
 .text {
-    display: inline-block;
+  display: inline-block;
 }
 
 .variables {
-    display: inline-block;
+  display: inline-block;
 }
 
 .metaData {
-    text-align: end;
+  text-align: end;
 }
 
 .metaData .date {
-    font-size: 28px;
-    margin-bottom: 20px;
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
 .city {
   font-size: 20px;
-  margin-bottom: 5px
+  margin-bottom: 5px;
 }
 
 .time {
-    display:flex;
-    justify-content: end;
-    align-items: center;
-    font-size: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  font-size: 20px;
 }
 
 .hourSection {
-    display:flex;
-    flex-wrap: nowrap;
-    overflow-y: scroll;
-    max-width: 84%;
-    gap: 50px;
-    margin-top:60px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-    padding-top:20px;
-
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-y: scroll;
+  max-width: 84%;
+  gap: 50px;
+  margin-top: 60px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  padding-top: 20px;
 }
 
- /* Hide scrollbar for Chrome, Safari and Opera */
- .hourSection::-webkit-scrollbar {
-    display: none;
-  }
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hourSection::-webkit-scrollbar {
+  display: none;
+}
 
-  .selected {
-    transform: translateY(-10%);
-  }
+.selected {
+  transform: translateY(-10%);
+}
 
-  .hourData {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
-    transition: transform 0.3s;
-  }
+.hourData {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
 
-  .hourData:hover {
-    transform: translateY(-10%);
-  }
+.hourData:hover {
+  transform: translateY(-10%);
+}
 
-  .hourData .time, .hourData .icon, .hourData .temp {
-    pointer-events: none;
-  }
+.hourData .time,
+.hourData .icon,
+.hourData .temp {
+  pointer-events: none;
+}
 
-  .daySlider {
-    display:flex;
-    align-items: center;
-    width: 90%;
-    gap:20px;
-  }
+.daySlider {
+  display: flex;
+  align-items: center;
+  width: 90%;
+  gap: 20px;
+}
 
-  .daySection {
-    display:flex;
-    width: 91%;
-    gap: 32px;
-    overflow-y: scroll;
-    padding-top:38px;
-    padding-bottom: 10px;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
-  }
+.daySection {
+  display: flex;
+  width: 91%;
+  gap: 32px;
+  overflow-y: scroll;
+  padding-top: 38px;
+  padding-bottom: 10px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
 
-   /* Hide scrollbar for Chrome, Safari and Opera */
+/* Hide scrollbar for Chrome, Safari and Opera */
 .daySection::-webkit-scrollbar {
   display: none;
 }
 
-  .dayData {
-    padding:10px;
-    background-color: white;
-    /*filter: drop-shadow(0 1px 1px black);*/
-    border-radius: 30px;
-    display:flex;
-    flex-shrink: 0;
-    flex-direction: column;
-    align-items: center;
-    height:150px;
-    width: 300px;
-    cursor: pointer;
-    transition: transform 0.3s;
-    box-shadow: 0px 1px 4px rgba(0,0,0,0.2);
-  }
+.dayData {
+  padding: 10px;
+  background-color: white;
+  /*filter: drop-shadow(0 1px 1px black);*/
+  border-radius: 30px;
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: center;
+  height: 150px;
+  width: 300px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+}
 
-  .dayData:hover {
-    transform: translateY(-10%);
-  }
+.dayData:hover {
+  transform: translateY(-10%);
+}
 
-  .metaAndIcon {
-    display:flex;
-    width: 100%;
-    justify-content: space-around;
-    margin-top: 10px;
-    pointer-events: none;
-  }
+.metaAndIcon {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 10px;
+  pointer-events: none;
+}
 
-  .meta {
-    text-align: start;
-  }
+.meta {
+  text-align: start;
+}
 
-  .weekday {
-    font-size: 28px;
-    margin-top: 5px;
-  }
+.weekday {
+  font-size: 28px;
+  margin-top: 5px;
+}
 
-  .meta .date {
-    font-size: 18px;
-  }
+.meta .date {
+  font-size: 18px;
+}
 
-  .tempScale {
-    display:flex;
-    align-items: center;
-    width: 60%;
-    justify-content: space-around;
-    pointer-events: none;
-  }
+.tempScale {
+  display: flex;
+  align-items: center;
+  width: 60%;
+  justify-content: space-around;
+  pointer-events: none;
+}
 
-  .spacer {
-    font-size: 35px;
-  }
+.spacer {
+  font-size: 35px;
+}
 
-  .backArrow {
-    width: 0px;
-    height: 0px;
-    border-right: 30px solid white;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-  }
+.backArrow {
+  width: 0px;
+  height: 0px;
+  border-right: 30px solid white;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+}
 
-  .forwardArrow {
-    width: 0px;
-    height: 0px;
-    border-left: 30px solid white;
-    border-top: 30px solid transparent;
-    border-bottom: 30px solid transparent;
-  }
+.forwardArrow {
+  width: 0px;
+  height: 0px;
+  border-left: 30px solid white;
+  border-top: 30px solid transparent;
+  border-bottom: 30px solid transparent;
+}
