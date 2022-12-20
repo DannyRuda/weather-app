@@ -1,12 +1,4 @@
-- implement search bar so that searching for a city and or city with country code will do a pageload with the entered city data
-
 - implement side scrolling for day section
-
-- implement unit switching with slider
-
-- style slider
-
-- style search bar
 
 - Clear icon, Clear Background, Clear Gradient and Clear color should change depending on time and timezone. For example if its past 7pm local time of the searched location, everything should fit the night and past 7am  it should fit the day
 

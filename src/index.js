@@ -14,6 +14,8 @@ import "./style.css";
 
 import { toggleUnitsOnPage } from "./toggleUnits";
 
+import { addScrollingEventListener } from "./horizontalScroll";
+
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
   getFiveDayForecast("sidney", "AU")
@@ -78,4 +80,5 @@ new Promise((resolve, reject) => {
     document
       .querySelector("#toggleSwitch")
       .addEventListener("click", toggleUnitsOnPage);
+    addScrollingEventListener();
   });
