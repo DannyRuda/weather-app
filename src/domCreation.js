@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
-import { daysForecast, currentWeather, unit } from "./globalVar";
+import { daysForecast, currentWeather, unit, mousedown } from "./globalVar";
 
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
@@ -25,8 +25,8 @@ function createHourElements(day, dayIndex) {
                             <p class="time">${hour.time}</p>
                             <img class="icon" src="${hour.getIconLink()}" width="70" height="70"/>
                             <p class="temp ${unit}">${kelvinToUnit(
-                              hour.temperature
-                            )}</p>
+        hour.temperature
+      )}</p>
                         </div>`;
     }
   });
@@ -57,9 +57,7 @@ function createDayElements() {
                               day.getMinTemp()
                             )}</p>
                       <p class="spacer">-</p>
-                      <p class="temp max">${kelvinToUnit(
-                        day.getMaxTemp()
-                      )}</p>`
+                      <p class="temp max">${kelvinToUnit(day.getMaxTemp())}</p>`
                           : `<p class="temp">${kelvinToUnit(
                               day.data[0].temperature
                             )}</p>`
@@ -95,7 +93,9 @@ async function pageLoad() {
                 </div>
         </div>
         <div class="toggleSwitch">
-                <input type="checkbox" class="hover-enabled ${unit}" id="toggleSwitch" ${unit==="fahrenheit" ? "checked":""}/>
+                <input type="checkbox" class="hover-enabled ${unit}" id="toggleSwitch" ${
+    unit === "fahrenheit" ? "checked" : ""
+  }/>
                 <label for="toggleSwitch"></label>
         </div>
         <div class="socials">
@@ -109,9 +109,7 @@ async function pageLoad() {
           <div class="weatherData">
             <div class="iconAndTemp">
                 <img src="${currentWeather.getIconLink()}" width="85" height="75" class="icon selected"/>
-                <p class="temp">${kelvinToUnit(
-                  currentWeather.temperature
-                )}</p>
+                <p class="temp">${kelvinToUnit(currentWeather.temperature)}</p>
             </div>
             <div class="text">
                 <p lang="DE">Niederschlag:</p>
@@ -121,7 +119,9 @@ async function pageLoad() {
             <div class="variables">
                 <p class="pop">${currentWeather.precipitation}%</p>
                 <p class="humid">${currentWeather.humidity}%</p>
-                <p class="wind metric">${speedToUnit(currentWeather.windspeed)}</p>
+                <p class="wind metric">${speedToUnit(
+                  currentWeather.windspeed
+                )}</p>
             </div>
           </div>
           <div class="metaData">
@@ -194,6 +194,7 @@ function changeBackgroundColors(hourData) {
 }
 
 function updateSelectedWeather(event) {
+  console.log("updateSelectedWeather runs");
   const icon = document.querySelector(".iconAndTemp .icon");
   const temp = document.querySelector(".iconAndTemp .temp");
   const pop = document.querySelector(".pop");
@@ -237,6 +238,7 @@ function updateDetailedSection(event) {
   updateHourSection(event);
 }
 
+// timeout is necessary
 function elevateSelectedElement(e) {
   const clickedElementClass = e.target.classList.item(0);
   const elevatedElement = document.querySelector(
@@ -249,6 +251,7 @@ function elevateSelectedElement(e) {
 }
 
 function addListenersToHourAndDataElements() {
+  console.log("addListeners");
   const hourElements = document.querySelector(".hourSection").children;
   const dayElements = document.querySelector(".daySection").children;
   addEventListenersToElements(hourElements, updateSelectedWeather);
@@ -263,4 +266,6 @@ export {
   updateDetailedSection,
   addEventListenersToElements,
   addListenersToHourAndDataElements,
+  removeEventListenersFromElements,
+  elevateSelectedElement,
 };

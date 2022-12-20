@@ -1,4 +1,10 @@
-import { daysForecast } from "./globalVar";
+import { daysForecast, setMousedown, toggleMousedown } from "./globalVar";
+
+import {
+  addEventListenersToElements,
+  removeListenersFromHourAndDataElements,
+  addListenersToHourAndDataElements,
+} from "./domCreation";
 
 function getSectionLength(Section) {
   const SectionStyle = window.getComputedStyle(Section);
@@ -31,21 +37,27 @@ function getGapWidth(Section) {
 
 function calculateNewLeft(element, deltaY) {
   const section = element.parentElement;
+  const sectionScrolledLeft = section.scrollLeft;
   const sectionLength = getSectionLength(section);
   const elementLength = getElementLength(element);
   const gapWidthNumber = getGapWidth(section);
   const allElementsLength =
     elementLength * section.children.length +
     gapWidthNumber * (section.children.length - 1);
-  const maxScrollableWidth = sectionLength - allElementsLength;
+  const maxScrollableWidth =
+    sectionLength - allElementsLength + sectionScrolledLeft;
 
   let leftNumber = Number(element.style.left.split("p")[0]);
-  if (leftNumber - deltaY <= 0 && leftNumber - deltaY >= maxScrollableWidth) {
+  if (
+    leftNumber - deltaY <= sectionScrolledLeft &&
+    leftNumber - deltaY >= maxScrollableWidth
+  ) {
     leftNumber -= deltaY;
+
     return `${leftNumber}px`;
     // eslint-disable-next-line no-else-return
-  } else if (leftNumber - deltaY > 0) {
-    return "0px";
+  } else if (leftNumber - deltaY > sectionScrolledLeft) {
+    return `${sectionScrolledLeft}px`;
   } else if (leftNumber - deltaY < maxScrollableWidth) {
     return `${maxScrollableWidth}px`;
   }
@@ -74,19 +86,81 @@ function addScrollingEventListener() {
   hourSection.addEventListener("wheel", activeHorizontalScrollHours);
 }
 
+function resetScroll(section, elements) {
+  const firstElement = elements[0];
+  const daySection = section;
+  const elementsLeftNumber = Number(firstElement.style.left.split("p")[0]);
+  console.log("element left number",elementsLeftNumber);
+  if(elementsLeftNumber!==0) {
+    daySection.scrollLeft = -elementsLeftNumber
+    console.log("section scroll left",section.scrollLeft);
+    // eslint-disable-next-line no-restricted-syntax
+    for (const element of elements) {
+      element.style.transition = "none";
+      element.style.left = "0px";
+      element.style.transition = "transform 0.3s, left 0.25s";
+    }
+  }
+}
+
 function scrollWithDrag(e) {
-    e.target.scrollLeft = e.movementX;
+  const { target } = e;
+  if (target.classList.contains("dayData")) {
+    const targetParent = target.parentElement;
+    targetParent.scrollBy(-e.movementX, 0);
+    target.style.left -= e.movementX;
+  } else {
+    target.scrollBy(-e.movementX, 0);
+  }
+  console.log(document.querySelector(".daySection").scrollLeft);
+}
+
+function removePointerEvents(e) {
+  e.target.style.pointerEvents = "none";
 }
 
 function addDraggingEventListener() {
-    const daySection = document.querySelector(".daySection");
-    const hourSection = document.querySelector(".hourSection");
-    daySection.addEventListener('mousedown',()=>{
-        daySection.addEventListener("mousemove",scrollWithDrag);
-    })
-    daySection.addEventListener("mouseup",()=>{
-        daySection.removeEventListener("mousemove",scrollWithDrag);
-    })
+  const daySection = document.querySelector(".daySection");
+  const dayElements = daySection.children;
+  console.log(dayElements);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const day of dayElements) {
+    day.addEventListener("mousedown", (e) => {
+      scrollWithDrag(e);
+      day.addEventListener("mousemove", removePointerEvents);
+    });
+    day.addEventListener("mouseup", () => {
+      day.removeEventListener("mousemove", removePointerEvents);
+      day.style.pointerEvents = "auto";
+    });
+  }
+  daySection.addEventListener("mousedown", () => {
+    daySection.style.scrollBehavior = "auto";
+    daySection.style.scrollSnapType = "none";
+    daySection.addEventListener("mousemove", scrollWithDrag);
+  });
+  daySection.addEventListener("mouseup", () => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const day of dayElements) {
+      day.removeEventListener("mousemove", removePointerEvents);
+      day.style.pointerEvents = "auto";
+    }
+    daySection.style.scrollBehavior = "smooth";
+    daySection.style.scrollSnapType = "inline mandatory";
+    daySection.removeEventListener("mousemove", scrollWithDrag);
+  });
+  daySection.addEventListener("mouseleave", () => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const day of dayElements) {
+      day.removeEventListener("mousemove", removePointerEvents);
+      day.style.pointerEvents = "auto";
+    }
+    daySection.style.scrollBehavior = "smooth";
+    daySection.style.scrollSnapType = "inline mandatory";
+    daySection.removeEventListener("mousemove", scrollWithDrag);
+  });
 }
 
-export { addScrollingEventListener , addDraggingEventListener};
+/* Horizontal scrolling on dragging with mouse */
+
+export { addScrollingEventListener, addDraggingEventListener };

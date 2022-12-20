@@ -49,7 +49,7 @@ function addCurrentWeatherToForecast(currentWeather, daysForecast) {
   hourData.dt = currentWeather.date;
   hourData.main = {};
   hourData.main.temp = currentWeather.temperature;
-  hourData.pop = currentWeather.precipitation;
+  hourData.pop = currentWeather.precipitation/100;
   hourData.main.humidity = currentWeather.humidity;
   hourData.wind = {};
   hourData.wind.speed = currentWeather.windspeed;
@@ -71,6 +71,7 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
       const currentData = values[0];
       const forecast = values[1];
       const weatherDataDays = splitIntoDays(values[1]);
+      console.log(forecast.list[0].pop)
       const currentWeather = createCurrentWeather(
         new Date(currentData.dt * 1000),
         currentData.coord.lon,
@@ -92,7 +93,6 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
 }
 
 function speedToUnit(speed) {
-  console.log(speed)
   if(unit ==="celsius") {
     return `${Math.round(speed*3.6 * 100)/100} km/h`;
   } if(unit==="fahrenheit") {

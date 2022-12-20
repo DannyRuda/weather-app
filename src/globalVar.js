@@ -3,6 +3,7 @@ let currentWeather = {};
 let daysForecast = {};
 let suggestedCities = [];
 let unit = "celsius";
+let mousedown = false;
 
 function setCurrentWeather(newValue) {
   currentWeather = newValue;
@@ -28,5 +29,5 @@ export {
   currentWeather,
   daysForecast,
   suggestedCities,
-  unit
+  unit,
 };

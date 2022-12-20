@@ -134,6 +134,18 @@ input {
   cursor: pointer;
 }
 
+/* Remove x from the search bar */
+
+/* clears the 'X' from Internet Explorer */
+input[type=search]::-ms-clear {  display: none; width : 0; height: 0; }
+input[type=search]::-ms-reveal {  display: none; width : 0; height: 0; }
+
+/* clears the 'X' from Chrome */
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration { display: none; }
+
 /* Styling for the toggle switch that switches between celsius/metric and fahrenheit/imperial */
 
 .toggleSwitch {
@@ -436,6 +448,7 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
   position:relative;
   left: 0px;
+  user-select: none;
 }
 
 .dayData:hover {

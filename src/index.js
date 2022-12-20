@@ -82,4 +82,5 @@ new Promise((resolve, reject) => {
       .querySelector("#toggleSwitch")
       .addEventListener("click", toggleUnitsOnPage);
     addScrollingEventListener();
+    addDraggingEventListener();
   });
