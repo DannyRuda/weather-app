@@ -381,7 +381,9 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  transition: transform 0.3s;
+  transition: transform 0.3s, left 0.25s;
+  position:relative;
+  left: 0px;
 }
 
 .hourData:hover {

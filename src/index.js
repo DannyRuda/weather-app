@@ -14,7 +14,7 @@ import "./style.css";
 
 import { toggleUnitsOnPage } from "./toggleUnits";
 
-import { addScrollingEventListener } from "./horizontalScroll";
+import { addDraggingEventListener, addScrollingEventListener } from "./horizontalScroll";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
@@ -32,6 +32,7 @@ writeWeatherintoObjects(
     document
       .querySelector("#toggleSwitch")
       .addEventListener("click", toggleUnitsOnPage);
+      addScrollingEventListener();
   });
 
 new Promise((resolve, reject) => {

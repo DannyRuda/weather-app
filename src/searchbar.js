@@ -21,6 +21,8 @@ import {
 
 import { toggleUnitsOnPage } from "./toggleUnits";
 
+import { addScrollingEventListener } from "./horizontalScroll";
+
 let search = "";
 let suggestions = "";
 let suggestionElements = "";
@@ -118,6 +120,7 @@ async function loadEnteredCity() {
   document
     .querySelector("#toggleSwitch")
     .addEventListener("click", toggleUnitsOnPage);
+    addScrollingEventListener();
 }
 
 async function loadClickedSuggestion(e) {
@@ -131,6 +134,7 @@ async function loadClickedSuggestion(e) {
   document
     .querySelector("#toggleSwitch")
     .addEventListener("click", toggleUnitsOnPage);
+    addScrollingEventListener();
 }
 
 export {
