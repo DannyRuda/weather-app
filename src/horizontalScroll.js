@@ -71,27 +71,33 @@ function activeHorizontalScrollDays(e) {
   }, 20);
   window.setTimeout(() => {
     clearInterval(myInterval);
-
   }, 220);
 }
 
 function activeHorizontalScrollHours(e) {
-  const hourElements = document.getElementsByClassName("hourData");
-  // eslint-disable-next-line no-restricted-syntax
-  for (const hourElement of hourElements) {
-    hourElement.style.left = calculateNewLeft(hourElement, e.deltaY);
-  }
+  const hourSection = document.querySelector(".hourSection");
+  const hourElements = hourSection.children;
+  const myInterval = window.setInterval(() => {
+    hourSection.scrollBy(e.deltaY / 10, 0);
+  }, 20);
+  window.setTimeout(() => {
+    clearInterval(myInterval);
+  }, 220);
 }
 
 function addScrollingEventListener() {
   const daySection = document.querySelector(".daySection");
   const hourSection = document.querySelector(".hourSection");
-  daySection.addEventListener("wheel",(e)=>{
+  daySection.addEventListener("wheel", (e) => {
     daySection.style.scrollSnapType = "none";
     daySection.style.scrollBehavior = "auto";
     activeHorizontalScrollDays(e);
   });
-  hourSection.addEventListener("wheel", activeHorizontalScrollHours);
+  hourSection.addEventListener("wheel", (e) => {
+    hourSection.style.scrollSnapType = "none";
+    hourSection.style.scrollBehavior = "auto";
+    activeHorizontalScrollHours(e);
+  });
 }
 
 function scrollWithDrag(e) {
@@ -110,7 +116,7 @@ function removePointerEvents(e) {
   e.target.style.pointerEvents = "none";
 }
 
-function addDraggingEventListener() {
+function addDraggingToDays() {
   const daySection = document.querySelector(".daySection");
   const dayElements = daySection.children;
   console.log(dayElements);
@@ -126,11 +132,13 @@ function addDraggingEventListener() {
     });
   }
   daySection.addEventListener("mousedown", () => {
+
     daySection.style.scrollBehavior = "auto";
     daySection.style.scrollSnapType = "none";
     daySection.addEventListener("mousemove", scrollWithDrag);
   });
   daySection.addEventListener("mouseup", () => {
+
     // eslint-disable-next-line no-restricted-syntax
     for (const day of dayElements) {
       day.removeEventListener("mousemove", removePointerEvents);
@@ -152,6 +160,55 @@ function addDraggingEventListener() {
   });
 }
 
+function addDraggingToHours() {
+  const hourSection = document.querySelector(".hourSection");
+  const hourElements = hourSection.children;
+  console.log(hourElements);
+  // eslint-disable-next-line no-restricted-syntax
+  for (const hour of hourElements) {
+    hour.addEventListener("mousedown", (e) => {
+      scrollWithDrag(e);
+      hour.addEventListener("mousemove", removePointerEvents);
+    });
+    hour.addEventListener("mouseup", () => {
+      hour.removeEventListener("mousemove", removePointerEvents);
+      hour.style.pointerEvents = "auto";
+    });
+  }
+  hourSection.addEventListener("mousedown", () => {
+
+    hourSection.style.scrollBehavior = "auto";
+    hourSection.style.scrollSnapType = "none";
+    hourSection.addEventListener("mousemove", scrollWithDrag);
+  });
+  hourSection.addEventListener("mouseup", () => {
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const hour of hourElements) {
+      hour.removeEventListener("mousemove", removePointerEvents);
+      hour.style.pointerEvents = "auto";
+    }
+    hourSection.style.scrollBehavior = "auto";
+    hourSection.style.scrollSnapType = "inline mandatory";
+    hourSection.removeEventListener("mousemove", scrollWithDrag);
+  });
+  hourSection.addEventListener("mouseleave", () => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const hour of hourElements) {
+      hour.removeEventListener("mousemove", removePointerEvents);
+      hour.style.pointerEvents = "auto";
+    }
+    hourSection.style.scrollBehavior = "smooth";
+    hourSection.style.scrollSnapType = "inline mandatory";
+    hourSection.removeEventListener("mousemove", scrollWithDrag);
+  });
+}
+
+function addDraggingEventListeners() {
+  addDraggingToDays();
+  addDraggingToHours();
+}
+
 /* Horizontal scrolling on dragging with mouse */
 
-export { addScrollingEventListener, addDraggingEventListener };
+export { addScrollingEventListener, addDraggingEventListeners };

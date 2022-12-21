@@ -21,7 +21,10 @@ import {
 
 import { toggleUnitsOnPage } from "./toggleUnits";
 
-import { addScrollingEventListener } from "./horizontalScroll";
+import {
+  addScrollingEventListener,
+  addDraggingEventListeners,
+} from "./horizontalScroll";
 
 let search = "";
 let suggestions = "";
@@ -86,12 +89,15 @@ async function inputHandler(e) {
   ) {
     // eslint-disable-next-line no-use-before-define
     loadEnteredCity();
-  } else if (search.value.length >= 1 && !specialCharacters.test(search.value)) {
+  } else if (
+    search.value.length >= 1 &&
+    !specialCharacters.test(search.value)
+  ) {
     suggestions.classList.remove("hide");
     await getAndFillSuggestions();
     // eslint-disable-next-line no-use-before-define
     addEventListenersToElements(suggestionElements, loadClickedSuggestion);
-  } else if (specialCharacters.test(search.value) && e.key==="Enter") {
+  } else if (specialCharacters.test(search.value) && e.key === "Enter") {
     console.log("hello?");
     search.value = "No Special Characters allowed!";
   } else {
@@ -120,7 +126,8 @@ async function loadEnteredCity() {
   document
     .querySelector("#toggleSwitch")
     .addEventListener("click", toggleUnitsOnPage);
-    addScrollingEventListener();
+  addScrollingEventListener();
+  addDraggingEventListeners();
 }
 
 async function loadClickedSuggestion(e) {
@@ -134,7 +141,8 @@ async function loadClickedSuggestion(e) {
   document
     .querySelector("#toggleSwitch")
     .addEventListener("click", toggleUnitsOnPage);
-    addScrollingEventListener();
+  addScrollingEventListener();
+  addDraggingEventListeners();
 }
 
 export {

@@ -1,7 +1,7 @@
 /* eslint-disable no-use-before-define */
 import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
-import { daysForecast, currentWeather, unit, mousedown } from "./globalVar";
+import { daysForecast, currentWeather, unit } from "./globalVar";
 
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
