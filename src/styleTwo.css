@@ -282,11 +282,20 @@ input[type="checkbox"].celsius:focus + label::before {
   margin-top: 60px;
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
+  position: relative;
 }
 
 /* Hide scrollbar for Chrome, Safari and Opera */
 .hourSection::-webkit-scrollbar {
   display: none;
+}
+
+.hourblur {
+  position:absolute;
+  width:30px;
+  height: 100%;
+  background: linear-gradient(to left, transparent, white 80%);
+  left: -5px;
 }
 
 .hourData {
