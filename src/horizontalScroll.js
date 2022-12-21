@@ -64,11 +64,15 @@ function calculateNewLeft(element, deltaY) {
 }
 
 function activeHorizontalScrollDays(e) {
-  const dayElements = document.getElementsByClassName("dayData");
-  // eslint-disable-next-line no-restricted-syntax
-  for (const dayElement of dayElements) {
-    dayElement.style.left = calculateNewLeft(dayElement, e.deltaY);
-  }
+  const daySection = document.querySelector(".daySection");
+  const dayElements = daySection.children;
+  const myInterval = window.setInterval(() => {
+    daySection.scrollBy(e.deltaY / 10, 0);
+  }, 20);
+  window.setTimeout(() => {
+    clearInterval(myInterval);
+
+  }, 220);
 }
 
 function activeHorizontalScrollHours(e) {
@@ -82,25 +86,12 @@ function activeHorizontalScrollHours(e) {
 function addScrollingEventListener() {
   const daySection = document.querySelector(".daySection");
   const hourSection = document.querySelector(".hourSection");
-  daySection.addEventListener("wheel", activeHorizontalScrollDays);
+  daySection.addEventListener("wheel",(e)=>{
+    daySection.style.scrollSnapType = "none";
+    daySection.style.scrollBehavior = "auto";
+    activeHorizontalScrollDays(e);
+  });
   hourSection.addEventListener("wheel", activeHorizontalScrollHours);
-}
-
-function resetScroll(section, elements) {
-  const firstElement = elements[0];
-  const daySection = section;
-  const elementsLeftNumber = Number(firstElement.style.left.split("p")[0]);
-  console.log("element left number",elementsLeftNumber);
-  if(elementsLeftNumber!==0) {
-    daySection.scrollLeft = -elementsLeftNumber
-    console.log("section scroll left",section.scrollLeft);
-    // eslint-disable-next-line no-restricted-syntax
-    for (const element of elements) {
-      element.style.transition = "none";
-      element.style.left = "0px";
-      element.style.transition = "transform 0.3s, left 0.25s";
-    }
-  }
 }
 
 function scrollWithDrag(e) {
@@ -145,7 +136,7 @@ function addDraggingEventListener() {
       day.removeEventListener("mousemove", removePointerEvents);
       day.style.pointerEvents = "auto";
     }
-    daySection.style.scrollBehavior = "smooth";
+    daySection.style.scrollBehavior = "auto";
     daySection.style.scrollSnapType = "inline mandatory";
     daySection.removeEventListener("mousemove", scrollWithDrag);
   });

@@ -449,6 +449,7 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   position:relative;
   left: 0px;
   user-select: none;
+
 }
 
 .dayData:hover {
