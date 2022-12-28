@@ -17,6 +17,7 @@ import { toggleUnitsOnPage } from "./toggleUnits";
 import {
   addDraggingEventListeners,
   addScrollingEventListener,
+  addListenersToArrows,
 } from "./horizontalScroll";
 
 writeWeatherintoObjects(
@@ -37,6 +38,7 @@ writeWeatherintoObjects(
       .addEventListener("click", toggleUnitsOnPage);
     addScrollingEventListener();
     addDraggingEventListeners();
+    addListenersToArrows()
   });
 
 new Promise((resolve, reject) => {
@@ -87,4 +89,5 @@ new Promise((resolve, reject) => {
       .addEventListener("click", toggleUnitsOnPage);
     addScrollingEventListener();
     addDraggingEventListeners();
+    addListenersToArrows();
   });

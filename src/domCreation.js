@@ -141,13 +141,13 @@ async function pageLoad() {
     
     </div>
       <div class="daySlider">
-        <div class="backArrow">
+        <div class="backArrow" style="border-right-color: ${currentWeather.getBackgroundColor()};">
 
         </div>
         <div class="daySection">
           ${daysHtml}
         </div>
-      <div class="forwardArrow">
+      <div class="forwardArrow" style="border-left-color: ${currentWeather.getBackgroundColor()};">
 
     </div>
 </div>
@@ -185,16 +185,19 @@ function changeBackgroundColors(hourData) {
   const dayCards = document.getElementsByClassName("dayData");
   const overlay = document.querySelector(".overlay");
   const detailedCard = document.querySelector(".detailed");
+  const forwardArrow = document.querySelector(".forwardArrow");
+  const backArrow = document.querySelector(".backArrow");
   // eslint-disable-next-line no-restricted-syntax
   for (const card of dayCards) {
     card.style.backgroundColor = hourData.getBackgroundColor();
   }
   overlay.style.background = `linear-gradient(${hourData.getBackgroundGradient()})`;
   detailedCard.style.backgroundColor = `${hourData.getBackgroundColor()}`;
+  forwardArrow.style.borderLeftColor = `${hourData.getBackgroundColor()}`;
+  backArrow.style.borderRightColor = `${hourData.getBackgroundColor()}`;
 }
 
 function updateSelectedWeather(event) {
-  console.log("updateSelectedWeather runs");
   const icon = document.querySelector(".iconAndTemp .icon");
   const temp = document.querySelector(".iconAndTemp .temp");
   const pop = document.querySelector(".pop");

@@ -24,6 +24,7 @@ import { toggleUnitsOnPage } from "./toggleUnits";
 import {
   addScrollingEventListener,
   addDraggingEventListeners,
+  addListenersToArrows,
 } from "./horizontalScroll";
 
 let search = "";
@@ -128,6 +129,7 @@ async function loadEnteredCity() {
     .addEventListener("click", toggleUnitsOnPage);
   addScrollingEventListener();
   addDraggingEventListeners();
+  addListenersToArrows();
 }
 
 async function loadClickedSuggestion(e) {
@@ -143,6 +145,7 @@ async function loadClickedSuggestion(e) {
     .addEventListener("click", toggleUnitsOnPage);
   addScrollingEventListener();
   addDraggingEventListeners();
+  addListenersToArrows()
 }
 
 export {

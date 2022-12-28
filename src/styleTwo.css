@@ -291,11 +291,17 @@ input[type="checkbox"].celsius:focus + label::before {
 }
 
 .hourblur {
-  position:absolute;
   width:30px;
   height: 100%;
   background: linear-gradient(to left, transparent, white 80%);
-  left: -5px;
+}
+
+.hourblur.left {
+  float: left;
+}
+
+.hourblur.right {
+  float:right;
 }
 
 .hourData {
