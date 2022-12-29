@@ -123,7 +123,7 @@ const mediaLinks = (state) => ({
         if (hour < 7 || hour > 20) {
           console.log("backgroundGradient night");
           BackgroundGradient =
-            "rgba(40, 38, 62, 1)0%, rgba(40, 38, 62, 1) 20%,rgba(88, 60, 40, 1) 100%";
+            "rgba(49, 48, 68, 1)0%, rgba(49, 48, 68, 1) 20%,rgba(87, 64, 47, 1) 100%";
         } else {
           console.log("backgroundGradient day");
           BackgroundGradient =
@@ -175,7 +175,7 @@ const mediaLinks = (state) => ({
       case "Clear":
         if (hour < 7 || hour > 20) {
           console.log("backgroundColor night");
-          BackgroundColor = "rgba(235, 218, 208, 1)";
+          BackgroundColor = "rgba(241, 230, 224, 1)";
         } else {
           console.log("backgroundColor day");
           BackgroundColor = "rgba(253, 252, 242, 1)";
