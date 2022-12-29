@@ -46,7 +46,6 @@ function scrollWithDrag(e) {
   } else {
     target.scrollBy(-e.movementX, 0);
   }
-  console.log(document.querySelector(".daySection").scrollLeft);
 }
 
 function removePointerEvents(e) {
@@ -93,7 +92,6 @@ function addDraggingToDays() {
 function addDraggingToHours() {
   const hourSection = document.querySelector(".hourSection");
   const hourElements = hourSection.children;
-  console.log(hourElements);
   // eslint-disable-next-line no-restricted-syntax
   for (const hour of hourElements) {
     hour.addEventListener("mousedown", (e) => {

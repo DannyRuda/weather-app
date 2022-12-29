@@ -71,7 +71,6 @@ async function writeWeatherintoObjects(currentWeatherPromise, forecastPromise) {
       const currentData = values[0];
       const forecast = values[1];
       const weatherDataDays = splitIntoDays(values[1]);
-      console.log(forecast.list[0].pop)
       const currentWeather = createCurrentWeather(
         new Date(currentData.dt * 1000),
         currentData.coord.lon,

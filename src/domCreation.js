@@ -254,7 +254,6 @@ function elevateSelectedElement(e) {
 }
 
 function addListenersToHourAndDataElements() {
-  console.log("addListeners");
   const hourElements = document.querySelector(".hourSection").children;
   const dayElements = document.querySelector(".daySection").children;
   addEventListenersToElements(hourElements, updateSelectedWeather);

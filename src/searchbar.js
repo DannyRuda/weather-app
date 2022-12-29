@@ -81,8 +81,6 @@ async function getAndFillSuggestions() {
 async function inputHandler(e) {
   // eslint-disable-next-line no-useless-escape
   const specialCharacters = /[`!@#$%^&*()_+\-=\[\]{};':"\\|.<>\/?~]/;
-  console.log(search.value);
-  console.log(specialCharacters.test("t+est"));
   if (
     e.key === "Enter" &&
     search.value.length > 0 &&
@@ -99,7 +97,6 @@ async function inputHandler(e) {
     // eslint-disable-next-line no-use-before-define
     addEventListenersToElements(suggestionElements, loadClickedSuggestion);
   } else if (specialCharacters.test(search.value) && e.key === "Enter") {
-    console.log("hello?");
     search.value = "No Special Characters allowed!";
   } else {
     suggestions.classList.add("hide");

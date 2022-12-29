@@ -1,8 +1,10 @@
 import Clear from "./media/clear.mp4";
+import ClearNight from "./media/clearNight.mp4";
 import Clouds from "./media/cloudy.mp4";
 import Rain from "./media/rain.mp4";
 import Snow from "./media/snow.mp4";
 import ClearIcon from "./media/clearIcon.svg";
+import ClearNightIcon from "./media/clearNightIcon.svg";
 import CloudsIcon from "./media/cloudyIcon.svg";
 import RainIcon from "./media/rainIcon.svg";
 import DrizzleIcon from "./media/drizzleIcon.svg";
@@ -15,12 +17,20 @@ const mediaLinks = (state) => ({
     const weathercon = state.weathercon
       ? state.weathercon
       : state.getDominatingWeathericon();
+    const hour = state.date.getHours();
+    console.log(hour,ClearNight);
     switch (weathercon) {
       case "Clouds":
         videoLink = `${Clouds}`;
         break;
       case "Clear":
-        videoLink = `${Clear}`;
+        if (hour < 7 || hour > 20) {
+          console.log("backgroundLink night");
+          videoLink = `${ClearNight}`;
+        } else {
+          console.log("backgroundLink day");
+          videoLink = `${Clear}`;
+        }
         break;
       case "Snow":
         videoLink = `${Snow}`;
@@ -53,12 +63,20 @@ const mediaLinks = (state) => ({
     const weathercon = state.weathercon
       ? state.weathercon
       : state.getDominatingWeathericon();
+    const hour = state.date.getHours();
+    console.log(hour);
     switch (weathercon) {
       case "Clouds":
         iconLink = `${CloudsIcon}`;
         break;
       case "Clear":
-        iconLink = `${ClearIcon}`;
+        if (hour < 7 || hour > 20) {
+          console.log("iconLink night");
+          iconLink = `${ClearNightIcon}`;
+        } else {
+          console.log("iconLink day");
+          iconLink = `${ClearIcon}`;
+        }
         break;
       case "Snow":
         iconLink = `${SnowIcon}`;
@@ -94,14 +112,23 @@ const mediaLinks = (state) => ({
     const weathercon = state.weathercon
       ? state.weathercon
       : state.getDominatingWeathericon();
+    const hour = state.date.getHours();
+    console.log(hour);
     switch (weathercon) {
       case "Clouds":
         BackgroundGradient =
           "rgba(161, 164, 165, 1)0%, rgba(161, 164, 165, 1) 20%, rgba(85, 85, 82, 1) 100%";
         break;
       case "Clear":
-        BackgroundGradient =
-          "rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%";
+        if (hour < 7 || hour > 20) {
+          console.log("backgroundGradient night");
+          BackgroundGradient =
+            "rgba(40, 38, 62, 1)0%, rgba(40, 38, 62, 1) 20%,rgba(88, 60, 40, 1) 100%";
+        } else {
+          console.log("backgroundGradient day");
+          BackgroundGradient =
+            "rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%";
+        }
         break;
       case "Snow":
         BackgroundGradient =
@@ -139,12 +166,20 @@ const mediaLinks = (state) => ({
     const weathercon = state.weathercon
       ? state.weathercon
       : state.getDominatingWeathericon();
+    const hour = state.date.getHours();
+    console.log(hour);
     switch (weathercon) {
       case "Clouds":
         BackgroundColor = "rgba(225, 225, 225, 1)";
         break;
       case "Clear":
-        BackgroundColor = "rgba(253, 252, 242, 1)";
+        if (hour < 7 || hour > 20) {
+          console.log("backgroundColor night");
+          BackgroundColor = "rgba(235, 218, 208, 1)";
+        } else {
+          console.log("backgroundColor day");
+          BackgroundColor = "rgba(253, 252, 242, 1)";
+        }
         break;
       case "Snow":
         BackgroundColor = "rgba(241, 241, 241, 1)";
