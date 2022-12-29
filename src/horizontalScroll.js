@@ -139,26 +139,6 @@ function addDraggingEventListeners() {
 
 /* logic for scrolling day section one card when clicking on arrow */
 
-function scrollOnClick(e) {
-  const daySection = document.querySelector(".daySection");
-  const direction = e.target.classList.contains("forwardArrow")
-    ? "right"
-    : "left";
-  const scrollValue = direction === "right" ? 352 : -352;
-  const myInterval = window.setInterval(() => {
-    daySection.scrollBy(scrollValue / 10, 0);
-  }, 20);
-  window.setTimeout(()=>{
-    daySection.style.scrollBehavior = "smooth";
-    daySection.style.scrollSnapType = "inline mandatory";
-  },200)
-  window.setTimeout(() => {
-    clearInterval(myInterval);
-    daySection.style.scrollBehavior = "auto";
-  daySection.style.scrollSnapType = "none";
-  }, 210);
-}
-
 function scrollOnClickWithoutTimeout(e) {
   const daySection = document.querySelector(".daySection");
   const dayElements = daySection.children;
@@ -167,7 +147,7 @@ function scrollOnClickWithoutTimeout(e) {
     : "left";
   const scrollValue = direction === "right" ? 352 : -352;
   daySection.style.scrollBehavior = "smooth";
-  daySection.style.scrollSnapType = "inline mandatory";
+  daySection.style.scrollSnapType = "inline proximity";
   // eslint-disable-next-line no-restricted-syntax
   for (const day of dayElements) {
     day.style.pointerEvents = "none";
