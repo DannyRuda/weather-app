@@ -298,6 +298,17 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   gap: 10px;
 }
 
+.githubBackground {
+  align-items: center;
+  background-color: white;
+  width: 35px;
+  height: 36px;
+  border: 1px solid white;
+  display: flex;
+  justify-content: center;
+  border-radius: 50%;
+}
+
 .detailed {
   width: 81.6%;
   height: 55%;

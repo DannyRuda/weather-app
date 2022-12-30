@@ -100,7 +100,9 @@ async function pageLoad() {
         </div>
         <div class="socials">
             <p class="myName">By DannyRuda</p>
-            <img src="${GithubIcon}" width="30" height="30"/>
+            <div class="githubBackground">
+              <img src="${GithubIcon}" width="35" height="35"/>
+            </div>
             <img src="${LinkedinIcon}" width="30" height="30"/>
         </div>
       </header>
