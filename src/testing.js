@@ -1,49 +1,59 @@
-function testPageLoadData(currentWeather, daysForecast, kelvinToUnit,kelvinToUnit) {
-  console.log("CURRENT WEATHER CARD!!!!!!!!!!!!!!");
-  console.log("Icon: ", currentWeather.getIconLink());
-  console.log("Background: ", currentWeather.getBackgroundLink());
-  console.log(
-    "temperature in °C: ",
-    kelvinToUnit(currentWeather.temperature)
-  );
-  console.log(
-    "temperature in °F: ",
-    kelvinToUnit(currentWeather.temperature)
-  );
-  console.log("pop: ", currentWeather.precipitation);
-  console.log("windspeed: ", currentWeather.windspeed);
-  console.log("humidity: ", currentWeather.humidity);
-  console.log("Day: ", currentWeather.getWeekDay());
-  console.log("Month and Day Date: ", currentWeather.getMonthAndDayDate("DE"));
-  currentWeather
-    .getCityNameAndCountryCode()
-    .then((cityCountry) => {
-      console.log("City and Country: ", cityCountry);
-    })
-    .then(() => {
-      console.log("Time: ", currentWeather.getCurrentTime());
-      console.log("HOUR DATA SECTION !!!!!!!!!!!!!!!!!!");
-      daysForecast[0].data.forEach((hour) => {
-        console.log("Time: ", hour.time);
-        console.log("Icon: ", hour.getIconLink());
-        console.log("Temperature in °C: ", kelvinToUnit(hour.temperature));
-        console.log("Temperature in °F: ", kelvinToUnit(hour.temperature));
-      });
-      console.log("DAY CARDS SECTION!!!!!!!!!!!!!!!!!");
-      daysForecast.forEach((day) => {
-        console.log(
-          "Weekday: ",
-          day.getWeekDay() !== currentWeather.getWeekDay()
-            ? day.getWeekDay()
-            : "today"
-        );
-        console.log("MonthAndDay: ", day.getMonthAndDayDate("DE"));
-        console.log("Icon: ", day.getIconLink());
-        console.log("Min Temperature in °C: ", kelvinToUnit(day.getMinTemp()));
-        console.log("Max Temperature in °C: ", kelvinToUnit(day.getMaxTemp()));
-        console.log("Min Temperature in °F: ", kelvinToUnit(day.getMinTemp()));
-        console.log("Max Temperature in °F: ", kelvinToUnit(day.getMaxTemp()));
-      });
-    });
+function changeToggleColorOnPageLoad(weathercon, hour) {
+  const styleElement = document.createElement("style");
+  switch (weathercon) {
+    
+    case "Clear":
+      if (hour < 7 || hour > 20) {
+        styleElement.innerHTML = `
+        input[type="checkbox"] + label::before {
+          background-color: rgb(241 230 224);
+        }
+        
+        input[type="checkbox"] + label::after {
+          background-color: rgb(136 134 171);
+        }`;
+      } else {
+        styleElement.innerHTML = `
+        input[type="checkbox"] + label::before {
+          background-color: rgb(83 169 231);
+        }
+        
+        input[type="checkbox"] + label::after {
+          background-color: rgb(253 242 162);
+        }`;
+      }
+      break;
+    case "Snow":
+    case "Rain":
+    case "Drizzle":
+      case "Clouds":
+    case "Mist":
+    case "Smoke":
+    case "Haze":
+    case "Dust":
+    case "Fog":
+    case "Sand":
+    case "Ash":
+    case "Squall":
+    case "Tornado":
+    case "Thunderstorm":
+      styleElement.innerHTML = `
+        input[type="checkbox"] + label::before {
+          background-color: rgb(218, 218, 218);
+        }
+        
+        input[type="checkbox"] + label::after {
+          background-color: rgb(255, 255, 255);
+        }`;
+      break;
+    default:
+      alert("no weathercon set yet");
+  }
+  document.head.removeChild(document.head.lastChild);
+  document.head.appendChild(styleElement);
 }
-export { testPageLoadData };
+
+
+
+
+export {changeToggleColorOnPageLoad };

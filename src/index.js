@@ -11,6 +11,7 @@ import { pageLoad, addListenersToHourAndDataElements } from "./domCreation";
 
 import "./reset.css";
 import "./style.css";
+import "./toggleSwitch.css"
 
 import { toggleUnitsOnPage } from "./toggleUnits";
 
@@ -38,7 +39,7 @@ writeWeatherintoObjects(
       .addEventListener("click", toggleUnitsOnPage);
     addScrollingEventListener();
     addDraggingEventListeners();
-    addListenersToArrows()
+    addListenersToArrows();
   });
 
 new Promise((resolve, reject) => {
@@ -91,3 +92,4 @@ new Promise((resolve, reject) => {
     addDraggingEventListeners();
     addListenersToArrows();
   });
+

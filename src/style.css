@@ -177,13 +177,20 @@ input[type="checkbox"] + label {
   align-items: center;
 }
 
+input[type="checkbox"] + label::before {
+  background-color: rgb(218, 218, 218);
+}
+
+input[type="checkbox"] + label::after {
+  background-color: rgb(255, 255, 255);
+}
+
 /* general styling celsius state */
 input[type="checkbox"].celsius + label::before {
   content: "";
   width: 5em;
   height: 40px;
   border-radius: 40px;
-  background-color: rgb(218, 218, 218);
 }
 
 input[type="checkbox"].celsius + label::after {
@@ -195,7 +202,6 @@ input[type="checkbox"].celsius + label::after {
   height: 48px;
   border: 1px solid black;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255);
   position: absolute;
   font-size: 26px;
   font-family: Poppins;
@@ -207,7 +213,6 @@ input[type="checkbox"].fahrenheit + label::before {
   width: 5em;
   height: 40px;
   border-radius: 40px;
-  background-color: rgb(218, 218, 218);
 }
 
 input[type="checkbox"].fahrenheit + label::after {
@@ -219,7 +224,7 @@ input[type="checkbox"].fahrenheit + label::after {
   height: 48px;
   border: 1px solid black;
   border-radius: 50%;
-  background-color: rgb(255, 255, 255);
+
   position: absolute;
   transform: translateX(32px);
   font-size: 26px;

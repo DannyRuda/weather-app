@@ -3,6 +3,8 @@ import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
 import { daysForecast, currentWeather, unit } from "./globalVar";
 
+import { changeToggleColor, changeToggleColorOnPageLoad } from "./testing";
+
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
 import LinkedinIcon from "./media/linkedinIcon.svg";
@@ -72,6 +74,7 @@ async function pageLoad() {
   const hoursHtml = createHourElements(daysForecast[0], 0);
   const daysHtml = createDayElements();
   const cityAndCountry = await currentWeather.getCityNameAndCountryCode();
+  changeToggleColorOnPageLoad(currentWeather.weathercon, currentWeather.date.getHours());
   document.querySelector("body").innerHTML = `
     <video class ="video" autoplay muted loop id="myVideo">
         <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
@@ -215,6 +218,7 @@ function updateSelectedWeather(event) {
   const day = daysForecast[indexDay];
   changeBackgroundVideo(hourData);
   changeBackgroundColors(hourData);
+  changeToggleColorOnPageLoad(hourData.weathercon,hourData.date.getHours())
   icon.src = `${hourData.getIconLink()}`;
   temp.innerText = kelvinToUnit(hourData.temperature);
   pop.innerText = `${hourData.precipitation}%`;
