@@ -27,6 +27,23 @@
   min-height: 100%;
 }
 
+.fade {
+  position:absolute;
+  width: 100%;
+  min-height: 100%;
+  background-color: black;
+  opacity: 0.95;
+  transition: opacity 2s;
+}
+
+.fade.in {
+  opacity: 0;
+}
+
+.fade.out {
+  opacity: 0.95;
+}
+
 .overlay {
   position: fixed;
   top: 50%;
@@ -325,6 +342,7 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   align-items: center;
   margin-top: 10px;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.8s;
 }
 
 .selectedWeather {

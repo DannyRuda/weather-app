@@ -76,9 +76,12 @@ async function pageLoad() {
   const cityAndCountry = await currentWeather.getCityNameAndCountryCode();
   changeToggleColorOnPageLoad(currentWeather.weathercon, currentWeather.date.getHours());
   document.querySelector("body").innerHTML = `
+  <div class="videoContainer">
     <video class ="video" autoplay muted loop id="myVideo">
-        <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
+      <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
     </video>
+    <div class="fade"></div>
+  </div>
     <div class="overlay" style="background: linear-gradient(${currentWeather.getBackgroundGradient()});">
       <header>
         <div class="logo">
@@ -163,6 +166,7 @@ async function pageLoad() {
         <p id="errorText">Sorry, the server didn't find any locations for your query, please check the spelling and try again.</p>
       </div>
     </template>`;
+    return "test";
 }
 
 function addEventListenersToElements(elements, handlerFunction) {

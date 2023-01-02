@@ -20,6 +20,7 @@ import {
   addScrollingEventListener,
   addListenersToArrows,
 } from "./horizontalScroll";
+import { fadeOut } from "./testing";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
@@ -31,6 +32,8 @@ writeWeatherintoObjects(
   })
   .then(() => pageLoad())
   .then(() => {
+    const fadeElement = document.querySelector(".fade");
+    window.setTimeout(()=>{fadeElement.classList.toggle("in")},0);
     updateSearchbarVariables();
     addListenersToSearchbar();
     addListenersToHourAndDataElements();
@@ -40,6 +43,7 @@ writeWeatherintoObjects(
     addScrollingEventListener();
     addDraggingEventListeners();
     addListenersToArrows();
+    
   });
 
 new Promise((resolve, reject) => {
@@ -80,8 +84,10 @@ new Promise((resolve, reject) => {
   .catch((err) => {
     throw err;
   })
+  .then(()=> fadeOut())
   .then(() => pageLoad())
   .then(() => {
+    const fadeElement = document.querySelector(".fade");
     updateSearchbarVariables();
     addListenersToSearchbar();
     addListenersToHourAndDataElements();
@@ -91,5 +97,6 @@ new Promise((resolve, reject) => {
     addScrollingEventListener();
     addDraggingEventListeners();
     addListenersToArrows();
+    window.setTimeout(()=>{fadeElement.classList.toggle("in")},0);
   });
 

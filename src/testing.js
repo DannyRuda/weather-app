@@ -53,7 +53,15 @@ function changeToggleColorOnPageLoad(weathercon, hour) {
   document.head.appendChild(styleElement);
 }
 
+async function fadeOut() {
+  const fadeElement = document.querySelector(".fade");
+  fadeElement.classList.toggle("in")
+  await new Promise((res)=>{
+    window.setTimeout(()=>{res()},2000)
+  })
+}
 
 
 
-export {changeToggleColorOnPageLoad };
+
+export {changeToggleColorOnPageLoad, fadeOut };
