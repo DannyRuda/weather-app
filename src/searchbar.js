@@ -27,7 +27,7 @@ import {
   addListenersToArrows,
 } from "./horizontalScroll";
 
-import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./testing";
+import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./transitions";
 
 let search = "";
 let suggestions = "";

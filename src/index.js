@@ -20,7 +20,7 @@ import {
   addScrollingEventListener,
   addListenersToArrows,
 } from "./horizontalScroll";
-import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./testing";
+import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./transitions";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),

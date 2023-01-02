@@ -3,7 +3,7 @@ import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
 import { daysForecast, currentWeather, unit } from "./globalVar";
 
-import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut } from "./testing";
+import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut } from "./transitions";
 
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
