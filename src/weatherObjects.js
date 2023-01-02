@@ -18,17 +18,14 @@ const mediaLinks = (state) => ({
       ? state.weathercon
       : state.getDominatingWeathericon();
     const hour = state.date.getHours();
-    console.log(hour,ClearNight);
     switch (weathercon) {
       case "Clouds":
         videoLink = `${Clouds}`;
         break;
       case "Clear":
         if (hour < 7 || hour > 20) {
-          console.log("backgroundLink night");
           videoLink = `${ClearNight}`;
         } else {
-          console.log("backgroundLink day");
           videoLink = `${Clear}`;
         }
         break;
@@ -60,23 +57,30 @@ const mediaLinks = (state) => ({
 
   getIconLink() {
     let iconLink = "";
+    const callingFor = state.weathercon ? "hour" : "day";
     const weathercon = state.weathercon
       ? state.weathercon
       : state.getDominatingWeathericon();
+    if (callingFor === "day") {
+      console.log(weathercon);
+    }
     const hour = state.date.getHours();
-    console.log(hour);
+
     switch (weathercon) {
       case "Clouds":
         iconLink = `${CloudsIcon}`;
         break;
       case "Clear":
-        if (hour < 7 || hour > 20) {
-          console.log("iconLink night");
+        if ((hour < 7 || hour > 20) && callingFor === "hour") {
           iconLink = `${ClearNightIcon}`;
-        } else {
-          console.log("iconLink day");
+        } else if (callingFor === "hour"){
+          iconLink = `${ClearIcon}`;
+        } else if(callingFor === "day") {
           iconLink = `${ClearIcon}`;
         }
+        break;
+      case "clearNight":
+        iconLink = `${ClearNightIcon}`;
         break;
       case "Snow":
         iconLink = `${SnowIcon}`;
@@ -113,7 +117,7 @@ const mediaLinks = (state) => ({
       ? state.weathercon
       : state.getDominatingWeathericon();
     const hour = state.date.getHours();
-    console.log(hour);
+
     switch (weathercon) {
       case "Clouds":
         BackgroundGradient =
@@ -121,11 +125,9 @@ const mediaLinks = (state) => ({
         break;
       case "Clear":
         if (hour < 7 || hour > 20) {
-          console.log("backgroundGradient night");
           BackgroundGradient =
             "rgba(49, 48, 68, 1)0%, rgba(49, 48, 68, 1) 20%,rgba(87, 64, 47, 1) 100%";
         } else {
-          console.log("backgroundGradient day");
           BackgroundGradient =
             "rgba(144, 189, 231, 1)0%, rgba(144, 189, 231, 1) 20%,rgba(209, 220, 138, 1) 100%";
         }
@@ -167,17 +169,15 @@ const mediaLinks = (state) => ({
       ? state.weathercon
       : state.getDominatingWeathericon();
     const hour = state.date.getHours();
-    console.log(hour);
+
     switch (weathercon) {
       case "Clouds":
         BackgroundColor = "rgba(225, 225, 225, 1)";
         break;
       case "Clear":
         if (hour < 7 || hour > 20) {
-          console.log("backgroundColor night");
           BackgroundColor = "rgba(241, 230, 224, 1)";
         } else {
-          console.log("backgroundColor day");
           BackgroundColor = "rgba(253, 252, 242, 1)";
         }
         break;
@@ -364,7 +364,18 @@ function createDayObject(data) {
     const drizzle = data.filter((element) => element.weathercon === "Drizzle");
     const rain = data.filter((element) => element.weathercon === "Rain");
     const snow = data.filter((element) => element.weathercon === "Snow");
-    const clear = data.filter((element) => element.weathercon === "Clear");
+    const clear = data.filter((element) => {
+      const hour = element.date.getHours();
+      if (hour > 7 || hour < 20) {
+        return element.weathercon === "Clear";
+      }
+    });
+    const clearNight = data.filter((element) => {
+      const hour = element.date.getHours();
+      if (hour < 7 || hour > 20) {
+        return element.weathercon === "Clear";
+      }
+    });
     const clouds = data.filter((element) => element.weathercon === "Clouds");
     const mist = data.filter((element) => element.weathercon === "Mist");
     const smoke = data.filter((element) => element.weathercon === "Smoke");
@@ -381,6 +392,7 @@ function createDayObject(data) {
       rain,
       snow,
       clear,
+      clearNight,
       clouds,
       mist,
       smoke,
