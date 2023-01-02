@@ -31,24 +31,20 @@
   position:absolute;
   width: 100%;
   min-height: 100%;
-  background-color: black;
-  opacity: 0.95;
-  transition: opacity 2s;
+  background-color: rgb(22, 22, 22);
+  opacity: 1;
+  transition: opacity 0.5s;
 }
 
 .fade.in {
   opacity: 0;
 }
 
-.fade.out {
-  opacity: 0.95;
-}
-
 .overlay {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1);
+  transform: translate(-50%, -50%) scale(0);
   max-height: 100vh;
   z-index: 4;
   width: 66%;
@@ -63,6 +59,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  opacity: 0;
+  transition: transform 0.5s, opacity 0.5s;
 }
 
 p {
@@ -196,10 +194,12 @@ input[type="checkbox"] + label {
 
 input[type="checkbox"] + label::before {
   background-color: rgb(218, 218, 218);
+  transition: background-color 0.5s;
 }
 
 input[type="checkbox"] + label::after {
   background-color: rgb(255, 255, 255);
+  transition: background-color 0.5s;
 }
 
 /* general styling celsius state */
@@ -490,7 +490,7 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   height: 150px;
   width: 300px;
   cursor: pointer;
-  transition: transform 0.3s, left 0.25s;
+  transition: transform 0.3s, background-color 0.5s;
   box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.2);
   position: relative;
   left: 0px;

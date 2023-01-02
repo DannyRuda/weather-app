@@ -27,6 +27,8 @@ import {
   addListenersToArrows,
 } from "./horizontalScroll";
 
+import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./testing";
+
 let search = "";
 let suggestions = "";
 let suggestionElements = "";
@@ -117,6 +119,8 @@ async function loadEnteredCity() {
   );
   setCurrentWeather(weatherObjects[0]);
   setDaysForecast(weatherObjects[1]);
+  fadeWeatherOut();
+  await fadeOut()
   await pageLoad();
   updateSearchbarVariables();
   addListenersToSearchbar();
@@ -127,12 +131,16 @@ async function loadEnteredCity() {
   addScrollingEventListener();
   addDraggingEventListeners();
   addListenersToArrows();
+  fadeIn();
+  fadeWeatherIn();
 }
 
 async function loadClickedSuggestion(e) {
   const weatherObjects = await callWeather(e);
   setCurrentWeather(weatherObjects[0]);
   setDaysForecast(weatherObjects[1]);
+  fadeWeatherOut();
+  await fadeOut();
   await pageLoad();
   updateSearchbarVariables();
   addListenersToSearchbar();
@@ -143,6 +151,8 @@ async function loadClickedSuggestion(e) {
   addScrollingEventListener();
   addDraggingEventListeners();
   addListenersToArrows()
+  fadeIn();
+  fadeWeatherIn();
 }
 
 export {

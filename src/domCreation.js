@@ -3,7 +3,7 @@ import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
 import { daysForecast, currentWeather, unit } from "./globalVar";
 
-import { changeToggleColor, changeToggleColorOnPageLoad } from "./testing";
+import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut } from "./testing";
 
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
@@ -206,7 +206,8 @@ function changeBackgroundColors(hourData) {
   backArrow.style.borderRightColor = `${hourData.getBackgroundColor()}`;
 }
 
-function updateSelectedWeather(event) {
+async function updateSelectedWeather(event) {
+  await fadeOut()
   const icon = document.querySelector(".iconAndTemp .icon");
   const temp = document.querySelector(".iconAndTemp .temp");
   const pop = document.querySelector(".pop");
@@ -232,6 +233,7 @@ function updateSelectedWeather(event) {
     "DE"
   )}`;
   selectedTime.innerText = `${hourData.time}`;
+  fadeIn();
 }
 
 function updateHourSection(event) {
@@ -246,9 +248,11 @@ function updateHourSection(event) {
   addEventListenersToElements(hourElements, elevateSelectedElement);
 }
 
-function updateDetailedSection(event) {
-  updateSelectedWeather(event);
+async function updateDetailedSection(event) {
+
+  await updateSelectedWeather(event);
   updateHourSection(event);
+
 }
 
 // timeout is necessary

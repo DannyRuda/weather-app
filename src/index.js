@@ -11,7 +11,7 @@ import { pageLoad, addListenersToHourAndDataElements } from "./domCreation";
 
 import "./reset.css";
 import "./style.css";
-import "./toggleSwitch.css"
+import "./toggleSwitch.css";
 
 import { toggleUnitsOnPage } from "./toggleUnits";
 
@@ -20,7 +20,7 @@ import {
   addScrollingEventListener,
   addListenersToArrows,
 } from "./horizontalScroll";
-import { fadeOut } from "./testing";
+import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./testing";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
@@ -32,8 +32,8 @@ writeWeatherintoObjects(
   })
   .then(() => pageLoad())
   .then(() => {
-    const fadeElement = document.querySelector(".fade");
-    window.setTimeout(()=>{fadeElement.classList.toggle("in")},0);
+    fadeIn();
+    fadeWeatherIn()
     updateSearchbarVariables();
     addListenersToSearchbar();
     addListenersToHourAndDataElements();
@@ -43,7 +43,6 @@ writeWeatherintoObjects(
     addScrollingEventListener();
     addDraggingEventListeners();
     addListenersToArrows();
-    
   });
 
 new Promise((resolve, reject) => {
@@ -84,10 +83,12 @@ new Promise((resolve, reject) => {
   .catch((err) => {
     throw err;
   })
-  .then(()=> fadeOut())
+  .then(() => {
+    fadeWeatherOut()
+    return fadeOut();
+  })
   .then(() => pageLoad())
   .then(() => {
-    const fadeElement = document.querySelector(".fade");
     updateSearchbarVariables();
     addListenersToSearchbar();
     addListenersToHourAndDataElements();
@@ -97,6 +98,6 @@ new Promise((resolve, reject) => {
     addScrollingEventListener();
     addDraggingEventListeners();
     addListenersToArrows();
-    window.setTimeout(()=>{fadeElement.classList.toggle("in")},0);
+    fadeIn();
+    fadeWeatherIn();
   });
-

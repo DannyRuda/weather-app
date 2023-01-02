@@ -57,11 +57,26 @@ async function fadeOut() {
   const fadeElement = document.querySelector(".fade");
   fadeElement.classList.toggle("in")
   await new Promise((res)=>{
-    window.setTimeout(()=>{res()},2000)
+    window.setTimeout(()=>{res()},500)
   })
 }
+function fadeIn() {
+  const fadeElement = document.querySelector(".fade");
+  window.setTimeout(()=>{fadeElement.classList.toggle("in")},0);
+}
 
+async function fadeWeatherOut() {
+  const weatherCard = document.querySelector(".overlay");
+  weatherCard.style.transform = "translate(-50%, -50%) scale(0)"
+  weatherCard.style.opacity = "0";
+}
 
+function fadeWeatherIn() {
+  const weatherCard = document.querySelector(".overlay");
+  window.setTimeout(()=>{
+    weatherCard.style.transform = "translate(-50%, -50%) scale(1)"
+    weatherCard.style.opacity = "1";
+  },0)
+}
 
-
-export {changeToggleColorOnPageLoad, fadeOut };
+export {changeToggleColorOnPageLoad, fadeOut , fadeIn, fadeWeatherOut, fadeWeatherIn};

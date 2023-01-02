@@ -1,4 +1,2 @@
-- implement side scrolling for day section
-
-- Clear icon, Clear Background, Clear Gradient and Clear color should change depending on time and timezone. For example if its past 7pm local time of the searched location, everything should fit the night and past 7am  it should fit the day
-
+- icon on day card is sometimes the clear moon even if thats not the most frequent weather icon for that day
+- change background and colors only if new background and color is different than the current one
