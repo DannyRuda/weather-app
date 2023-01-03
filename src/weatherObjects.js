@@ -61,9 +61,6 @@ const mediaLinks = (state) => ({
     const weathercon = state.weathercon
       ? state.weathercon
       : state.getDominatingWeathericon();
-    if (callingFor === "day") {
-      console.log(weathercon);
-    }
     const hour = state.date.getHours();
 
     switch (weathercon) {
@@ -244,7 +241,7 @@ function createCurrentWeather(
   async function getCityNameAndCountryCode() {
     return new Promise((resolve, reject) => {
       fetch(
-        `http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=d145974fac8fb803900422c2cc1d620e`
+        `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&appid=d145974fac8fb803900422c2cc1d620e`
       )
         .then((response) => response.json())
         .then(
