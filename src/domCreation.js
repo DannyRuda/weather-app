@@ -3,7 +3,7 @@ import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
 import { daysForecast, currentWeather, unit } from "./globalVar";
 
-import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut } from "./transitions";
+import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut, setVideoEventListeners } from "./transitions";
 
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
@@ -233,7 +233,7 @@ async function updateSelectedWeather(event) {
     "DE"
   )}`;
   selectedTime.innerText = `${hourData.time}`;
-  fadeIn();
+  setVideoEventListeners();
 }
 
 function updateHourSection(event) {

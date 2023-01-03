@@ -20,7 +20,8 @@ import {
   addScrollingEventListener,
   addListenersToArrows,
 } from "./horizontalScroll";
-import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut } from "./transitions";
+
+import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut, setVideoEventListeners } from "./transitions";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
@@ -32,8 +33,7 @@ writeWeatherintoObjects(
   })
   .then(() => pageLoad())
   .then(() => {
-    fadeIn();
-    fadeWeatherIn()
+    setVideoEventListeners();
     updateSearchbarVariables();
     addListenersToSearchbar();
     addListenersToHourAndDataElements();
@@ -89,6 +89,7 @@ new Promise((resolve, reject) => {
   })
   .then(() => pageLoad())
   .then(() => {
+    setVideoEventListeners();
     updateSearchbarVariables();
     addListenersToSearchbar();
     addListenersToHourAndDataElements();
@@ -98,6 +99,4 @@ new Promise((resolve, reject) => {
     addScrollingEventListener();
     addDraggingEventListeners();
     addListenersToArrows();
-    fadeIn();
-    fadeWeatherIn();
   });
