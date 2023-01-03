@@ -3,25 +3,25 @@
 ![Showcase](./src/readmeSources/showcase-png.PNG)
 
 ## Short Description
-----
+
 This web app shows different weather data with the use of the openweathermap api and is packed with small features. 
 
 ## Live page
----
+
 Click the link to see the [live page](https://dannyruda.github.io/weather-app/)
 
 ## Demo Video
----
+
 ![Showcase GIF](./src/readmeSources/showcase-gif.gif)
 
 Showcases some example features
 
 ## Motivation
----
+
 I created this project to practise the use of APIs and to create a project that i can proudly present to people. This project also served the purpose of improving my ability to write clean code. During the creation of this project i was able to collect alot of experience in that regard. I also wanted to create something completly on my own and from scratch, especially the visual design part. 
 
 ## Features
----
+
 - Shows weather data for user location if the user permits the browser to detect the location
 - Shows weather data for a city entered with the search bar
 - Shows detailed weather data in an area of the site, compact weather data for 3 hour steps and compact weather data for each of the next 5 days
@@ -34,7 +34,7 @@ I created this project to practise the use of APIs and to create a project that 
 
 
 ## Technologies used
----
+
 - JavaScript
 - CSS3
 - HTML 5
@@ -44,12 +44,12 @@ I created this project to practise the use of APIs and to create a project that 
 - Prettier
 
 ## Future Improvements
----
+
 - Add an animation that plays when the background image is loaded that indicates that the website is in a loading state
 - make color changes also wait for the background video to play
 
 ## License
----
+
 MIT License
 
 Copyright (c) [2022] [DannyRuda]
