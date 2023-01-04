@@ -105,11 +105,15 @@ async function pageLoad() {
                 <label for="toggleSwitch"></label>
         </div>
         <div class="socials">
-            <p class="myName">By DannyRuda</p>
-            <div class="githubBackground">
-              <img src="${GithubIcon}" width="35" height="35"/>
-            </div>
-            <img src="${LinkedinIcon}" width="30" height="30"/>
+            <a href="https://github.com/DannyRuda" target="_blank" rel="noopener noreferrer"><p class="myName">By DannyRuda</p></a>
+            <a href="https://github.com/DannyRuda" target="_blank" rel="noopener noreferrer">
+              <div class="githubBackground">
+                <img src="${GithubIcon}" width="35" height="35"/>
+              </div>
+            </a>
+            <a href="https://www.linkedin.com/in/danny-ruda-786967260/" target="_blank" rel="noopener noreferrer">
+              <img src="${LinkedinIcon}" width="30" height="30"/>
+            </a>
         </div>
       </header>
       <div class="detailed" style="background-color: ${currentWeather.getBackgroundColor()};">

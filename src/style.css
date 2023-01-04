@@ -320,6 +320,13 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   gap: 10px;
 }
 
+a {
+  color:black;
+  text-decoration: none;
+}
+
+
+
 .githubBackground {
   align-items: center;
   background-color: white;
@@ -329,6 +336,7 @@ input[type="checkbox"].hover-enabled:checked:hover + label::after {
   display: flex;
   justify-content: center;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .detailed {
