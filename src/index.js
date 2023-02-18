@@ -21,7 +21,7 @@ import {
   addListenersToArrows,
 } from "./horizontalScroll";
 
-import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut, setVideoEventListeners } from "./transitions";
+import { bigLoadIcon, fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut, setVideoEventListeners } from "./transitions";
 
 writeWeatherintoObjects(
   getCurrentWeather("sidney", "AU"),
@@ -84,7 +84,8 @@ new Promise((resolve, reject) => {
     throw err;
   })
   .then(() => {
-    fadeWeatherOut()
+    bigLoadIcon();
+    fadeWeatherOut();
     return fadeOut();
   })
   .then(() => pageLoad())

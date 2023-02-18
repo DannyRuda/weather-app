@@ -27,7 +27,7 @@ import {
   addListenersToArrows,
 } from "./horizontalScroll";
 
-import { fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut, setVideoEventListeners } from "./transitions";
+import { bigLoadIcon, fadeIn, fadeOut, fadeWeatherIn, fadeWeatherOut, setVideoEventListeners } from "./transitions";
 
 let search = "";
 let suggestions = "";
@@ -119,6 +119,7 @@ async function loadEnteredCity() {
   );
   setCurrentWeather(weatherObjects[0]);
   setDaysForecast(weatherObjects[1]);
+  bigLoadIcon();
   fadeWeatherOut();
   await fadeOut()
   await pageLoad();
@@ -138,6 +139,7 @@ async function loadClickedSuggestion(e) {
   const weatherObjects = await callWeather(e);
   setCurrentWeather(weatherObjects[0]);
   setDaysForecast(weatherObjects[1]);
+  bigLoadIcon();
   fadeWeatherOut();
   await fadeOut();
   await pageLoad();

@@ -1,7 +1,6 @@
 function changeToggleColorOnPageLoad(weathercon, hour) {
   const styleElement = document.createElement("style");
   switch (weathercon) {
-    
     case "Clear":
       if (hour < 7 || hour > 20) {
         styleElement.innerHTML = `
@@ -26,7 +25,7 @@ function changeToggleColorOnPageLoad(weathercon, hour) {
     case "Snow":
     case "Rain":
     case "Drizzle":
-      case "Clouds":
+    case "Clouds":
     case "Mist":
     case "Smoke":
     case "Haze":
@@ -53,28 +52,44 @@ function changeToggleColorOnPageLoad(weathercon, hour) {
   document.head.appendChild(styleElement);
 }
 
-async function fadeOut() {
-  const fadeElement = document.querySelector(".fade");
-  fadeElement.classList.toggle("in")
-  await new Promise((res)=>{
-    window.setTimeout(()=>{res()},500)
-  })
+function smallLoadIcon() {
+  document.querySelector(".lds-ripple").classList.add("small");
 }
-function fadeIn() {
+
+function bigLoadIcon() {
+  document.querySelector(".lds-ripple").classList.remove("small");
+}
+
+async function fadeOut() {
+  console.log("fadeOut")
   const fadeElement = document.querySelector(".fade");
-  fadeElement.classList.toggle("in")
+  fadeElement.classList.toggle("in");
+  await new Promise((res) => {
+    window.setTimeout(() => {
+      res();
+    }, 500);
+  });
+}
+
+function fadeIn() {
+  console.log("fadeIN")
+  const fadeElement = document.querySelector(".fade");
+  fadeElement.classList.toggle("in");
 }
 
 async function fadeWeatherOut() {
   const weatherCard = document.querySelector(".overlay");
-  weatherCard.style.transform = "translate(-50%, -50%) scale(0)"
+  weatherCard.style.transform = "translate(-50%, -50%) scale(0)";
   weatherCard.style.opacity = "0";
+
 }
 
 function fadeWeatherIn() {
   const weatherCard = document.querySelector(".overlay");
-  weatherCard.style.transform = "translate(-50%, -50%) scale(1)"
-    weatherCard.style.opacity = "1";
+  weatherCard.style.transform = "translate(-50%, -50%) scale(1)";
+  weatherCard.style.opacity = "1";
+
+
 }
 
 function videoEventHandler() {
@@ -84,7 +99,16 @@ function videoEventHandler() {
 
 function setVideoEventListeners() {
   const video = document.querySelector("video");
-  video.addEventListener("play",videoEventHandler)
+  video.addEventListener("play", videoEventHandler);
 }
 
-export {changeToggleColorOnPageLoad, fadeOut , fadeIn, fadeWeatherOut, fadeWeatherIn, setVideoEventListeners};
+export {
+  changeToggleColorOnPageLoad,
+  fadeOut,
+  fadeIn,
+  fadeWeatherOut,
+  fadeWeatherIn,
+  bigLoadIcon,
+  smallLoadIcon,
+  setVideoEventListeners,
+};

@@ -3,7 +3,7 @@ import { kelvinToUnit, speedToUnit } from "./helperFunctions";
 
 import { daysForecast, currentWeather, unit } from "./globalVar";
 
-import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut, setVideoEventListeners } from "./transitions";
+import { changeToggleColor, changeToggleColorOnPageLoad, fadeIn, fadeOut, setVideoEventListeners, smallLoadIcon } from "./transitions";
 
 import ClearIcon from "./media/clearIcon.svg";
 import GithubIcon from "./media/githubIcon.svg";
@@ -80,7 +80,7 @@ async function pageLoad() {
     <video class ="video" autoplay muted loop id="myVideo">
       <source src="${currentWeather.getBackgroundLink()}" type="video/mp4">
     </video>
-    <div class="fade"></div>
+    <div class="fade"><div class="lds-ripple"><div></div><div></div></div></div>
   </div>
     <div class="overlay" style="background: linear-gradient(${currentWeather.getBackgroundGradient()});">
       <header>
@@ -211,6 +211,7 @@ function changeBackgroundColors(hourData) {
 }
 
 async function updateSelectedWeather(event) {
+  smallLoadIcon()
   await fadeOut()
   const icon = document.querySelector(".iconAndTemp .icon");
   const temp = document.querySelector(".iconAndTemp .temp");
